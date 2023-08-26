@@ -1,3 +1,5 @@
+-- TODO
+
 local file = ('%s.lua'):format('client/main')
 local chunk, err = load(LoadResourceFile('bl_bridge', file), ('@@bl_bridge/%s'):format(file))
 
