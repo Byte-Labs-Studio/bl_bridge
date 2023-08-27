@@ -1,6 +1,6 @@
 # current Module and Methods
 
-## Server
+##Server
 ### Framework.core
 #### Framework.core.GetPlayer(src)
   type = 'cash' | 'bank'
