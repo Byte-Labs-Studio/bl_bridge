@@ -1,4 +1,4 @@
-local currentFramework = Config
+local currentFramework = Config.convars
 local serverDir = 'server.modules'
 local moduleNames = {
     "core",
