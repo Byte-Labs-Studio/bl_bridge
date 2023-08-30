@@ -24,7 +24,13 @@ local functionsOverride = {
         modifier = function(originalFun, type, amount)
             return originalFun(type == 'cash' and 'money' or type, amount)
         end
-    }
+    },
+    items = {
+        originalMethod = 'getInventory',
+        modifier = function(originalFun)
+            return originalFun.items
+        end
+    },
 }
 
 

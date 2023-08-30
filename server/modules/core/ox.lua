@@ -3,8 +3,9 @@ if GetResourceState('ox_core') ~= 'started' then
     return
 end
 
-
 local file = 'imports/server.lua'
 local chunk = assert(load(LoadResourceFile('ox_core', file), ('@@ox_core/%s'):format(file)))
 chunk()
+
+
 return Ox
