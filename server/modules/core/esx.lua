@@ -6,33 +6,57 @@ end
 local Core = {}
 local shared = exports["es_extended"]:getSharedObject()
 local Utils = require 'utils'
-local functionsOverride = {
+local merge = lib.table.merge
+
+local inventoryFunctionsOverride = Framework.inventory
+local coreFunctionsOverride = {
     getBalance = {
         originalMethod = 'getAccount',
-        modifier = function(originalFun, type)
-            return originalFun(type == 'cash' and 'money' or type).money
-        end
+        modifier = {
+            effect = function(originalFun, type)
+                return originalFun(type == 'cash' and 'money' or type).money
+            end
+        }
     },
     removeBalance = {
         originalMethod = 'removeAccountMoney',
-        modifier = function(originalFun, type, amount)
-            return originalFun(type == 'cash' and 'money' or type, amount)
-        end
+        modifier = {
+            effect = function(originalFun, type, amount)
+                return originalFun(type == 'cash' and 'money' or type, amount)
+            end
+        }
     },
     addBalance = {
         originalMethod = 'addAccountMoney',
-        modifier = function(originalFun, type, amount)
-            return originalFun(type == 'cash' and 'money' or type, amount)
-        end
+        modifier = {
+            effect = function(originalFun, type, amount)
+                return originalFun(type == 'cash' and 'money' or type, amount)
+            end
+        }
     },
-    items = {
-        originalMethod = 'getInventory',
-        modifier = function(originalFun)
-            return originalFun.items
-        end
+    setJob = {
+        originalMethod = 'setJob',
+    },
+    job = {
+        originalMethod = 'getJob',
+        modifier = {
+            effect = function(originalFun)
+                local job = originalFun()
+                return {name = job.name, label = job.label, onDuty = true, isBoss = false, grade = {name = job.grade_name, label = job.grade_label, salary = job.grade_salary}}
+            end
+        }
+    },
+    name = {
+        originalMethod = 'getName',
+        modifier = {
+            effect = function(originalFun)
+                return originalFun()
+            end
+        }
     },
 }
 
+local totalFunctionsOverride = merge(inventoryFunctionsOverride, coreFunctionsOverride)
 
 function Core.CommandAdd(name, permission, cb, suggestion, flags)
     shared.RegisterCommand(name, permission, cb, flags.allowConsole, suggestion)
@@ -41,7 +65,7 @@ end
 function Core.GetPlayer(src)
     local player = shared.GetPlayerFromId(src)
     if not player then return end
-    local wrappedPlayer = Utils.retreiveData(player, functionsOverride)
+    local wrappedPlayer = Utils.retreiveData(player, totalFunctionsOverride)
     return wrappedPlayer
 end
 

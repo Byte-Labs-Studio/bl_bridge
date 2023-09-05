@@ -3,23 +3,22 @@ if GetResourceState('qb-inventory') ~= 'started' then
     return
 end
 
-local qb_inventory = exports['qb-inventory']
-local Inventory = {}
-
-function Inventory.saveInventory(source, isOffline)
-    qb_inventory:SaveInventory(source, isOffline)
-end
-
-function Inventory.getTotalWeight(items)
-    return qb_inventory:GetTotalWeight(items)
-end
-
-function Inventory.getSlotsByItem(items, itemName)
-    return qb_inventory:GetSlotsByItem(items, itemName)
-end
-
-function Inventory.getFirstSlotByItem(items, itemName)
-    return qb_inventory:GetFirstSlotByItem(items, itemName)
-end
-
-return Inventory
+return {
+    addItem = {
+        originalMethod = 'AddItem',
+    },
+    removeItem = {
+        originalMethod = 'RemoveItem',
+    },
+    getItem = {
+        originalMethod = 'GetItemByName',
+    },
+    items = {
+        originalMethod = 'getInventory',
+        modifier = {
+            effect = function(originalFun)
+                return originalFun.items
+            end
+        }
+    },
+}

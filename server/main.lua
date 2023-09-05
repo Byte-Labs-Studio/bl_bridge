@@ -1,13 +1,9 @@
 local currentFramework = Config.convars
 local serverDir = 'server.modules'
 local moduleNames = {
-    "core",
     "inventory",
     "notify",
-    "progress",
-    "radial",
-    "target",
-    "textui"
+    "core"
 }
 
 print('choosed framework: ' .. json.encode(currentFramework))

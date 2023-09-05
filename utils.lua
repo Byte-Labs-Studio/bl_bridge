@@ -8,9 +8,10 @@ local function retrieveData(playerTable, functionsOverride)
             local modifier = modification.modifier
             local ref = data[originalMethod]
             if originalMethod and ref then
-                newMethods[method] = modifier and function(...)
-                    return modifier(ref, ...)
-                end or ref
+
+                newMethods[method] = modifier and (modifier.executeFun and modifier.effect(ref) or function(...)
+                    return modifier.effect(ref, ...)
+                end) or ref
             end
         end
     end

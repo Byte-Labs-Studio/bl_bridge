@@ -6,7 +6,10 @@ end
 local Core = {}
 local shared = exports['qb-core']:GetCoreObject()
 local Utils = require 'utils'
-local functionsOverride = {
+local merge = lib.table.merge
+
+local inventoryFunctionsOverride = Framework.inventory
+local coreFunctionsOverride = {
     Functions = {
         getBalance = {
             originalMethod = 'GetMoney',
@@ -22,11 +25,23 @@ local functionsOverride = {
         },
     },
     PlayerData = {
-        items = {
-            originalMethod = 'items',
+        job = {
+            originalMethod = 'job',
+            modifier = {
+                executeFun = true,
+                effect = function(originalFun)
+                    local job = originalFun
+                    return {name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, grade = {name = job.grade.level, label = job.grade.label, salary = job.payment}}
+                end
+            }
+        },
+        name = {
+            originalMethod = 'name',
         },
     }
 }
+
+local totalFunctionsOverride = merge(inventoryFunctionsOverride, coreFunctionsOverride)
 
 function Core.CommandAdd(name, permission, cb, suggestion, flags)
     if type(name) == 'table' then
@@ -41,7 +56,7 @@ end
 function Core.GetPlayer(src)
     local player = shared.Functions.GetPlayer(src)
     if not player then return end
-    local wrappedPlayer = Utils.retreiveData(player, functionsOverride)
+    local wrappedPlayer = Utils.retreiveData(player, totalFunctionsOverride)
     return wrappedPlayer
 end
 
