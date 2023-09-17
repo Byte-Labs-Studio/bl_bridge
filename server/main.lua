@@ -2,9 +2,11 @@ local currentFramework = Config.convars
 local serverDir = 'server.modules'
 local moduleNames = {
     "inventory",
-    "notify",
     "core"
 }
+lib.callback.register('UUID', function(_, num)
+    return require'utils'.UUID(num)
+end)
 
 print('choosed framework: ' .. json.encode(currentFramework))
 
