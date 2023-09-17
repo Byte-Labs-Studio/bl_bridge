@@ -32,6 +32,9 @@ local overRideData = {
     disabled = {
         originalMethod = 'disabled',
     },
+    isMenuHeader = {
+        originalMethod = 'isHeader',
+    },
 }
 
 function Context.openContext(data)
