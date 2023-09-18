@@ -1,16 +1,19 @@
-local currentFramework = Config.convars
+local convars, frameworks in Config
 local clientDir = 'client.modules'
 local moduleNames = {
+    'core',
     "context",
 }
 
-print('choosed framework: ' .. json.encode(currentFramework))
+print('choosed framework: ' .. json.encode(convars))
 
 for _, moduleName in ipairs(moduleNames) do
-    local isModuleExist = currentFramework[moduleName]
-    if isModuleExist then
-        local success, module = pcall(require, ("%s.%s.%s"):format(clientDir, moduleName, isModuleExist))
+    local framework = convars[moduleName]
+    if frameworks[framework] then
+        local fomartedModule = ("%s.%s.%s"):format(clientDir, moduleName, framework)
+        local success, module = pcall(require, fomartedModule)
         if success then
+            print('module loaded: ' .. moduleName)
             Framework[moduleName] = module
         else
             error(("Error loading module %s: %s"):format(moduleName, module))

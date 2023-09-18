@@ -43,6 +43,9 @@ local coreFunctionsOverride = {
         name = {
             originalMethod = 'name',
         },
+        id = {
+            originalMethod = 'citizenid',
+        },
     }
 }
 local totalFunctionsOverride = merge(inventoryFunctions, coreFunctionsOverride)
@@ -60,10 +63,6 @@ function Core.GetPlayer(src)
     local player = shared.Functions.GetPlayer(src)
     if not player then return end
     local wrappedPlayer = retreiveStringIndexedData(player, totalFunctionsOverride, src)
-
-    wrappedPlayer.addItem('water', 1)
-    wrappedPlayer.removeItem('water', 1)
-    print(wrappedPlayer.items)
 
     return wrappedPlayer
 end
