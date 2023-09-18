@@ -7,14 +7,25 @@ Framework = setmetatable({}, {
         rawset(self, name, fn)
     end
 })
+
+local function format(str)
+    if not string.find(str, "'") then return str end
+    return str:gsub("'", "")
+end
+
 Config = {
+    frameworks = {
+        ox = true,
+        esx = true,
+        qb = true
+    },
     convars = {
-        core = GetConvar('bl:framework', DEFAULT_FRAMEWORK),
-        inventory = GetConvar('bl:inventory', DEFAULT_FRAMEWORK),
-        context = GetConvar('bl:context', DEFAULT_FRAMEWORK),
-        target = GetConvar('bl:target', DEFAULT_FRAMEWORK),
-        progress = GetConvar('bl:progress', DEFAULT_FRAMEWORK),
-        radial = GetConvar('bl:radial', DEFAULT_FRAMEWORK),
+        core =      format(GetConvar('bl:framework', DEFAULT_FRAMEWORK)),
+        inventory = format(GetConvar('bl:inventory', DEFAULT_FRAMEWORK)),
+        context =   format(GetConvar('bl:context', DEFAULT_FRAMEWORK)),
+        target =    format(GetConvar('bl:target', DEFAULT_FRAMEWORK)),
+        progress =  format(GetConvar('bl:progress', DEFAULT_FRAMEWORK)),
+        radial =    format(GetConvar('bl:radial', DEFAULT_FRAMEWORK)),
     },
 }
 

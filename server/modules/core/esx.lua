@@ -40,8 +40,9 @@ local coreFunctionsOverride = {
     job = {
         originalMethod = 'getJob',
         modifier = {
-            effect = function(originalFun)
-                local job = originalFun()
+            executeFun = true,
+            effect = function(data)
+                local job = data
                 return {name = job.name, label = job.label, onDuty = true, isBoss = false, grade = {name = job.grade_name, label = job.grade_label, salary = job.grade_salary}}
             end
         }
@@ -49,9 +50,7 @@ local coreFunctionsOverride = {
     name = {
         originalMethod = 'getName',
         modifier = {
-            effect = function(originalFun)
-                return originalFun()
-            end
+            executeFun = true,
         }
     },
 }

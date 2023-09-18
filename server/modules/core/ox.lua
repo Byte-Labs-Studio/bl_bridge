@@ -1,6 +1,6 @@
 if GetResourceState('ox_core') ~= 'started' then
     error('The imported file from the chosen framework isn\'t starting')
-    return
+    return {}
 end
 
 local file = 'imports/server.lua'

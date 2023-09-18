@@ -1,24 +1,60 @@
 local Utils = {}
 
-local function retreiveStringIndexedData(playerTable, functionsOverride)
+local function retreiveExportsData(export, override)
     local newMethods = {}
+
+    for k,v in pairs(override) do
+        local method = export[v.originalMethod]
+        if method then
+            v.selfEffect = function(...)
+                return method(export, ...)
+            end
+            newMethods[k] = v
+        end
+    end
+    return newMethods
+end
+
+local function retreiveStringIndexedData(wrappedData, functionsOverride, src)
+    local newMethods = {}
+    
     local function modifyMethods(data, overrides)
         for method, modification in pairs(overrides) do
-            local originalMethod = modification.originalMethod
-            local modifier = modification.modifier
-            local ref = data[originalMethod]
-            if originalMethod and ref then
+            if type(modification) == 'table' then
+                local selfEffect = modification.selfEffect
+                local originalMethod = selfEffect or modification.originalMethod
+                local ref = selfEffect or data[originalMethod]
+                local modifier = modification.modifier
+                if ref and originalMethod then
+                    local lastEffect
+                    if modifier then
+                        local executeFun, effect, passSource in modifier
 
-                newMethods[method] = modifier and (modifier.executeFun and modifier.effect(ref) or function(...)
-                    return modifier.effect(ref, ...)
-                end) or ref
+                        if passSource and executeFun then
+                            lastEffect = ref(src)
+                        elseif passSource then
+                            lastEffect = function(...)
+                                return ref(src, ...)
+                            end
+                        elseif executeFun then
+                            lastEffect = effect(ref)
+                        else
+                            lastEffect = function(...)
+                                return passSource and effect(ref, src, ...) or effect(ref, ...)
+                            end
+                        end
+                    else
+                        lastEffect = ref
+                    end
+                    newMethods[method] = lastEffect
+                end
             end
         end
     end
 
     local function processTable(tableToProcess, overrides)
         for method, modification in pairs(overrides) do
-            if type(modification) == 'table' and not modification.originalMethod then
+            if type(modification) == 'table' and not modification.originalMethod and not modification.add then
                 processTable(tableToProcess[method], modification)
             else
                 modifyMethods(tableToProcess, overrides)
@@ -26,7 +62,7 @@ local function retreiveStringIndexedData(playerTable, functionsOverride)
         end
     end
 
-    processTable(playerTable, functionsOverride)
+    processTable(wrappedData, functionsOverride)
     return newMethods
 end
 
@@ -75,7 +111,6 @@ local function retreiveNumberIndexedData(playerTable, functionsOverride)
     return newMethods
 end
 
-
 local function UUID(num)
     num = type(num) == 'number' and num or 5
     local template = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
@@ -96,6 +131,7 @@ local function UUID(num)
 end
 
 Utils.retreiveStringIndexedData = retreiveStringIndexedData
+Utils.retreiveExportsData = retreiveExportsData
 Utils.retreiveNumberIndexedData = retreiveNumberIndexedData
 Utils.UUID = UUID
 return Utils

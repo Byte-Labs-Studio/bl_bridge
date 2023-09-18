@@ -1,25 +1,35 @@
-if GetResourceState('qb-inventory') ~= 'started' then
+if GetResourceState('ox_inventory') ~= 'started' then
     error('The imported file from the chosen framework isn\'t starting')
-    return
+    return {}
 end
+local retreiveExportsData = require 'utils'.retreiveExportsData
 
-local qb_inventory = exports['qb-inventory']
-local Inventory = {}
+local overrideFunction = {
+    addItem = {
+        originalMethod = 'AddItem',
+        modifier = {
+            passSource = true,
+        }
+    },
+    removeItem = {
+        originalMethod = 'RemoveItem',
+        modifier = {
+            passSource = true,
+        }
+    },
+    getItem = {
+        originalMethod = 'GetItem',
+        modifier = {
+            passSource = true,
+        }
+    },
+    items = {
+        originalMethod = 'GetInventoryItems',
+        modifier = {
+            executeFun = true,
+            passSource = true,
+        }
+    },
+}
 
-function Inventory.saveInventory(source, isOffline)
-    qb_inventory:SaveInventory(source, isOffline)
-end
-
-function Inventory.getTotalWeight(items)
-    return qb_inventory:GetTotalWeight(items)
-end
-
-function Inventory.getSlotsByItem(items, itemName)
-    return qb_inventory:GetSlotsByItem(items, itemName)
-end
-
-function Inventory.getFirstSlotByItem(items, itemName)
-    return qb_inventory:GetFirstSlotByItem(items, itemName)
-end
-
-return Inventory
+return retreiveExportsData(exports['ox_inventory'], overrideFunction)

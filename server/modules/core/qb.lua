@@ -7,8 +7,13 @@ local Core = {}
 local shared = exports['qb-core']:GetCoreObject()
 local Utils = require 'utils'
 local merge = lib.table.merge
+local retreiveStringIndexedData in Utils
 
-local inventoryFunctionsOverride = Framework.inventory
+RegisterNetEvent('QBCore:Server:OnPlayerLoaded', function(...)
+    TriggerEvent('bl_bridge:server:playerLoaded', source, ...)
+end)
+
+local inventoryFunctions = Framework.inventory
 local coreFunctionsOverride = {
     Functions = {
         getBalance = {
@@ -40,9 +45,7 @@ local coreFunctionsOverride = {
         },
     }
 }
-
-local totalFunctionsOverride = merge(inventoryFunctionsOverride, coreFunctionsOverride)
-
+local totalFunctionsOverride = merge(inventoryFunctions, coreFunctionsOverride)
 function Core.CommandAdd(name, permission, cb, suggestion, flags)
     if type(name) == 'table' then
         for _,command in ipairs(name) do
@@ -56,7 +59,12 @@ end
 function Core.GetPlayer(src)
     local player = shared.Functions.GetPlayer(src)
     if not player then return end
-    local wrappedPlayer = Utils.retreiveStringIndexedData(player, totalFunctionsOverride)
+    local wrappedPlayer = retreiveStringIndexedData(player, totalFunctionsOverride, src)
+
+    wrappedPlayer.addItem('water', 1)
+    wrappedPlayer.removeItem('water', 1)
+    print(wrappedPlayer.items)
+
     return wrappedPlayer
 end
 
