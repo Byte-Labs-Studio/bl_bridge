@@ -5,7 +5,7 @@ local callback = menu.callback
 local function findHeader(data)
     for _,v in ipairs(data) do
         if v.isMenuHeader then
-            return v.header
+            return _, v.title
         end
     end
     return 'Header'
@@ -13,7 +13,9 @@ end
 
 function Context.openContext(data)
     local id = callback.await('UUID', false, 8)
-    menu.registerContext({id = id, title = findHeader(data),options = data})
+    local index, header = findHeader(data)
+    data[index] = nil
+    menu.registerContext({id = id, title = header, options = data})
     menu.showContext(id)
     return id
 end

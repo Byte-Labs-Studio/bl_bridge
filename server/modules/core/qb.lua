@@ -14,7 +14,7 @@ RegisterNetEvent('QBCore:Server:OnPlayerLoaded', function(...)
 end)
 
 local inventoryFunctions = Framework.inventory
-local coreFunctionsOverride = {
+local playerFunctionsOverride = {
     Functions = {
         getBalance = {
             originalMethod = 'GetMoney',
@@ -40,6 +40,25 @@ local coreFunctionsOverride = {
                 end
             }
         },
+        gang = {
+            originalMethod = 'gang',
+            modifier = {
+                executeFun = true,
+                effect = function(data)
+                    local gang = data
+                    return {name = gang.name, label = gang.label, isBoss = gang.isboss, grade = {name = gang.grade.level, label = gang.grade.label}}
+                end
+            }
+        },
+        charinfo = {
+            originalMethod = 'charinfo',
+            modifier = {
+                executeFun = true,
+                effect = function(data)
+                    return {firstname = data.firstname, lastname = data.lastname}
+                end
+            }
+        },
         name = {
             originalMethod = 'name',
         },
@@ -48,7 +67,23 @@ local coreFunctionsOverride = {
         },
     }
 }
-local totalFunctionsOverride = merge(inventoryFunctions, coreFunctionsOverride)
+
+function Core.players()
+    local data = {}
+    for k,v in ipairs(shared.Players) do
+        local playerData = v.PlayerData
+        local job = playerData.job
+        local gang = playerData.gang
+        local charinfo = playerData.charinfo
+        data[k] = {
+            job = {name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, grade = {name = job.grade.level, label = job.grade.label, salary = job.payment}},
+            gang = {name = gang.name, label = gang.label, isBoss = gang.isboss, grade = {name = gang.grade.level, label = gang.grade.label}},
+            charinfo = {firstname = charinfo.firstname, lastname = charinfo.lastname}
+        }
+    end
+    return data
+end
+
 function Core.CommandAdd(name, permission, cb, suggestion, flags)
     if type(name) == 'table' then
         for _,command in ipairs(name) do
@@ -59,6 +94,12 @@ function Core.CommandAdd(name, permission, cb, suggestion, flags)
     shared.Commands.Add(name, suggestion.help, suggestion.arguments, flags.argsrequired, cb, permission)
 end
 
+function Core.RegisterUsableItem(name, cb)
+    shared.Functions.CreateUseableItem(name, cb)
+end
+
+local totalFunctionsOverride = merge(inventoryFunctions, playerFunctionsOverride)
+
 function Core.GetPlayer(src)
     local player = shared.Functions.GetPlayer(src)
     if not player then return end
@@ -67,6 +108,8 @@ function Core.GetPlayer(src)
     return wrappedPlayer
 end
 
-Core.Players = shared.Players
+function Core.hasPerms(...)
+    return shared.Functions.HasPermission(...)
+end
 
 return Core

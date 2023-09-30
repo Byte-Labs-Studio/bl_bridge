@@ -61,6 +61,10 @@ function Core.CommandAdd(name, permission, cb, suggestion, flags)
     shared.RegisterCommand(name, permission, cb, flags.allowConsole, suggestion)
 end
 
+function Core.RegisterUsableItem(name, cb)
+    shared.RegisterUsableItem(name, cb)
+end
+
 function Core.GetPlayer(src)
     local player = shared.GetPlayerFromId(src)
     if not player then return end

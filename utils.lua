@@ -129,6 +129,7 @@ local function UUID(num)
 
     return uuidWithTime
 end
+exports('UUID', UUID)
 
 Utils.retreiveStringIndexedData = retreiveStringIndexedData
 Utils.retreiveExportsData = retreiveExportsData

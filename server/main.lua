@@ -27,3 +27,5 @@ for _, moduleName in ipairs(moduleNames) do
         end
     end
 end
+
+Framework.inventory = nil
