@@ -1,6 +1,5 @@
 local Core = {}
-local Utils = require 'utils'
-local retreiveStringIndexedData in Utils
+local retreiveStringIndexedData = require 'utils'.retreiveStringIndexedData
 
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
     TriggerEvent('bl_bridge:client:playerLoaded')
