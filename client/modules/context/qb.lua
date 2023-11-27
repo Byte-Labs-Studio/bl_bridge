@@ -27,7 +27,7 @@ local overRideData = {
     },
     params = {
         originalMethod = 'none',
-        hasKeys = {'event', 'args'}
+        hasKeys = { 'event', 'args' }
     },
     disabled = {
         originalMethod = 'disabled',
@@ -53,7 +53,7 @@ Context.openContext({
         icon = 'head',
         disabled = true,
         event = 'event',
-        args = {xirvin = 'dick'}
+        args = { xirvin = 'dick' }
     },
 })
 

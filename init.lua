@@ -20,12 +20,12 @@ Config = {
         qb = true
     },
     convars = {
-        core =      format(GetConvar('bl:framework', DEFAULT_FRAMEWORK)),
+        core = format(GetConvar('bl:framework', DEFAULT_FRAMEWORK)),
         inventory = format(GetConvar('bl:inventory', DEFAULT_FRAMEWORK)),
-        context =   format(GetConvar('bl:context', DEFAULT_FRAMEWORK)),
-        target =    format(GetConvar('bl:target', DEFAULT_FRAMEWORK)),
-        progress =  format(GetConvar('bl:progress', DEFAULT_FRAMEWORK)),
-        radial =    format(GetConvar('bl:radial', DEFAULT_FRAMEWORK)),
+        context = format(GetConvar('bl:context', DEFAULT_FRAMEWORK)),
+        target = format(GetConvar('bl:target', "ox")),
+        progress = format(GetConvar('bl:progress', DEFAULT_FRAMEWORK)),
+        radial = format(GetConvar('bl:radial', DEFAULT_FRAMEWORK)),
     },
 }
 
