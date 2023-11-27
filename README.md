@@ -21,6 +21,13 @@ sets bl:progress 'qb'
 sets bl:radial 'qb'
 ```
 
+## Import 
+```lua
+client_scripts '@bl_bridge/imports/client.lua',
+
+server_scripts '@bl_bridge/imports/server.lua',
+```
+
 # Current Module and Methods
 
 ## Server
