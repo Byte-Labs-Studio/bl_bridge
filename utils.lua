@@ -161,6 +161,8 @@ local function retreiveNumberIndexedData(playerTable, functionsOverride)
     return newMethods
 end
 
+-- this is a way to transform values using mapping
+-- maybe the name not the best 
 local function transformOptions(options, mapping)
     local transformedOptions = {}
     for _, option in ipairs(options) do

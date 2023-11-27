@@ -49,7 +49,7 @@ local OverrideData = {
 
 -- alot of them have exclusive args
 -- add up here
-local exports = {
+local funcs = {
     {
         name = "addBoxZone",
         originalname = "AddBoxZone",
@@ -75,26 +75,22 @@ local exports = {
     }
 }
 
--- This is used to work on qbcore, so maybe ill make it global one day its 5:37 here in portugal so idc care
-local function generateFunctions(exports)
-    for _, exportData in ipairs(exports) do
-        Target[exportData.name] = function(data)
-            local id = callback.await('UUID', false, 8)
-            local originalName = exportData.originalname or exportData.name
+-- dynamic way of creating funcs for the target, i will make it global in the future
+for _, exportData in ipairs(funcs) do
+    Target[exportData.name] = function(data)
+        local id = callback.await('UUID', false, 8)
+        local originalName = exportData.originalname or exportData.name
 
-            local args = exportData.args(data, id)
+        local args = exportData.args(data, id)
 
-            args[#args + 1] = {
-                options = transformOptions(data.options, OverrideData),
-                distance = data.distance
-            }
+        args[#args + 1] = {
+            options = transformOptions(data.options, OverrideData),
+            distance = data.distance
+        }
 
-            return target[originalName]("bruh", table.unpack(args))
-        end
+        return target[originalName]("bruh", table.unpack(args))
     end
 end
-
-generateFunctions(exports)
 
 -- for options is exactly the same as https://overextended.dev/ox_target
 -- Example
