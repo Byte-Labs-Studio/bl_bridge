@@ -46,29 +46,4 @@ function Context.closeContext()
     qb_menu:closeMenu()
 end
 
-Context.openContext({
-    {
-        title = 'aadasd',
-        description = 'asdfasf',
-        icon = 'head',
-        disabled = true,
-        event = 'event',
-        args = { xirvin = 'dick' }
-    },
-})
-
-
-exports['qb-menu']:openMenu({
-    {
-        header = 'First Button',
-        txt = 'Print a message!',
-        icon = 'fas fa-code-merge',
-        params = {
-            event = 'qb-menu:client:testButton',
-            args = {
-                message = 'This was called by clicking a button'
-            }
-        }
-    },
-})
 return Context

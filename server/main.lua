@@ -5,7 +5,8 @@ local serverDir = 'server.modules'
 local UUID = require'utils'.UUID
 local moduleNames = {
     "inventory",
-    "core"
+    "core",
+    "notify",
 }
 
 lib.callback.register('UUID', function(_, num)
@@ -19,6 +20,7 @@ for _, moduleName in ipairs(moduleNames) do
         local success, module = pcall(require, fomartedModule)
         if success then
             Framework[moduleName] = module
+            print(("[%s] Loaded module %s"):format(framework, moduleName))
         else
             error(("Error loading module %s: %s"):format(moduleName, module))
         end

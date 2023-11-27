@@ -3,22 +3,32 @@
 ## CFG
 ``` 
 # Frameworks 'ox' | 'qb' | 'esx' | 'custom'
-sets bl:framework 'qb' 
+setr bl:framework 'qb' 
 
 # Inventories 'ox' | 'qb' | 'esx' | 'ps' | 'custom'
-sets bl:inventory 'qb'
+setr bl:inventory 'ox'
 
 # Context 'ox' | 'qb' | 'esx' | 'custom'
-sets bl:context 'qb'
+setr bl:context 'ox'
 
 # Target 'ox' | 'qb' | 'esx' | 'custom'
-sets bl:target 'qb'
+setr bl:target 'ox'
 
 # Progress 'ox' | 'qb' | 'esx' | 'custom'
-sets bl:progress 'qb'
+setr bl:progress 'ox'
+
+# Radial 'ox' | 'qb' | 'esx' | 'custom'
+setr bl:radial 'ox'
 
 # Notification 'ox' | 'qb' | 'esx' | 'custom'
-sets bl:radial 'qb'
+setr bl:notify 'ox'
+```
+
+## Import 
+```lua
+client_scripts '@bl_bridge/imports/client.lua',
+
+server_scripts '@bl_bridge/imports/server.lua',
 ```
 
 # Current Module and Methods
