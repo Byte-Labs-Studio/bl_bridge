@@ -3,6 +3,7 @@ local clientDir = 'client.modules'
 local moduleNames = {
     'core',
     "context",
+    "target"
 }
 
 for _, moduleName in ipairs(moduleNames) do
