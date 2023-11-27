@@ -161,6 +161,35 @@ local function retreiveNumberIndexedData(playerTable, functionsOverride)
     return newMethods
 end
 
+-- this is a way to transform values using mapping
+-- maybe the name not the best 
+local function transformOptions(options, mapping)
+    local transformedOptions = {}
+    for _, option in ipairs(options) do
+        local transformedOption = {}
+        for key, value in pairs(mapping) do
+            local originalValues = type(value.originalValues) == 'table' and value.originalValues or
+                { value.originalValues }
+            local originalProperty
+            for _, originalMethod in ipairs(originalValues) do
+                originalProperty = option[originalMethod]
+                if originalProperty then
+                    break
+                end
+            end
+            if originalProperty then
+                if value.modifier then
+                    transformedOption[key] = value.modifier(option)
+                else
+                    transformedOption[key] = originalProperty
+                end
+            end
+        end
+        table.insert(transformedOptions, transformedOption)
+    end
+    return transformedOptions
+end
+
 local function UUID(num)
     num = type(num) == 'number' and num or 5
     local template = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
@@ -192,5 +221,6 @@ end)
 Utils.retreiveStringIndexedData = retreiveStringIndexedData
 Utils.retreiveExportsData = retreiveExportsData
 Utils.retreiveNumberIndexedData = retreiveNumberIndexedData
+Utils.transformOptions = transformOptions
 Utils.UUID = UUID
 return Utils

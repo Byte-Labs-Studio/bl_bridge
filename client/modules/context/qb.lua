@@ -27,7 +27,7 @@ local overRideData = {
     },
     params = {
         originalMethod = 'none',
-        hasKeys = {'event', 'args'}
+        hasKeys = { 'event', 'args' }
     },
     disabled = {
         originalMethod = 'disabled',
