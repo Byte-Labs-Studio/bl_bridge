@@ -1,8 +1,9 @@
 local convars, frameworks in Config
 local clientDir = 'client.modules'
 local moduleNames = {
-    'core',
+    "core",
     "context",
+    "notify",
 }
 
 for _, moduleName in ipairs(moduleNames) do
@@ -12,6 +13,7 @@ for _, moduleName in ipairs(moduleNames) do
         local success, module = pcall(require, fomartedModule)
         if success then
             Framework[moduleName] = module
+            print(("[%s] Loaded module %s"):format(framework, moduleName))
         else
             error(("Error loading module %s: %s"):format(moduleName, module))
         end
