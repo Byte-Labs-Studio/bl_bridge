@@ -1,6 +1,6 @@
 local targetName = 'ox_target'
 if GetResourceState(targetName) ~= 'started' then
-    error('The imported file from the chosen framework isn\'t started')
+    error(targetName.. ' isn\'t started')
     return
 end
 
