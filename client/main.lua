@@ -3,7 +3,7 @@ local clientDir = 'client.modules'
 local moduleNames = {
     "core",
     "context",
-    "target"
+    "target",
     "notify",
 }
 
