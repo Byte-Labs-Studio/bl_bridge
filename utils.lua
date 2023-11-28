@@ -15,91 +15,42 @@ local function retreiveExportsData(export, override)
     return newMethods
 end
 
-local function modifyMethods(data, overrides, src)
-    local newMethods = {}
-
-    for dataIndex, dataValue in ipairs(data) do
-        for method, modification in pairs(overrides) do
-            local originalMethod = modification.originalMethod
-            local originalMethodRef = originalMethod and (modification.selfEffect or dataValue[originalMethod])
-
-            if originalMethod == 'none' then
-                local hasKeys = modification.hasKeys
-                for _, key in ipairs(hasKeys) do
-                    if dataValue[key] then
-                        newMethods[dataIndex] = newMethods[dataIndex] or {}
-                        newMethods[dataIndex][method] = {[key] = dataValue[key]}
-                    end
-                end
-            elseif originalMethodRef then
-                local modifier = modification.modifier
-                newMethods[dataIndex] = newMethods[dataIndex] or {}
-                
-                local lastEffect
-                if modifier then
-                    local executeFun, effect, passSource in modifier
-
-                    if passSource and executeFun then
-                        lastEffect = originalMethodRef(src)
-                    elseif passSource then
-                        lastEffect = function(...)
-                            return originalMethodRef(src, ...)
-                        end
-                    elseif executeFun then
-                        lastEffect = effect(originalMethodRef)
-                    else
-                        lastEffect = function(...)
-                            return passSource and effect(originalMethodRef, src, ...) or effect(originalMethodRef, ...)
-                        end
-                    end
-                else
-                    lastEffect = originalMethodRef
-                end
-
-                newMethods[dataIndex][method] = lastEffect
-            end
-        end
-    end
-
-    return newMethods
-end
-
 local function retreiveStringIndexedData(wrappedData, functionsOverride, src)
     local newMethods = {}
 
-    -- local function modifyMethods(data, overrides)
-    --     for method, modification in pairs(overrides) do
-    --         if type(modification) == 'table' then
-    --             local selfEffect = modification.selfEffect
-    --             local originalMethod = selfEffect or modification.originalMethod
-    --             local ref = selfEffect or data[originalMethod]
-    --             local modifier = modification.modifier
-    --             if ref and originalMethod then
-    --                 local lastEffect
-    --                 if modifier then
-    --                     local executeFun, effect, passSource in modifier
+    local function modifyMethods(data, overrides)
+        for method, modification in pairs(overrides) do
+            if type(modification) == 'table' then
+                local selfEffect = modification.selfEffect
+                local originalMethod = selfEffect or modification.originalMethod
+                local ref = selfEffect or data[originalMethod]
+                local modifier = modification.modifier
+                if ref and originalMethod then
+                    local lastEffect
+                    if modifier then
+                        local executeFun, effect, passSource in modifier
 
-    --                     if passSource and executeFun then
-    --                         lastEffect = ref(src)
-    --                     elseif passSource then
-    --                         lastEffect = function(...)
-    --                             return ref(src, ...)
-    --                         end
-    --                     elseif executeFun then
-    --                         lastEffect = effect(ref)
-    --                     else
-    --                         lastEffect = function(...)
-    --                             return passSource and effect(ref, src, ...) or effect(ref, ...)
-    --                         end
-    --                     end
-    --                 else
-    --                     lastEffect = ref
-    --                 end
-    --                 newMethods[method] = lastEffect
-    --             end
-    --         end
-    --     end
-    -- end
+                        if passSource and executeFun then
+                            lastEffect = ref(src)
+                        elseif passSource then
+                            lastEffect = function(...)
+                                return ref(src, ...)
+                            end
+                        elseif executeFun then
+                            lastEffect = effect(ref)
+                        else
+                            lastEffect = function(...)
+                                return passSource and effect(ref, src, ...) or effect(ref, ...)
+                            end
+                        end
+                    else
+                        lastEffect = ref
+                    end
+                    newMethods[method] = lastEffect
+                end
+            end
+        end
+    end
 
     local function processTable(tableToProcess, overrides)
         for method, modification in pairs(overrides) do
@@ -118,31 +69,30 @@ end
 local function retreiveNumberIndexedData(playerTable, functionsOverride)
     local newMethods = {}
 
-    -- local function modifyMethods(data, overrides)
-    --     for dataIndex, dataValue in ipairs(data) do
-    --         for method, modification in pairs(overrides) do
-    --             local originalMethod = modification.originalMethod
-    --             local originalMethodRef = originalMethod and dataValue[originalMethod]
+    local function modifyMethods(data, overrides)
+        for dataIndex, dataValue in ipairs(data) do
+            for method, modification in pairs(overrides) do
+                local originalMethod = modification.originalMethod
+                local originalMethodRef = originalMethod and dataValue[originalMethod]
 
-    --             if originalMethod == 'none' then
-    --                 local hasKeys = modification.hasKeys
-    --                 for _, key in ipairs(hasKeys) do
-    --                     if dataValue[key] then
-    --                         newMethods[dataIndex] = newMethods[dataIndex] or {}
-    --                         newMethods[dataIndex][method] = {[key] = dataValue[key]}
-    --                     end
-    --                 end
-    --             elseif originalMethodRef then
-    --                 local modifier = modification.modifier
-    --                 newMethods[dataIndex] = newMethods[dataIndex] or {}
-    --                 newMethods[dataIndex][method] = modifier and (modifier.executeFun and modifier.effect(originalMethodRef) or function(...)
-    --                     return modifier.effect(originalMethodRef, ...)
-    --                 end) or originalMethodRef
-    --             end
-                
-    --         end
-    --     end
-    -- end
+                if originalMethod == 'none' then
+                    local hasKeys = modification.hasKeys
+                    for _, key in ipairs(hasKeys) do
+                        if dataValue[key] then
+                            newMethods[dataIndex] = newMethods[dataIndex] or {}
+                            newMethods[dataIndex][method] = {[key] = dataValue[key]}
+                        end
+                    end
+                elseif originalMethodRef then
+                    local modifier = modification.modifier
+                    newMethods[dataIndex] = newMethods[dataIndex] or {}
+                    newMethods[dataIndex][method] = modifier and (modifier.executeFun and modifier.effect(originalMethodRef) or function(...)
+                        return modifier.effect(originalMethodRef, ...)
+                    end) or originalMethodRef
+                end
+            end
+        end
+    end
 
     local function processTable(tableToProcess, overrides)
         for _, value in ipairs(tableToProcess) do
@@ -159,6 +109,35 @@ local function retreiveNumberIndexedData(playerTable, functionsOverride)
 
     processTable(playerTable, functionsOverride)
     return newMethods
+end
+
+-- this is a way to transform values using mapping
+-- maybe the name not the best 
+local function transformOptions(options, mapping)
+    local transformedOptions = {}
+    for _, option in ipairs(options) do
+        local transformedOption = {}
+        for key, value in pairs(mapping) do
+            local originalValues = type(value.originalValues) == 'table' and value.originalValues or
+                { value.originalValues }
+            local originalProperty
+            for _, originalMethod in ipairs(originalValues) do
+                originalProperty = option[originalMethod]
+                if originalProperty then
+                    break
+                end
+            end
+            if originalProperty then
+                if value.modifier then
+                    transformedOption[key] = value.modifier(option)
+                else
+                    transformedOption[key] = originalProperty
+                end
+            end
+        end
+        table.insert(transformedOptions, transformedOption)
+    end
+    return transformedOptions
 end
 
 local function UUID(num)
@@ -192,5 +171,6 @@ end)
 Utils.retreiveStringIndexedData = retreiveStringIndexedData
 Utils.retreiveExportsData = retreiveExportsData
 Utils.retreiveNumberIndexedData = retreiveNumberIndexedData
+Utils.transformOptions = transformOptions
 Utils.UUID = UUID
 return Utils
