@@ -2,7 +2,7 @@ local targetName = 'qb-target'
 
 -- Check resource state
 if GetResourceState(targetName) ~= 'started' then
-    error('The imported file from the chosen framework isn\'t started')
+    error(targetName.. ' isn\'t started')
     return
 end
 
