@@ -2,7 +2,7 @@ local targetName = 'qb-target'
 
 -- Check resource state
 if GetResourceState(targetName) ~= 'started' then
-    error(targetName.. ' isn\'t started')
+    error(targetName .. ' isn\'t started')
     return
 end
 
