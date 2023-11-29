@@ -46,21 +46,27 @@ local funcs = {
                 options = data.options
             }
         end
-    }
+    },
+    {
+        name = "removeZone",
+        originalname = "removeZone",
+        args = function(data)
+            return data
+        end
+    },
 }
 
--- dynamic way of creating funcs for the target, i will make it global in the future its 6 am damn
 for _, exportData in ipairs(funcs) do
     Target[exportData.name] = function(data)
         local originalName = exportData.originalname or exportData.name
 
-        return target[originalName]("bruh", exportData.args(data)) -- same here
+        return target[originalName]("bruh", exportData.args(data)) -- already return id
     end
 end
 
 -- for options is exactly the same as https://overextended.dev/ox_target
 -- Example
---[[ Target.addBoxZone({
+--[[ local id = Target.addBoxZone({
     coords = vector3(428, -973.44, 30.71),
     size = vector3(2, 2, 2),
     rotation = 90,
@@ -84,6 +90,9 @@ end
     }
 }
 )
+
+print(id)
+Target.removeZone(id)
 
 Target.addCircleZone({
     coords = vector3(428, -973.44, 30.71),
