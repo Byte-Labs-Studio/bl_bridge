@@ -49,6 +49,7 @@ server_scripts '@bl_bridge/imports/server.lua',
  print(player.id) -- citizenid
  -- Global
  coreModule.CommandAdd(name, permission, cb, suggestion, flags)
+ coreModule.RegisterUsableItem(name, cb)
  coreModule.Players --players data (still will do synced methods for all framework, now every framework have their players data)
 ```
 ## Framework.notify (data like https://overextended.dev/ox_lib/Modules/Interface/Client/notify)
