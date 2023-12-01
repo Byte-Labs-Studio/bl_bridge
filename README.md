@@ -74,14 +74,14 @@ server_scripts '@bl_bridge/imports/server.lua',
  print(json.encode(playerData))
  -- [[
       {
-                        cid = data.citizenid,
-                        money = data.money,
-                        inventory = data.inventory,
-                        job = { name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, grade = { name = job.grade.level, label = job.grade.label, salary = job.payment } },
-                        gang = { name = gang.name, label = gang.label, isBoss = gang.isboss, grade = { name = gang.grade.level, label = gang.grade.label } },
-                        firstName = data.charinfo.firstname,
-                        lastName = data.charinfo.lastname,
-                    }
+            cid = data.citizenid,
+            money = data.money,
+            inventory = data.inventory,
+            job = { name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, grade = { name = job.grade.level, label = job.grade.label, salary = job.payment } },
+            gang = { name = gang.name, label = gang.label, isBoss = gang.isboss, grade = { name = gang.grade.level, label = gang.grade.label } },
+            firstName = data.charinfo.firstname,
+            lastName = data.charinfo.lastname,
+      }
 ]]
 ```
 ## Framework.context
