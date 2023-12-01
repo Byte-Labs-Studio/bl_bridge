@@ -72,8 +72,7 @@ server_scripts '@bl_bridge/imports/server.lua',
  -- getPlayerData
  local playerData = Framework.core.getPlayerData
  print(json.encode(playerData))
- -- [[
-      {
+ -- [[{
             cid = data.citizenid,
             money = data.money,
             inventory = data.inventory,
@@ -81,8 +80,8 @@ server_scripts '@bl_bridge/imports/server.lua',
             gang = { name = gang.name, label = gang.label, isBoss = gang.isboss, grade = { name = gang.grade.level, label = gang.grade.label } },
             firstName = data.charinfo.firstname,
             lastName = data.charinfo.lastname,
-      }
-]]
+      }]]
+
 ```
 ## Framework.context
 
