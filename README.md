@@ -2,25 +2,22 @@
 
 ## CFG
 ``` 
-# Frameworks 'ox' | 'qb' | 'esx' | 'custom'
+# Frameworks 'qb' | 'esx' | 'custom'
 setr bl:framework 'qb' 
 
-# Inventories 'ox' | 'qb' | 'esx' | 'ps' | 'custom'
+# Inventories 'ox' | 'qb'
 setr bl:inventory 'ox'
 
-# Context 'ox' | 'qb' | 'esx' | 'custom'
+# Context 'ox' | 'qb'
 setr bl:context 'ox'
 
-# Target 'ox' | 'qb' | 'esx' | 'custom'
+# Target 'ox' | 'qb'
 setr bl:target 'ox'
 
-# Progress 'ox' | 'qb' | 'esx' | 'custom'
-setr bl:progress 'ox'
-
-# Radial 'ox' | 'qb' | 'esx' | 'custom'
+# Radial 'ox' | 'qb'
 setr bl:radial 'ox'
 
-# Notification 'ox' | 'qb' | 'esx' | 'custom'
+# Notification 'ox' | 'qb'
 setr bl:notify 'ox'
 ```
 
@@ -58,7 +55,7 @@ server_scripts '@bl_bridge/imports/server.lua',
 ```lua
  Framework.notify(src, data) -- data: {description: string, status, duration: number}
 ```
-## Framework.inventory (integrated into core module even if you use ox_inventory)
+## Framework.inventory note: integrated into core module even if you use ox_inventory
 
 ```lua
  local player = coreModule.GetPlayer(src)
@@ -67,4 +64,38 @@ server_scripts '@bl_bridge/imports/server.lua',
  player.addItem(item, amount)
  player.getItem(item)
  local items = player.items --all player items
+```
+## Client
+## Framework.core (#only for qb currently!!!)
+
+```lua
+ -- getPlayerData
+ local playerData = Framework.core.getPlayerData
+ print(json.encode(playerData))
+ -- [[
+      {
+                        cid = data.citizenid,
+                        money = data.money,
+                        inventory = data.inventory,
+                        job = { name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, grade = { name = job.grade.level, label = job.grade.label, salary = job.payment } },
+                        gang = { name = gang.name, label = gang.label, isBoss = gang.isboss, grade = { name = gang.grade.level, label = gang.grade.label } },
+                        firstName = data.charinfo.firstname,
+                        lastName = data.charinfo.lastname,
+                    }
+]]
+```
+## Framework.context
+
+```lua
+ local Context = Framework.context
+ @type data: {
+        title = string,
+        description = string,
+        icon = Icon(string, ),
+        disabled = boolean,
+        event = string,
+        args = {xirvin = 'dick'}
+ },
+ Context.openContext(data)
+ Context.closeContext()
 ```
