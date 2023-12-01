@@ -2,8 +2,8 @@
 
 ---@param data NotificationParams Notification data
 function notify(data)
-    local text, type, length = data.description, data.status, data.duration
-    TriggerEvent('QBCore:Notify', text, type, length)
+    local title, type in data
+    TriggerEvent('QBCore:Notify', title, type)
 end
 
 return notify
