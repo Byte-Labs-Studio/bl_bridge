@@ -23,9 +23,9 @@ Config = {
         core =          format(GetConvar('bl:framework', DEFAULT_FRAMEWORK)),
         inventory =     format(GetConvar('bl:inventory', DEFAULT_FRAMEWORK)),
         context =       format(GetConvar('bl:context', DEFAULT_FRAMEWORK)),
-        target =        format(GetConvar('bl:target', DEFAULT_FRAMEWORK)),
+        target =        format(GetConvar('bl:target', 'qb')),
         progress =      format(GetConvar('bl:progress', DEFAULT_FRAMEWORK)),
-        radial =        format(GetConvar('bl:radial', DEFAULT_FRAMEWORK)),
+        radial =        format(GetConvar('bl:radial', 'qb')),
         notify =        format(GetConvar('bl:notify', DEFAULT_FRAMEWORK)),
     },
 }

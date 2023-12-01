@@ -2,7 +2,7 @@ local targetName = 'qb-target'
 
 -- Check resource state
 if GetResourceState(targetName) ~= 'started' then
-    error('The imported file from the chosen framework isn\'t started')
+    error(targetName .. ' isn\'t started')
     return
 end
 
@@ -72,7 +72,14 @@ local funcs = {
                 debugPoly = data.debug,
             } }
         end
-    }
+    },
+    {
+        name = "removeZone",
+        originalname = "RemoveZone",
+        args = function(data)
+            return data
+        end
+    },
 }
 
 -- dynamic way of creating funcs for the target, i will make it global in the future
@@ -83,18 +90,26 @@ for _, exportData in ipairs(funcs) do
 
         local args = exportData.args(data, id)
 
-        args[#args + 1] = {
-            options = transformOptions(data.options, OverrideData),
-            distance = data.distance
-        }
+        if data.options then
+            args[#args + 1] = {
+                options = transformOptions(data.options, OverrideData),
+                distance = data.distance
+            }
+        end
 
-        return target[originalName]("bruh", table.unpack(args))
+        if type(args) == "table" then
+            target[originalName]("bruh", table.unpack(args))
+        else
+            target[originalName]("bruh", args)
+        end
+
+        return id
     end
 end
 
 -- for options is exactly the same as https://overextended.dev/ox_target
 -- Example
---[[ Target.addBoxZone({
+--[[ local id = Target.addBoxZone({
     coords = vector3(428, -973.44, 30.71),
     size = vector3(2, 2, 2),
     rotation = 90,
@@ -119,7 +134,10 @@ end
 }
 )
 
-Target.addCircleZone({
+print(id)
+Target.removeZone(id)
+
+local id2 = Target.addCircleZone({
     coords = vector3(428, -973.44, 30.71),
     radius = 2,
     rotation = 90,
@@ -143,6 +161,10 @@ Target.addCircleZone({
     }
 }
 )
- ]]
+
+print(id2)
+Target.removeZone(id2) ]]
+
+
 
 return Target
