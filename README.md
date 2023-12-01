@@ -34,6 +34,7 @@ server_scripts '@bl_bridge/imports/server.lua',
 ## Framework.core
 ```lua
  local coreModule = Framework.core
+
 -- Player
 
  local player = coreModule.GetPlayer(src)
@@ -48,6 +49,7 @@ server_scripts '@bl_bridge/imports/server.lua',
  local charinfo = player.charinfo --{firstname = data.firstname, lastname = data.lastname}
  print(player.id) -- citizenid
  -- Global
+
  coreModule.CommandAdd(name, permission, cb, suggestion, flags)
  coreModule.RegisterUsableItem(name, cb)
  coreModule.Players --players data (still will do synced methods for all framework, now every framework have their players data)
