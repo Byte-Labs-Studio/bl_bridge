@@ -11,6 +11,7 @@ local function findHeader(data)
     return 'Header'
 end
 
+---@param data ContextMenuProps | ContextMenuProps[]
 function Context.openContext(data)
     local id = callback.await('UUID', false, 8)
     local index, header = findHeader(data)
