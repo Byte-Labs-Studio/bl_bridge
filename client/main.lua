@@ -4,6 +4,7 @@ local moduleNames = {
     "core",
     "context",
     "target",
+    "radial",
     "notify",
 }
 

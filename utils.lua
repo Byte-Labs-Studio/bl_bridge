@@ -72,18 +72,8 @@ local function retreiveNumberIndexedData(playerTable, functionsOverride)
     local function modifyMethods(data, overrides)
         for dataIndex, dataValue in ipairs(data) do
             for method, modification in pairs(overrides) do
-                local originalMethods = type(modification.originalMethod) == 'table' and modification.originalMethod or
-                { modification.originalMethod }
-                local originalMethodRef
-                local originalMethod
-
-                for _, method in ipairs(originalMethods) do
-                    originalMethod = method
-                    originalMethodRef = originalMethod and dataValue[method]
-                    if originalMethodRef then
-                        break
-                    end
-                end
+                local originalMethod = modification.originalMethod
+                local originalMethodRef = originalMethod and dataValue[originalMethod]
 
                 if originalMethod == 'none' then
                     local hasKeys = modification.hasKeys
@@ -93,10 +83,12 @@ local function retreiveNumberIndexedData(playerTable, functionsOverride)
                             newMethods[dataIndex][method] = {[key] = dataValue[key]}
                         end
                     end
-                elseif originalMethodRef then
+                end
+                
+                if originalMethodRef then
                     local modifier = modification.modifier
                     newMethods[dataIndex] = newMethods[dataIndex] or {}
-                    newMethods[dataIndex][method] = modifier and (modifier.executeFun and modifier.effect(originalMethodRef, originalMethod) or function(...)
+                    newMethods[dataIndex][method] = modifier and (modifier.executeFun and modifier.effect(originalMethodRef) or function(...)
                         return modifier.effect(originalMethodRef, ...)
                     end) or originalMethodRef
                 end
