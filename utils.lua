@@ -72,8 +72,18 @@ local function retreiveNumberIndexedData(playerTable, functionsOverride)
     local function modifyMethods(data, overrides)
         for dataIndex, dataValue in ipairs(data) do
             for method, modification in pairs(overrides) do
-                local originalMethod = modification.originalMethod
-                local originalMethodRef = originalMethod and dataValue[originalMethod]
+                local originalMethods = type(modification.originalMethod) == 'table' and modification.originalMethod or
+                { modification.originalMethod }
+                local originalMethodRef
+                local originalMethod
+
+                for _, method in ipairs(originalMethods) do
+                    originalMethod = method
+                    originalMethodRef = originalMethod and dataValue[method]
+                    if originalMethodRef then
+                        break
+                    end
+                end
 
                 if originalMethod == 'none' then
                     local hasKeys = modification.hasKeys
@@ -86,7 +96,7 @@ local function retreiveNumberIndexedData(playerTable, functionsOverride)
                 elseif originalMethodRef then
                     local modifier = modification.modifier
                     newMethods[dataIndex] = newMethods[dataIndex] or {}
-                    newMethods[dataIndex][method] = modifier and (modifier.executeFun and modifier.effect(originalMethodRef) or function(...)
+                    newMethods[dataIndex][method] = modifier and (modifier.executeFun and modifier.effect(originalMethodRef, originalMethod) or function(...)
                         return modifier.effect(originalMethodRef, ...)
                     end) or originalMethodRef
                 end
@@ -109,35 +119,6 @@ local function retreiveNumberIndexedData(playerTable, functionsOverride)
 
     processTable(playerTable, functionsOverride)
     return newMethods
-end
-
--- this is a way to transform values using mapping
--- maybe the name not the best 
-local function transformOptions(options, mapping)
-    local transformedOptions = {}
-    for _, option in ipairs(options) do
-        local transformedOption = {}
-        for key, value in pairs(mapping) do
-            local originalValues = type(value.originalValues) == 'table' and value.originalValues or
-                { value.originalValues }
-            local originalProperty
-            for _, originalMethod in ipairs(originalValues) do
-                originalProperty = option[originalMethod]
-                if originalProperty then
-                    break
-                end
-            end
-            if originalProperty then
-                if value.modifier then
-                    transformedOption[key] = value.modifier(option)
-                else
-                    transformedOption[key] = originalProperty
-                end
-            end
-        end
-        table.insert(transformedOptions, transformedOption)
-    end
-    return transformedOptions
 end
 
 local function UUID(num)
@@ -171,6 +152,5 @@ end)
 Utils.retreiveStringIndexedData = retreiveStringIndexedData
 Utils.retreiveExportsData = retreiveExportsData
 Utils.retreiveNumberIndexedData = retreiveNumberIndexedData
-Utils.transformOptions = transformOptions
 Utils.UUID = UUID
 return Utils
