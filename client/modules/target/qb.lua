@@ -110,7 +110,7 @@ end
 
 -- for options is exactly the same as https://overextended.dev/ox_target
 -- Example
-local id = Target.addBoxZone({
+--[[ local id = Target.addBoxZone({
     coords = vector3(428, -973.44, 30.71),
     size = vector3(2, 2, 2),
     rotation = 90,
@@ -158,7 +158,7 @@ local id2 = Target.addCircleZone({
     }
 }
 )
-
+ ]]
 
 
 

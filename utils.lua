@@ -72,11 +72,20 @@ local function retreiveNumberIndexedData(playerTable, functionsOverride)
     local function modifyMethods(data, overrides)
         for dataIndex, dataValue in ipairs(data) do
             for method, modification in pairs(overrides) do
-                local originalMethod = modification.originalMethod
-                local originalMethodRef = originalMethod and dataValue[originalMethod]
+                local originalMethods = type(modification.originalMethod) == 'table' and modification.originalMethod or
+                { modification.originalMethod }
+                local originalMethodRef
+                local originalMethod
 
-                if originalMethod == 'none' then
-                    local hasKeys = modification.hasKeys
+                for _, method in ipairs(originalMethods) do
+                    originalMethod = method
+                    originalMethodRef = originalMethod and dataValue[method]
+                    if originalMethodRef then
+                        break
+                    end
+                end
+            
+                if hasKeys then
                     for _, key in ipairs(hasKeys) do
                         if dataValue[key] then
                             newMethods[dataIndex] = newMethods[dataIndex] or {}
@@ -88,9 +97,20 @@ local function retreiveNumberIndexedData(playerTable, functionsOverride)
                 if originalMethodRef then
                     local modifier = modification.modifier
                     newMethods[dataIndex] = newMethods[dataIndex] or {}
-                    newMethods[dataIndex][method] = modifier and (modifier.executeFun and modifier.effect(originalMethodRef) or function(...)
-                        return modifier.effect(originalMethodRef, ...)
-                    end) or originalMethodRef
+                    local effect
+                    if modifier then
+                        if modifier.executeFun then
+                            effect = modifier.effect(originalMethodRef, originalMethod) 
+                        else
+                            effect = function(...)
+                                return modifier.effect(originalMethodRef, ...)
+                            end
+                        end
+                    else
+                        effect = originalMethodRef
+                    end
+
+                    newMethods[dataIndex][method] = effect
                 end
             end
         end
