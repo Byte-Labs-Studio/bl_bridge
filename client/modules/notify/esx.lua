@@ -4,7 +4,7 @@
 function notify(data)
     local title, type, duration in data
     if type == 'inform' then type = 'info' end
-    TriggerEvent('QBCore:Notify', title, type, duration)
+    ESX.ShowNotification(title, type, duration)
 end
 
 return notify
