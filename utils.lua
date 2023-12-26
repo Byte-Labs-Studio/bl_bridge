@@ -151,16 +151,8 @@ local function UUID(num)
 
     return uuidWithTime
 end
+
 exports('UUID', UUID)
-
-local math_random = math.random
-
-exports('generatePlate', function()
-    local platerandomizer = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"}
-	local newPlate = math_random(1,9) .. math_random(1, 9) .. platerandomizer[math_random(1,#platerandomizer)] .. platerandomizer[math_random(1,#platerandomizer)] .. platerandomizer[math_random(1,#platerandomizer)] .. platerandomizer[math_random(1,#platerandomizer)] .. math_random(1,9) .. math_random(1,9)
-    return newPlate
-end)
-
 Utils.retreiveStringIndexedData = retreiveStringIndexedData
 Utils.retreiveExportsData = retreiveExportsData
 Utils.retreiveNumberIndexedData = retreiveNumberIndexedData
