@@ -42,7 +42,7 @@ local coreFunctionsOverride = {
         modifier = {
             executeFun = true,
             effect = function(data)
-                local job = data
+                local job = data()
                 return {name = job.name, label = job.label, onDuty = true, isBoss = false, grade = {name = job.grade_name, label = job.grade_label, salary = job.grade_salary}}
             end
         }

@@ -37,7 +37,7 @@ local function retreiveStringIndexedData(wrappedData, functionsOverride, src)
                                 return ref(src, ...)
                             end
                         elseif executeFun then
-                            lastEffect = effect(ref)
+                            lastEffect = effect and effect(ref) or ref
                         else
                             lastEffect = function(...)
                                 return passSource and effect(ref, src, ...) or effect(ref, ...)
