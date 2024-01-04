@@ -79,7 +79,7 @@ server_scripts '@bl_bridge/imports/server.lua',
      playerData.money
      playerData.inventory
      playerData.job 
-     playerData.gang
+     playerData.gang (not for esx!)
      playerData.firstName
      playerData.lastName
 ]]
