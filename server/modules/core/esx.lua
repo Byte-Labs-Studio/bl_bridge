@@ -53,6 +53,9 @@ local coreFunctionsOverride = {
             executeFun = true,
         }
     },
+    id = {
+        originalMethod = 'identifier',
+    },
 }
 
 local totalFunctionsOverride = merge(inventoryFunctionsOverride, coreFunctionsOverride)
