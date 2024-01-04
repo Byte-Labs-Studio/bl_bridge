@@ -73,7 +73,7 @@ server_scripts '@bl_bridge/imports/server.lua',
 
 ```lua
  -- getPlayerData
- local playerData = Framework.core.getPlayerData
+ local playerData = Framework.core.getPlayerData()
  --[[
      playerData.cid
      playerData.money
