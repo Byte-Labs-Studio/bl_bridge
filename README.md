@@ -69,7 +69,7 @@ server_scripts '@bl_bridge/imports/server.lua',
  local items = player.items --all player items
 ```
 ## Client
-## Framework.core (#only for qb currently!!!)
+## Framework.core
 
 ```lua
  -- getPlayerData
