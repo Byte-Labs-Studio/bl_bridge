@@ -1,8 +1,16 @@
 local Core = {}
 local retreiveStringIndexedData = require 'utils'.retreiveStringIndexedData
 
-RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
+AddEventHandler('esx:playerLoaded', function()
+    TriggerEvent('bl_bridge:client:playerLoaded')
+end)
+
+RegisterNetEvent('esx:onPlayerLogout', function()
     TriggerEvent('bl_bridge:client:playerUnloaded')
+end)
+
+RegisterNetEvent('esx:setJob', function(...)
+    TriggerEvent('bl_bridge:client:jobUpdated', ...)
 end)
 
 local shared = exports['es_extended']:getSharedObject()
