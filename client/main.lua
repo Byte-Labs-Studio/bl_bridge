@@ -6,6 +6,7 @@ local moduleNames = {
     "target",
     "radial",
     "notify",
+    'textui',
 }
 
 for _, moduleName in ipairs(moduleNames) do

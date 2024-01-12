@@ -37,3 +37,10 @@
 ---@field onBack? fun()
 ---@field canClose? boolean
 ---@field options { [string]: ContextMenuItem } | ContextMenuArrayItem[]
+
+
+---@class TextUIOptions
+---@field position? 'right-center' | 'left-center' | 'top-center';
+---@field icon? string | {[1]: IconProp, [2]: string};
+---@field iconColor? string;
+---@field style? string | table;

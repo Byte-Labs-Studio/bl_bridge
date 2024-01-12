@@ -19,6 +19,9 @@ setr bl:radial 'ox'
 
 # Notification 'ox' | 'qb'
 setr bl:notify 'ox'
+
+# TextUI 'ox' | 'qb'
+setr bl:textui 'ox'
 ```
 
 ## Import 

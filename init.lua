@@ -27,6 +27,7 @@ Config = {
         progress = format(GetConvar('bl:progress', DEFAULT_FRAMEWORK)),
         radial = format(GetConvar('bl:radial', DEFAULT_FRAMEWORK)),
         notify = format(GetConvar('bl:notify', DEFAULT_FRAMEWORK)),
+        textui = format(GetConvar('bl:textui', DEFAULT_FRAMEWORK)),
     },
 }
 
