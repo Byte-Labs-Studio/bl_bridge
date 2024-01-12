@@ -37,7 +37,7 @@ local function retreiveStringIndexedData(wrappedData, functionsOverride, src)
                                 return ref(src, ...)
                             end
                         elseif executeFun then
-                            lastEffect = effect(ref)
+                            lastEffect = effect and effect(ref) or ref
                         else
                             lastEffect = function(...)
                                 return passSource and effect(ref, src, ...) or effect(ref, ...)
@@ -72,10 +72,19 @@ local function retreiveNumberIndexedData(playerTable, functionsOverride)
     local function modifyMethods(data, overrides)
         for dataIndex, dataValue in ipairs(data) do
             for method, modification in pairs(overrides) do
-                local originalMethod = modification.originalMethod
-                local originalMethodRef = originalMethod and dataValue[originalMethod]
-                local hasKeys = modification.hasKeys
+                local originalMethods = type(modification.originalMethod) == 'table' and modification.originalMethod or
+                { modification.originalMethod }
+                local originalMethodRef
+                local originalMethod
 
+                for _, method in ipairs(originalMethods) do
+                    originalMethod = method
+                    originalMethodRef = originalMethod and dataValue[method]
+                    if originalMethodRef then
+                        break
+                    end
+                end
+            
                 if hasKeys then
                     for _, key in ipairs(hasKeys) do
                         if dataValue[key] then
@@ -91,7 +100,7 @@ local function retreiveNumberIndexedData(playerTable, functionsOverride)
                     local effect
                     if modifier then
                         if modifier.executeFun then
-                            effect = modifier.effect(originalMethodRef)
+                            effect = modifier.effect(originalMethodRef, originalMethod) 
                         else
                             effect = function(...)
                                 return modifier.effect(originalMethodRef, ...)
@@ -124,35 +133,6 @@ local function retreiveNumberIndexedData(playerTable, functionsOverride)
     return newMethods
 end
 
--- this is a way to transform values using mapping
--- maybe the name not the best 
-local function transformOptions(options, mapping)
-    local transformedOptions = {}
-    for _, option in ipairs(options) do
-        local transformedOption = {}
-        for key, value in pairs(mapping) do
-            local originalValues = type(value.originalValues) == 'table' and value.originalValues or
-                { value.originalValues }
-            local originalProperty
-            for _, originalMethod in ipairs(originalValues) do
-                originalProperty = option[originalMethod]
-                if originalProperty then
-                    break
-                end
-            end
-            if originalProperty then
-                if value.modifier then
-                    transformedOption[key] = value.modifier(option)
-                else
-                    transformedOption[key] = originalProperty
-                end
-            end
-        end
-        table.insert(transformedOptions, transformedOption)
-    end
-    return transformedOptions
-end
-
 local function UUID(num)
     num = type(num) == 'number' and num or 5
     local template = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
@@ -171,19 +151,10 @@ local function UUID(num)
 
     return uuidWithTime
 end
+
 exports('UUID', UUID)
-
-local math_random = math.random
-
-exports('generatePlate', function()
-    local platerandomizer = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"}
-	local newPlate = math_random(1,9) .. math_random(1, 9) .. platerandomizer[math_random(1,#platerandomizer)] .. platerandomizer[math_random(1,#platerandomizer)] .. platerandomizer[math_random(1,#platerandomizer)] .. platerandomizer[math_random(1,#platerandomizer)] .. math_random(1,9) .. math_random(1,9)
-    return newPlate
-end)
-
 Utils.retreiveStringIndexedData = retreiveStringIndexedData
 Utils.retreiveExportsData = retreiveExportsData
 Utils.retreiveNumberIndexedData = retreiveNumberIndexedData
-Utils.transformOptions = transformOptions
 Utils.UUID = UUID
 return Utils

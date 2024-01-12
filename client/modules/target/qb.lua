@@ -7,43 +7,44 @@ if GetResourceState(targetName) ~= 'started' then
 end
 
 local target = exports[targetName]
-local transformOptions = require 'utils'.transformOptions
+local retreiveNumberIndexedData = require 'utils'.retreiveNumberIndexedData
 local callback = lib.callback
 local Target = {}
 
 local OverrideData = {
-    label = { originalValues = 'label' },
+    label = { originalMethod = 'label' },
     type = {
-        originalValues = { 'event', 'serverEvent' },
+        originalMethod = { 'event', 'serverEvent' },
         modifier = {
-            effect = function(options)
-                return options['event'] and 'client' or options['serverEvent'] and 'server'
+            executeFun = true,
+            effect = function(value, originalMethod)
+                return originalMethod == 'event' and 'client' or originalMethod == 'serverEvent' and 'server'
             end
         }
     },
     event = {
-        originalValues = { 'event', 'serverEvent' }
+        originalMethod = { 'event', 'serverEvent' }
     },
     icon = {
-        originalValues = 'icon',
+        originalMethod = 'icon',
     },
     targeticon = {
-        originalValues = 'targeticon',
+        originalMethod = 'targeticon',
     },
     item = {
-        originalValues = 'items'
+        originalMethod = 'items'
     },
     action = {
-        originalValues = 'onSelect',
+        originalMethod = 'onSelect',
     },
     canInteract = {
-        originalValues = 'canInteract',
+        originalMethod = 'canInteract',
     },
     job = {
-        originalValues = 'groups',
+        originalMethod = 'groups',
     },
     gang = {
-        originalValues = 'groups',
+        originalMethod = 'groups',
     }
 }
 
@@ -92,7 +93,7 @@ for _, exportData in ipairs(funcs) do
 
         if data.options then
             args[#args + 1] = {
-                options = transformOptions(data.options, OverrideData),
+                options = retreiveNumberIndexedData(data.options, OverrideData),
                 distance = data.distance
             }
         end
@@ -134,8 +135,6 @@ end
 }
 )
 
-print(id)
-Target.removeZone(id)
 
 local id2 = Target.addCircleZone({
     coords = vector3(428, -973.44, 30.71),
@@ -147,9 +146,7 @@ local id2 = Target.addCircleZone({
         {
             label = "W",
             icon = "fa-solid fa-scissors",
-            onSelect = function()
-                print("frist")
-            end
+            serverEvent = 'dwadaw',
         },
         {
             label = "Destroy",
@@ -161,9 +158,7 @@ local id2 = Target.addCircleZone({
     }
 }
 )
-
-print(id2)
-Target.removeZone(id2) ]]
+ ]]
 
 
 

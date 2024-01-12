@@ -2,7 +2,7 @@
 
 ## CFG
 ``` 
-# Frameworks 'qb' | 'esx' | 'custom'
+# Frameworks 'qb' | 'esx'
 setr bl:framework 'qb' 
 
 # Inventories 'ox' | 'qb'
@@ -19,6 +19,9 @@ setr bl:radial 'ox'
 
 # Notification 'ox' | 'qb'
 setr bl:notify 'ox'
+
+# TextUI 'ox' | 'qb'
+setr bl:textui 'ox'
 ```
 
 ## Import 
@@ -69,22 +72,19 @@ server_scripts '@bl_bridge/imports/server.lua',
  local items = player.items --all player items
 ```
 ## Client
-## Framework.core (#only for qb currently!!!)
+## Framework.core
 
 ```lua
  -- getPlayerData
- local playerData = Framework.core.getPlayerData
- print(json.encode(playerData))
+ local playerData = Framework.core.getPlayerData()
  --[[
- {
-     cid = data.citizenid,
-     money = data.money,
-     inventory = data.inventory,
-     job = { name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, grade = { name = job.grade.level, label = job.grade.label, salary = job.payment } },
-     gang = { name = gang.name, label = gang.label, isBoss = gang.isboss, grade = { name = gang.grade.level, label = gang.grade.label } },
-     firstName = data.charinfo.firstname,
-     lastName = data.charinfo.lastname,
-  }
+     playerData.cid
+     playerData.money
+     playerData.inventory
+     playerData.job 
+     playerData.gang (not for esx!)
+     playerData.firstName
+     playerData.lastName
 ]]
 
 ```
