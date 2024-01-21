@@ -20,6 +20,9 @@ setr bl:radial 'ox'
 # Notification 'ox' | 'qb'
 setr bl:notify 'ox'
 
+# Progressbar 'ox' | 'qb'
+setr bl:progressbar 'ox'
+
 # TextUI 'ox' | 'qb'
 setr bl:textui 'ox'
 ```

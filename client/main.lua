@@ -6,6 +6,7 @@ local moduleNames = {
     "target",
     "radial",
     "notify",
+    "progressbar",
     'textui',
 }
 
