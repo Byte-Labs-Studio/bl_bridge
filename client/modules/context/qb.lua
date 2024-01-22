@@ -27,7 +27,7 @@ local overRideData = {
     },
     params = {
         originalMethod = 'none',
-        hasKeys = {'event', 'args'}
+        hasKeys = { 'event', 'args' }
     },
     disabled = {
         originalMethod = 'disabled',
@@ -37,6 +37,7 @@ local overRideData = {
     },
 }
 
+---@param data ContextMenuProps | ContextMenuProps[]
 function Context.openContext(data)
     data = Utils.retreiveNumberIndexedData(data, overRideData)
     qb_menu:openMenu(data)

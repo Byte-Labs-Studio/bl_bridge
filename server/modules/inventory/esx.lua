@@ -1,7 +1,3 @@
-if GetResourceState('qb-inventory') ~= 'started' then
-    error('The imported file from the chosen framework isn\'t starting')
-    return
-end
 
 return {
     addItem = {
