@@ -69,20 +69,6 @@ function Radial.addOptions(optionId, data)
     }, id)
 end
 
-Radial.addOptions('police2', {
-    title = 'sdfsafd',
-    items = {
-        {
-            label = 'Search',
-            icon = 'magnifying-glass',
-            keepOpen = true,
-            onSelect = function()
-              print('Search')
-            end
-        }
-      },
-})
-
 function Radial.removeOption(onExit)
     
 end
