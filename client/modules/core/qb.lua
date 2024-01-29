@@ -1,14 +1,11 @@
 local Core = {}
 local retreiveStringIndexedData = require 'utils'.retreiveStringIndexedData
-local playerLoaded = false
 
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
-    playerLoaded = true
     TriggerEvent('bl_bridge:client:playerLoaded')
 end)
 
 RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
-    playerLoaded = false
     TriggerEvent('bl_bridge:client:playerUnloaded')
 end)
 
@@ -29,11 +26,7 @@ local coreFunctionsOverride = {
             modifier = {
                 executeFun = true,
                 effect = function(originalFun)
-                    lib.waitFor(function()
-                        if playerLoaded then
-                            return true
-                        end
-                    end, nil, 10000)
+                    lib.waitFor(function()if LocalPlayer.state.isLoggedIn then return true end end, nil, 10000)
                     local data = originalFun()
                     local job = data.job
                     local gang = data.gang
