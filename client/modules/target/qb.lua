@@ -55,7 +55,7 @@ local funcs = {
         name = "addBoxZone",
         originalname = "AddBoxZone",
         args = function(data, id)
-            local length, width, height = table.unpack(data.size)
+            local length, width = table.unpack(data.size)
             return { id, data.coords, length, width, {
                 name      = id,
                 heading   = data.rotation,
@@ -75,8 +75,22 @@ local funcs = {
         end
     },
     {
+        name = "addEntity",
+        originalname = "AddTargetEntity",
+        args = function(data)
+            return {data.entity}
+        end
+    },
+    {
         name = "removeZone",
         originalname = "RemoveZone",
+        args = function(data)
+            return data
+        end
+    },
+    {
+        name = "removeEntity",
+        originalname = "RemoveTargetEntity",
         args = function(data)
             return data
         end
@@ -91,7 +105,7 @@ for _, exportData in ipairs(funcs) do
 
         local args = exportData.args(data, id)
 
-        if data.options then
+        if type(data) == "table" and data.options then
             args[#args + 1] = {
                 options = retreiveNumberIndexedData(data.options, OverrideData),
                 distance = data.distance

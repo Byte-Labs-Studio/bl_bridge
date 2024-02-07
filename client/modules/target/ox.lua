@@ -48,10 +48,38 @@ local funcs = {
         end
     },
     {
+        name = "addEntity",
+        originalname = "addEntity",
+        args = function(data)
+            local options, distance, entity in data
+            for _, value in ipairs(options) do
+                value.distance = value.distance or distance
+            end -- a simple adjust
+
+            local entities = {}
+            for k,v in ipairs(type(entity) == 'table' and entity or {entity}) do
+                entities[k] = DoesEntityExist(v) and NetworkGetEntityIsNetworked(v) and NetworkGetNetworkIdFromEntity(v)
+            end
+            return {entities, data.options}
+        end
+    },
+    {
         name = "removeZone",
         originalname = "removeZone",
         args = function(data)
             return data
+        end
+    },
+    {
+        name = "removeEntity",
+        originalname = "removeEntity",
+        args = function(data)
+            local entity = data[1]
+            local entities = {}
+            for k,v in ipairs(type(entity) == 'table' and entity or {entity}) do
+                entities[k] = DoesEntityExist(v) and NetworkGetEntityIsNetworked(v) and NetworkGetNetworkIdFromEntity(v)
+            end
+            return {entities, data[2]}
         end
     },
 }
