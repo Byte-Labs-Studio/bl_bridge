@@ -1,9 +1,8 @@
 if not lib then return end
-local DEFAULT_FRAMEWORK = 'esx'
+local DEFAULT_FRAMEWORK = 'qb'
 Framework = setmetatable({}, {
     __newindex = function(self, name, fn)
-        local data = function() return fn end
-        exports(name, data)
+        exports(name, function() return fn end)
         rawset(self, name, fn)
     end
 })
