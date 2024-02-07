@@ -1,3 +1,9 @@
+local coreName = 'es_extended'
+if GetResourceState(coreName) ~= 'started' then
+    error('The imported file from the chosen framework isn\'t starting')
+    return
+end
+
 local Core = {}
 local retreiveStringIndexedData = require 'utils'.retreiveStringIndexedData
 
@@ -14,7 +20,7 @@ RegisterNetEvent('esx:setJob', function(...)
     TriggerEvent('bl_bridge:client:jobUpdated', ...)
 end)
 
-local shared = exports['es_extended']:getSharedObject()
+local shared = exports[coreName]:getSharedObject()
 
 local coreFunctionsOverride = {
     playerData = {

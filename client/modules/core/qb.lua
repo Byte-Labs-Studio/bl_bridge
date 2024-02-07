@@ -1,3 +1,9 @@
+local coreName = 'qb-core'
+if GetResourceState(coreName) ~= 'started' then
+    error('The imported file from the chosen framework isn\'t starting')
+    return
+end
+
 local Core = {}
 local retreiveStringIndexedData = require 'utils'.retreiveStringIndexedData
 
@@ -17,7 +23,7 @@ RegisterNetEvent('QBCore:Client:OnGangUpdate', function(...)
     TriggerEvent('bl_bridge:client:gangUpdated', ...)
 end)
 
-local shared = exports['qb-core']:GetCoreObject()
+local shared = exports[coreName]:GetCoreObject()
 
 local coreFunctionsOverride = {
     Functions = {
@@ -33,7 +39,7 @@ local coreFunctionsOverride = {
                     return {
                         cid = data.citizenid,
                         money = data.money,
-                        inventory = data.inventory,
+                        inventory = type(data.inventory) == 'string' and json.decode(data.inventory) or data.inventory,
                         job = { name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, grade = { name = job.grade.level, label = job.grade.label, salary = job.payment } },
                         gang = { name = gang.name, label = gang.label, isBoss = gang.isboss, grade = { name = gang.grade.level, label = gang.grade.label } },
                         firstName = data.charinfo.firstname,
