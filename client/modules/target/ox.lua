@@ -60,7 +60,7 @@ local funcs = {
             for k,v in ipairs(type(entity) == 'table' and entity or {entity}) do
                 entities[k] = DoesEntityExist(v) and NetworkGetEntityIsNetworked(v) and NetworkGetNetworkIdFromEntity(v)
             end
-            return {entities, data.options}
+            return table.unpack({entities, options})
         end
     },
     {
@@ -74,12 +74,12 @@ local funcs = {
         name = "removeEntity",
         originalname = "removeEntity",
         args = function(data)
-            local entity = data[1]
+            local names, entity in data
             local entities = {}
             for k,v in ipairs(type(entity) == 'table' and entity or {entity}) do
                 entities[k] = DoesEntityExist(v) and NetworkGetEntityIsNetworked(v) and NetworkGetNetworkIdFromEntity(v)
             end
-            return {entities, data[2]}
+            return table.unpack({entities, names})
         end
     },
 }
