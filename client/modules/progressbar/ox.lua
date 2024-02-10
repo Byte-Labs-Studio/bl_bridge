@@ -2,7 +2,7 @@ local Progressbar = {}
 local menu = lib
 
 function Progressbar.showProgress(data)
-    if menu.progressBar({
+    return menu.progressBar({
         duration = data.duration,
         label = data.label,
         useWhileDead = data.useWhileDead,
@@ -15,7 +15,7 @@ function Progressbar.showProgress(data)
             pos = data.prop.pos,
             rot = data.prop.rotation
         },
-    }) then return true else return false end
+    })
 end
 
 function Progressbar.cancelProgress()

@@ -32,11 +32,7 @@ function Progressbar.showProgress(data)
             rotation = data.prop.rotation
         },
     }, function(cancelled)
-        if not cancelled then
-            return true
-        else
-            return false
-        end
+        return not cancelled
     end)
 end
 
