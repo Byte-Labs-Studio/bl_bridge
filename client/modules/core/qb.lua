@@ -19,8 +19,8 @@ RegisterNetEvent('QBCore:Client:OnJobUpdate', function(job)
     TriggerEvent('bl_bridge:client:jobUpdated', { name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, grade = { name = job.grade.level, label = job.grade.name, salary = job.payment } })
 end)
 
-RegisterNetEvent('QBCore:Client:OnGangUpdate', function(...)
-    TriggerEvent('bl_bridge:client:gangUpdated', ...)
+RegisterNetEvent('QBCore:Client:OnGangUpdate', function(gang)
+    TriggerEvent('bl_bridge:client:gangUpdated', { name = gang.name, label = gang.label, isBoss = gang.isboss, grade = { name = gang.grade.level, label = gang.grade.label } })
 end)
 
 local shared = exports[coreName]:GetCoreObject()
