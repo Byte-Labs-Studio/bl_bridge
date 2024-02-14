@@ -15,8 +15,8 @@ RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
     TriggerEvent('bl_bridge:client:playerUnloaded')
 end)
 
-RegisterNetEvent('QBCore:Client:OnJobUpdate', function(...)
-    TriggerEvent('bl_bridge:client:jobUpdated', ...)
+RegisterNetEvent('QBCore:Client:OnJobUpdate', function(job)
+    TriggerEvent('bl_bridge:client:jobUpdated', { name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, grade = { name = job.grade.level, label = job.grade.name, salary = job.payment } })
 end)
 
 RegisterNetEvent('QBCore:Client:OnGangUpdate', function(...)
