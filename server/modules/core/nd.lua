@@ -88,13 +88,7 @@ function Core.players()
 end
 
 function Core.CommandAdd(name, permission, cb, suggestion, flags)
-    if type(name) == 'table' then
-        for _, command in ipairs(name) do
-            shared.Commands.Add(command, suggestion.help, suggestion.arguments, flags.argsrequired, cb, permission)
-        end
-        return
-    end
-    shared.Commands.Add(name, suggestion.help, suggestion.arguments, flags.argsrequired, cb, permission)
+    RegisterCommand(name, cb, permission)
 end
 
 function Core.RegisterUsableItem(name, cb) -- need a way to do this
