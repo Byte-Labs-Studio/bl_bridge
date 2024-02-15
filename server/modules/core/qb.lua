@@ -1,19 +1,19 @@
-if GetResourceState('qb-core') ~= 'started' then
+local resource = 'qb-core'
+if GetResourceState(resource) ~= 'started' then
     error('The imported file from the chosen framework isn\'t starting')
     return
 end
 
 local Core = {}
-local shared = exports['qb-core']:GetCoreObject()
-local Utils = require 'utils'
+local shared = exports[resource]:GetCoreObject()
+local retreiveStringIndexedData = require 'utils'.retreiveStringIndexedData
 local merge = lib.table.merge
-local retreiveStringIndexedData in Utils
+local inventoryFunctions = Framework.inventory
 
 RegisterNetEvent('QBCore:Server:OnPlayerLoaded', function(...)
     TriggerEvent('bl_bridge:server:playerLoaded', source, ...)
 end)
 
-local inventoryFunctions = Framework.inventory
 local playerFunctionsOverride = {
     Functions = {
         getBalance = {
@@ -76,7 +76,7 @@ function Core.players()
         local gang = playerData.gang
         local charinfo = playerData.charinfo
         data[k] = {
-            job = {name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, grade = {name = job.grade.level, label = job.grade.label, salary = job.payment}},
+            job = {name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, grade = {name = job.grade.level, label = job.grade.name, salary = job.payment}},
             gang = {name = gang.name, label = gang.label, isBoss = gang.isboss, grade = {name = gang.grade.level, label = gang.grade.label}},
             charinfo = {firstname = charinfo.firstname, lastname = charinfo.lastname}
         }
