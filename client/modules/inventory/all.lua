@@ -9,7 +9,7 @@ function inventory.hasItem(itemName, itemCount)
             if Framework.core then return true end
         end)
     end
-    local playerData = invFramework == 'ox' and exports.ox_inventory:GetPlayerItems() or core.getPlayerData().inventory
+    local playerData = invFramework == 'ox' and exports.ox_inventory:GetPlayerItems() or core.getPlayerData().inventory or {}
     local notify = Framework.notify
 
     if type(itemName) ~= 'string' then
