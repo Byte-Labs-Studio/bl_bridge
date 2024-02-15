@@ -36,7 +36,7 @@ local playerFunctionsOverride = {
                 executeFun = true,
                 effect = function(originalFun)
                     local job = originalFun
-                    return {name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, grade = {name = job.grade.level, label = job.grade.label, salary = job.payment}}
+                    return {name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, grade = { name = job.grade.level, label = job.grade.name, salary = job.payment } }
                 end
             }
         },
