@@ -3,8 +3,10 @@ if GetResourceState('ox_inventory') ~= 'started' then
     return {}
 end
 local retreiveExportsData = require 'utils'.retreiveExportsData
+local overrideFunction = {}
+local ox_inventory = exports.ox_inventory
 
-local overrideFunction = {
+overrideFunction.methods = retreiveExportsData(ox_inventory, {
     addItem = {
         originalMethod = 'AddItem',
         modifier = {
@@ -30,6 +32,18 @@ local overrideFunction = {
             passSource = true,
         }
     },
-}
+})
 
-return retreiveExportsData(exports.ox_inventory, overrideFunction)
+local registeredItems = {}
+
+AddEventHandler('ox_inventory:usedItem', function(playerId, itemName, slotId, metadata)
+    local itemEffect = registeredItems[itemName]
+    if not itemEffect then return end
+    itemEffect(playerId)
+end)
+
+function overrideFunction.registerUsableItem(name, cb)
+    registeredItems[name] = cb
+end
+
+return overrideFunction

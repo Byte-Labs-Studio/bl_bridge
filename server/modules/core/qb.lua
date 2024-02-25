@@ -94,18 +94,16 @@ function Core.CommandAdd(name, permission, cb, suggestion, flags)
     shared.Commands.Add(name, suggestion.help, suggestion.arguments, flags.argsrequired, cb, permission)
 end
 
-function Core.RegisterUsableItem(name, cb)
+Core.RegisterUsableItem = inventoryFunctions.registerUsableItem and inventoryFunctions.registerUsableItem or function(name, cb)
     shared.Functions.CreateUseableItem(name, cb)
 end
 
-local totalFunctionsOverride = merge(inventoryFunctions, playerFunctionsOverride)
+local totalFunctionsOverride = merge(inventoryFunctions.methods, playerFunctionsOverride)
 
 function Core.GetPlayer(src)
     local player = shared.Functions.GetPlayer(src)
     if not player then return end
-    local wrappedPlayer = retreiveStringIndexedData(player, totalFunctionsOverride, src)
-
-    return wrappedPlayer
+    return retreiveStringIndexedData(player, totalFunctionsOverride, src)
 end
 
 function Core.hasPerms(...)

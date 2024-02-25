@@ -91,11 +91,9 @@ function Core.CommandAdd(name, permission, cb, suggestion, flags)
     RegisterCommand(name, cb, permission)
 end
 
-function Core.RegisterUsableItem(name, cb) -- need a way to do this
-    return true
-end
+Core.RegisterUsableItem = inventoryFunctions.registerUsableItem
 
-local totalFunctionsOverride = merge(inventoryFunctions, playerFunctionsOverride)
+local totalFunctionsOverride = merge(inventoryFunctions.methods, playerFunctionsOverride)
 
 function Core.GetPlayer(src)
     local player = shared:getPlayer(src)

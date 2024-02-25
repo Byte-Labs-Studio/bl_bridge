@@ -3,7 +3,10 @@ if GetResourceState('qb-inventory') ~= 'started' then
     return
 end
 
-return {
+
+local overrideFunction = {}
+
+overrideFunction.methods = {
     Functions = {
         addItem = {
             originalMethod = 'AddItem',
@@ -21,3 +24,5 @@ return {
         },
     }
 }
+
+return overrideFunction

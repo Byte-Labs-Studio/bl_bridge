@@ -8,7 +8,7 @@ local shared = exports["es_extended"]:getSharedObject()
 local Utils = require 'utils'
 local merge = lib.table.merge
 
-local inventoryFunctionsOverride = Framework.inventory
+local inventoryFunctions = Framework.inventory
 local coreFunctionsOverride = {
     getBalance = {
         originalMethod = 'getAccount',
@@ -58,13 +58,13 @@ local coreFunctionsOverride = {
     },
 }
 
-local totalFunctionsOverride = merge(inventoryFunctionsOverride, coreFunctionsOverride)
+local totalFunctionsOverride = merge(inventoryFunctions.methods, coreFunctionsOverride)
 
 function Core.CommandAdd(name, permission, cb, suggestion, flags)
     shared.RegisterCommand(name, permission, cb, flags.allowConsole, suggestion)
 end
 
-function Core.RegisterUsableItem(name, cb)
+Core.RegisterUsableItem = inventoryFunctions.registerUsableItem and inventoryFunctions.registerUsableItem or function(name, cb)
     shared.RegisterUsableItem(name, cb)
 end
 

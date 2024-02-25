@@ -1,5 +1,7 @@
 
-return {
+local overrideFunction = {}
+
+overrideFunction.methods = {
     addItem = {
         originalMethod = 'AddItem',
     },
@@ -18,3 +20,5 @@ return {
         }
     },
 }
+
+return overrideFunction
