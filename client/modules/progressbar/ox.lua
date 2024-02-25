@@ -10,10 +10,10 @@ function Progressbar.showProgress(data)
         disable = data.disableControl,
         anim = data.animation,
         prop = {
-            model = data.prop.model,
-            bone = data.prop.bone,
-            pos = data.prop.pos,
-            rot = data.prop.rotation
+            model = data.prop?.model,
+            bone = data.prop?.bone,
+            pos = data.prop?.pos,
+            rot = data.prop?.rot
         },
     })
 end

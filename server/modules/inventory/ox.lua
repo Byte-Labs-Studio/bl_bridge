@@ -23,13 +23,6 @@ local overrideFunction = {
             passSource = true,
         }
     },
-    items = {
-        originalMethod = 'GetInventoryItems',
-        modifier = {
-            executeFun = true,
-            passSource = true,
-        }
-    },
 }
 
 return retreiveExportsData(exports['ox_inventory'], overrideFunction)

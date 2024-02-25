@@ -15,21 +15,21 @@ function Progressbar.showProgress(data)
         useWhileDead = data.useWhileDead,
         canCancel = data.canCancel,
         controlDisables = {
-            disableMovement = data.disableControl.move,
-            disableCarMovement = data.disableControl.car,
-            disableMouse = data.disableControl.mouse,
-            disableCombat = data.disableControl.combat,
+            disableMovement = data.disableControl?.move,
+            disableCarMovement = data.disableControl?.car,
+            disableMouse = data.disableControl?.mouse,
+            disableCombat = data.disableControl?.combat,
         },
         animation = {
-            animDict = data.animation.dict,
-            anim = data.animation.clip,
-            flags = data.animation.flags
+            animDict = data.animation?.dict,
+            anim = data.animation?.clip,
+            flags = data.animation?.flags
         },
         prop = {
-            model = data.prop.model,
-            bone = data.prop.bone,
-            coords = data.prop.pos,
-            rotation = data.prop.rotation
+            model = data.prop?.model,
+            bone = data.prop?.bone,
+            coords = data.prop?.pos,
+            rotation = data.prop?.rot
         },
     }, function(cancelled)
         return not cancelled
