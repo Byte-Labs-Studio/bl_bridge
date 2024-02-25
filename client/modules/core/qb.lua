@@ -16,7 +16,7 @@ RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
 end)
 
 RegisterNetEvent('QBCore:Client:OnJobUpdate', function(job)
-    TriggerEvent('bl_bridge:client:jobUpdated', { name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, grade = { name = job.grade.level, label = job.grade.name, salary = job.payment } })
+    TriggerEvent('bl_bridge:client:jobUpdated', { name = job.name, label = job.label, onDuty = job.onduty, type = job.type, isBoss = job.isboss, grade = { name = job.grade.level, label = job.grade.name, salary = job.payment } })
 end)
 
 RegisterNetEvent('QBCore:Client:OnGangUpdate', function(gang)
@@ -40,7 +40,7 @@ local coreFunctionsOverride = {
                         cid = data.citizenid,
                         money = data.money,
                         inventory = type(data.inventory) == 'string' and json.decode(data.inventory) or data.inventory,
-                        job = { name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, grade = { name = job.grade.level, label = job.grade.name, salary = job.payment } },
+                        job = { name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, type = job.type, grade = { name = job.grade.level, label = job.grade.name, salary = job.payment } },
                         gang = { name = gang.name, label = gang.label, isBoss = gang.isboss, grade = { name = gang.grade.level, label = gang.grade.label } },
                         firstName = data.charinfo.firstname,
                         lastName = data.charinfo.lastname,

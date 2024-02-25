@@ -16,7 +16,8 @@ Config = {
     frameworks = {
         ox = true,
         esx = true,
-        qb = true
+        qb = true,
+        nd = true
     },
     convars = {
         core = format(GetConvar('bl:framework', DEFAULT_FRAMEWORK)),

@@ -2,7 +2,7 @@
 
 ## CFG
 ``` 
-# Frameworks 'qb' | 'esx'
+# Frameworks 'qb' | 'esx' | 'nd'
 setr bl:framework 'qb' 
 
 # Inventories 'ox' | 'qb'

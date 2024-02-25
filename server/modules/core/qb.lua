@@ -36,7 +36,7 @@ local playerFunctionsOverride = {
                 executeFun = true,
                 effect = function(originalFun)
                     local job = originalFun
-                    return {name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, grade = { name = job.grade.level, label = job.grade.name, salary = job.payment } }
+                    return {name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, type = job.type, grade = { name = job.grade.level, label = job.grade.name, salary = job.payment } }
                 end
             }
         },
@@ -76,7 +76,7 @@ function Core.players()
         local gang = playerData.gang
         local charinfo = playerData.charinfo
         data[k] = {
-            job = {name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, grade = {name = job.grade.level, label = job.grade.name, salary = job.payment}},
+            job = {name = job.name, label = job.label, onDuty = job.onduty, type = job.type, isBoss = job.isboss, grade = {name = job.grade.level, label = job.grade.name, salary = job.payment}},
             gang = {name = gang.name, label = gang.label, isBoss = gang.isboss, grade = {name = gang.grade.level, label = gang.grade.label}},
             charinfo = {firstname = charinfo.firstname, lastname = charinfo.lastname}
         }
