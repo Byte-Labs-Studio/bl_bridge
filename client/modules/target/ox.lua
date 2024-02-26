@@ -37,10 +37,7 @@ local funcs = {
                 value.distance = value.distance or data.distance
             end -- a simple adjust
 
-            return {
-                entity = data.entity,
-                options = data.options
-            }
+            return table.unpack({data.entity, data.options})
         end
     },
     {
