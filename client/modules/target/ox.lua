@@ -30,6 +30,20 @@ local funcs = {
         end
     },
     {
+        name = "addLocalEntity",
+        originalname = "addLocalEntity",
+        args = function(data)
+            for _, value in ipairs(data.options) do
+                value.distance = value.distance or data.distance
+            end -- a simple adjust
+
+            return {
+                entity = data.entity,
+                options = data.options
+            }
+        end
+    },
+    {
         name = "addCircleZone",
         originalname = "addSphereZone",
         args = function(data)
