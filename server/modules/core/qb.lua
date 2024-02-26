@@ -94,7 +94,7 @@ function Core.CommandAdd(name, permission, cb, suggestion, flags)
     shared.Commands.Add(name, suggestion.help, suggestion.arguments, flags.argsrequired, cb, permission)
 end
 
-Core.RegisterUsableItem = inventoryFunctions.registerUsableItem and inventoryFunctions.registerUsableItem or function(name, cb)
+Core.RegisterUsableItem = inventoryFunctions.registerUsableItem or function(name, cb)
     shared.Functions.CreateUseableItem(name, cb)
 end
 
