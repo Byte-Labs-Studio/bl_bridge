@@ -8,32 +8,38 @@ local Progressbar = {}
 Progressbar.state = false
 
 function Progressbar.showProgress(data)
+    local prop, animation, disableControl in data
+    local success
     exports['progressbar']:Progress({
         name = 'progress',
         duration = data.duration,
         label = data.label,
         useWhileDead = data.useWhileDead,
         canCancel = data.canCancel,
-        controlDisables = {
-            disableMovement = data.disableControl?.move,
-            disableCarMovement = data.disableControl?.car,
-            disableMouse = data.disableControl?.mouse,
-            disableCombat = data.disableControl?.combat,
+        controlDisables = disableControl and {
+            disableMovement = disableControl.move,
+            disableCarMovement = disableControl.car,
+            disableMouse = disableControl.mouse,
+            disableCombat = disableControl.combat,
         },
-        animation = {
-            animDict = data.animation?.dict,
-            anim = data.animation?.clip,
-            flags = data.animation?.flags
+        animation = animation and {
+            animDict = animation.dict,
+            anim = animation.clip,
+            flags = animation.flag
         },
-        prop = {
-            model = data.prop?.model,
-            bone = data.prop?.bone,
-            coords = data.prop?.pos,
-            rotation = data.prop?.rot
+        prop = prop and {
+            model = prop.model,
+            bone = prop.bone,
+            coords = prop.pos,
+            rotation = prop.rot
         },
     }, function(cancelled)
-        return not cancelled
+        success = not cancelled
     end)
+    lib.waitFor(function()
+        if success ~= nil then return true end
+    end)
+    return success
 end
 
 function Progressbar.cancelProgress()
