@@ -82,6 +82,13 @@ local funcs = {
         end
     },
     {
+        name = "removeLocalEntity",
+        originalname = "removeLocalEntity",
+        args = function(data)
+            return table.unpack({data.entity, data.names})
+        end
+    },
+    {
         name = "removeEntity",
         originalname = "removeEntity",
         args = function(data)

@@ -82,6 +82,13 @@ local funcs = {
         end
     },
     {
+        name = "addLocalEntity",
+        originalname = "AddTargetEntity",
+        args = function(data)
+            return {data.entity}
+        end
+    },
+    {
         name = "removeZone",
         originalname = "RemoveZone",
         args = function(data)
@@ -90,6 +97,13 @@ local funcs = {
     },
     {
         name = "removeEntity",
+        originalname = "RemoveTargetEntity",
+        args = function(data)
+            return data
+        end
+    },
+    {
+        name = "removeLocalEntity",
         originalname = "RemoveTargetEntity",
         args = function(data)
             return data
