@@ -17,7 +17,7 @@ RegisterNetEvent('esx:onPlayerLogout', function()
 end)
 
 RegisterNetEvent('esx:setJob', function(job)
-    TriggerEvent('bl_bridge:client:jobUpdated', {name = job.name, label = job.label, onDuty = true, isBoss = false, grade = {name = job.grade_name, label = job.grade_label, salary = job.grade_salary}})
+    TriggerEvent('bl_bridge:client:jobUpdated', {name = job.name, label = job.label, onDuty = true, isBoss = false, grade = {name = job.grade, label = job.grade_label, salary = job.grade_salary}})
 end)
 
 local shared = exports[coreName]:getSharedObject()
@@ -35,7 +35,7 @@ local coreFunctionsOverride = {
                     cid = data.identifier,
                     money = data.money,
                     inventory = data.inventory,
-                    job = {name = job.name, label = job.label, onDuty = true, isBoss = false, grade = {name = job.grade_name, label = job.grade_label, salary = job.grade_salary}},
+                    job = {name = job.name, label = job.label, onDuty = true, isBoss = false, grade = {name = job.grade, label = job.grade_label, salary = job.grade_salary}},
                     firstName = data.firstName,
                     lastName = data.lastName,
                     phone = data.phone_number or '0',
