@@ -77,15 +77,15 @@ local function retreiveNumberIndexedData(playerTable, functionsOverride)
                     break
                 end
             end
+            
             local hasKeys = modification.hasKeys
             if hasKeys then
-                for _, key in ipairs(hasKeys) do
-                    if dataValue[key] then
-                        newMethods[dataIndex] = newMethods[dataIndex] or {}
-                        newMethods[dataIndex][method] = {[key] = dataValue[key]}
-                    end
+                local modifier = modification.modifier
+                if modifier and modifier.effect then
+                    newMethods[dataIndex][method] = modifier.effect(dataValue)
                 end
             end
+
             if originalMethodRef then
                 local modifier = modification.modifier
                 newMethods[dataIndex] = newMethods[dataIndex] or {}

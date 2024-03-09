@@ -27,7 +27,24 @@ local overRideData = {
     },
     params = {
         originalMethod = 'none',
-        hasKeys = { 'event', 'args' }
+        hasKeys = true,
+        modifier = {
+            effect = function(data)
+                local params = {}
+                if data.onSelect then
+                    params.event = data.onSelect
+                    params.isAction = true
+                elseif data.event then
+                    params.event = data.event
+                    params.args = data.args
+                elseif data.serverEvent then
+                    params.event = data.serverEvent
+                    params.isServer = true
+                    params.args = data.args
+                end
+                return params
+            end
+        },
     },
     disabled = {
         originalMethod = 'disabled',
