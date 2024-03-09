@@ -8,13 +8,15 @@ if not core then
     end)
 end
 
+local isOx = invFramework == 'ox'
+
 function inventory.items()
-    local inventoryItems = invFramework == 'ox' and exports.ox_inventory:Items() or core.getPlayerData().items or {}
+    local inventoryItems = isOx and exports.ox_inventory:Items() or core.getPlayerData().items or {}
     return inventoryItems
 end
 
 function inventory.playerItems()
-    local playerData = invFramework == 'ox' and exports.ox_inventory:GetPlayerItems() or core.getPlayerData().inventory or {}
+    local playerData = isOx and exports.ox_inventory:GetPlayerItems() or core.getPlayerData().inventory or {}
     for _, itemData in ipairs(playerData) do
         local count = itemData.count
         if count then
@@ -23,6 +25,16 @@ function inventory.playerItems()
         end
     end
     return playerData
+end
+
+function inventory.openInventory(invType, invId)
+    if isOx then
+        exports.ox_inventory:openInventory(invType, {type = invId})
+    elseif invFramework == 'qb' then
+        local inventoryData = lib.callback.await('bl_bridge:validInventory', 10, invType, invId)
+        if not inventoryData then return end
+        TriggerServerEvent('inventory:server:OpenInventory', invType, invId, inventoryData)
+    end
 end
 
 function inventory.hasItem(itemName, itemCount)

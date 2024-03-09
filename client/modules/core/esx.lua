@@ -7,8 +7,7 @@ end
 local Core = {}
 local retreiveStringIndexedData = require 'utils'.retreiveStringIndexedData
 
-RegisterNetEvent('esx:playerLoaded')
-AddEventHandler('esx:playerLoaded', function()
+RegisterNetEvent('esx:playerLoaded', function()
     TriggerEvent('bl_bridge:client:playerLoaded')
 end)
 

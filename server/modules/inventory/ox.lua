@@ -46,4 +46,17 @@ function overrideFunction.registerUsableItem(name, cb)
     registeredItems[name] = cb
 end
 
+function overrideFunction.registerInventory(id, data)
+    local type, name, items in data
+    if type == 'shop' then
+        ox_inventory:RegisterShop(id, {
+            name = name or 'Shop',
+            inventory = items or {},
+        })
+    elseif type == 'stash' then
+        local maxWeight, slots in data
+        ox_inventory:RegisterStash(id, name or 'Stash', slots or 10, maxWeight or 20000)
+    end
+end
+
 return overrideFunction
