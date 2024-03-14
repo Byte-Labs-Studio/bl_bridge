@@ -9,18 +9,20 @@ Progressbar.state = false
 
 function Progressbar.showProgress(data)
     local prop, animation, disableControl in data
-    local success
+    local promise = promise.new()
+    disableControl = disableControl or {}
+
     exports['progressbar']:Progress({
         name = 'progress',
         duration = data.duration,
         label = data.label,
         useWhileDead = data.useWhileDead,
         canCancel = data.canCancel,
-        controlDisables = disableControl and {
-            disableMovement = disableControl.move,
-            disableCarMovement = disableControl.car,
-            disableMouse = disableControl.mouse,
-            disableCombat = disableControl.combat,
+        controlDisables = {
+            disableMovement = disableControl.move or true,
+            disableCarMovement = disableControl.car or true,
+            disableMouse = disableControl.mouse or true,
+            disableCombat = disableControl.combat or true,
         },
         animation = animation and {
             animDict = animation.dict,
@@ -34,11 +36,10 @@ function Progressbar.showProgress(data)
             rotation = prop.rot
         },
     }, function(cancelled)
-        success = not cancelled
+        promise:resolve(not cancelled)
     end)
-    lib.waitFor(function()
-        if success ~= nil then return true end
-    end)
+    local success = Citizen.Await(promise)
+
     return success
 end
 

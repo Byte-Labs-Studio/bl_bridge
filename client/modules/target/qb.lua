@@ -131,7 +131,6 @@ for _, exportData in ipairs(funcs) do
         else
             target[originalName]("bruh", args)
         end
-
         return id
     end
 end

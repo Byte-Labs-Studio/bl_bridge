@@ -13,10 +13,18 @@ lib.callback.register('UUID', function(_, num)
     return UUID(num)
 end)
 
+local alternative = {
+    inventory = {
+        ps = 'qb'
+    }
+}
+
 for _, moduleName in ipairs(moduleNames) do
     local framework = convars[moduleName]
+    local hasAlternative = alternative[moduleName]
+
     if frameworks[framework] then
-        local fomartedModule = ("%s.%s.%s"):format(serverDir, moduleName, framework)
+        local fomartedModule = ("%s.%s.%s"):format(serverDir, moduleName, hasAlternative and hasAlternative[framework] or framework)
         local success, module = pcall(require, fomartedModule)
         if type(module) ~= "string" or not string.find(module, 'not found') then
             if success then
