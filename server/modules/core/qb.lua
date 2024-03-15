@@ -65,6 +65,15 @@ local playerFunctionsOverride = {
         id = {
             originalMethod = 'citizenid',
         },
+        gender = {
+            originalMethod = 'charinfo',
+            modifier = {
+                executeFun = true,
+                effect = function(data)
+                    return data.gender
+                end
+            }
+        },
     }
 }
 
@@ -95,6 +104,9 @@ function Core.CommandAdd(name, permission, cb, suggestion, flags)
 end
 
 Core.RegisterUsableItem = inventoryFunctions.registerUsableItem or function(name, cb)
+    cb = function(source, item)
+        cb(source, item.info)
+    end
     shared.Functions.CreateUseableItem(name, cb)
 end
 

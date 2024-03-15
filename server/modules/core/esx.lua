@@ -37,6 +37,7 @@ local coreFunctionsOverride = {
     setJob = {
         originalMethod = 'setJob',
     },
+    
     job = {
         originalMethod = 'getJob',
         modifier = {
@@ -55,6 +56,9 @@ local coreFunctionsOverride = {
     },
     id = {
         originalMethod = 'identifier',
+    },
+    gender = {
+        originalMethod = 'sex',
     },
 }
 

@@ -39,7 +39,7 @@ local registeredItems = {}
 AddEventHandler('ox_inventory:usedItem', function(playerId, itemName, slotId, metadata)
     local itemEffect = registeredItems[itemName]
     if not itemEffect then return end
-    itemEffect(playerId)
+    itemEffect(playerId, metadata)
 end)
 
 function overrideFunction.registerUsableItem(name, cb)
