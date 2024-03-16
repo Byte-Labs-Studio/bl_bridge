@@ -104,10 +104,9 @@ function Core.CommandAdd(name, permission, cb, suggestion, flags)
 end
 
 Core.RegisterUsableItem = inventoryFunctions.registerUsableItem or function(name, cb)
-    cb = function(source, item)
-        cb(source, item.info)
-    end
-    shared.Functions.CreateUseableItem(name, cb)
+    shared.Functions.CreateUseableItem(name, function(source, item)
+        cb(source, item and item.info)
+    end)
 end
 
 local totalFunctionsOverride = merge(inventoryFunctions.methods, playerFunctionsOverride)
