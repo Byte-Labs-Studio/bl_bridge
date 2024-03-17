@@ -73,6 +73,15 @@ local playerFunctionsOverride = {
             end
         }
     },
+    gender = {
+        originalMethod = 'getData',
+        modifier = {
+            executeFun = true,
+            effect = function(data)
+                return data('gender')
+            end
+        }
+    },
 }
 
 function Core.players()

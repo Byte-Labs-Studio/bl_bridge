@@ -70,7 +70,9 @@ local playerFunctionsOverride = {
             modifier = {
                 executeFun = true,
                 effect = function(data)
-                    return data.gender
+                    local gender = data.gender
+                    gender = gender == 1 and 'male' or 'female'
+                    return gender
                 end
             }
         },
