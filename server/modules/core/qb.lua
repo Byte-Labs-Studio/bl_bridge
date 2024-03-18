@@ -116,7 +116,7 @@ end
 
 Core.RegisterUsableItem = inventoryFunctions.registerUsableItem or function(name, cb)
     shared.Functions.CreateUseableItem(name, function(source, item)
-        cb(source, item and item.info)
+        cb(source, item and item.slot, item and item.info)
     end)
 end
 
