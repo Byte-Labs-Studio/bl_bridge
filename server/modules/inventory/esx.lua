@@ -3,13 +3,13 @@ local overrideFunction = {}
 
 overrideFunction.methods = {
     addItem = {
-        originalMethod = 'AddItem',
+        originalMethod = 'addInventoryItem',
     },
     removeItem = {
-        originalMethod = 'RemoveItem',
+        originalMethod = 'removeInventoryItem',
     },
     getItem = {
-        originalMethod = 'GetItemByName',
+        originalMethod = 'getInventoryItem',
     },
     items = {
         originalMethod = 'getInventory',
