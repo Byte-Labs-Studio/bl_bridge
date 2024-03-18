@@ -47,7 +47,6 @@ local coreFunctionsOverride = {
                         lastName = charinfo.lastname,
                         phone = charinfo.phone,
                         gender = charinfo.gender == 1 and 'female' or 'male',
-                        items = shared.Shared.Items,
                         dob = charinfo.birthdate -- YYYY-MM-DD
                     }
                 end

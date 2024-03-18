@@ -10,10 +10,10 @@ end
 
 local isOx = invFramework == 'ox'
 
-function inventory.items()
-    local inventoryItems = isOx and exports.ox_inventory:Items() or core.getPlayerData().items or {}
-    return inventoryItems
-end
+-- function inventory.items()
+--     local inventoryItems = isOx and exports.ox_inventory:Items() or core.getPlayerData().items or {}
+--     return inventoryItems
+-- end
 
 function inventory.playerItems()
     local playerData = isOx and exports.ox_inventory:GetPlayerItems() or core.getPlayerData().inventory or {}

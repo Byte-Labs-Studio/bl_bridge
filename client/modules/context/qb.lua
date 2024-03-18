@@ -56,8 +56,7 @@ local overRideData = {
 
 ---@param data ContextMenuProps | ContextMenuProps[]
 function Context.openContext(data)
-    data = Utils.retreiveNumberIndexedData(data, overRideData)
-    qb_menu:openMenu(data)
+    qb_menu:openMenu(Utils.retreiveNumberIndexedData(data, overRideData))
 end
 
 function Context.closeContext()

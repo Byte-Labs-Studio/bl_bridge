@@ -3,9 +3,8 @@
 local textui = {}
 
 ---@param text string
----@param options? TextUIOptions
-function textui.showTextUI(text, options)
-    lib.showTextUI(text, options)
+function textui.showTextUI(text, position)
+    lib.showTextUI(text, position and {position = ('%s-center'):format(position)})
 end
 
 function textui.hideTextUI()
