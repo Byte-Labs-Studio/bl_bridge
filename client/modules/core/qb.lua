@@ -36,17 +36,19 @@ local coreFunctionsOverride = {
                     local data = originalFun()
                     local job = data.job
                     local gang = data.gang
+                    local charinfo = data.charinfo
                     return {
                         cid = data.citizenid,
                         money = data.money,
                         inventory = type(data.inventory) == 'string' and json.decode(data.inventory) or data.inventory,
                         job = { name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, type = job.type, grade = { name = job.grade.level, label = job.grade.name, salary = job.payment } },
                         gang = { name = gang.name, label = gang.label, isBoss = gang.isboss, grade = { name = gang.grade.level, label = gang.grade.label } },
-                        firstName = data.charinfo.firstname,
-                        lastName = data.charinfo.lastname,
-                        phone = data.charinfo.phone,
-                        gender = data.gender == 1 and 'female' or 'male',
-                        items = shared.Shared.Items
+                        firstName = charinfo.firstname,
+                        lastName = charinfo.lastname,
+                        phone = charinfo.phone,
+                        gender = charinfo.gender == 1 and 'female' or 'male',
+                        items = shared.Shared.Items,
+                        dob = charinfo.birthdate -- YYYY-MM-DD
                     }
                 end
             }

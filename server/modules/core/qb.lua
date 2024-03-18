@@ -76,6 +76,15 @@ local playerFunctionsOverride = {
                 end
             }
         },
+        dob = {
+            originalMethod = 'charinfo',
+            modifier = {
+                executeFun = true,
+                effect = function(data)
+                    return data.birthdate -- YYYY-MM-DD
+                end
+            }
+        },
     }
 }
 
