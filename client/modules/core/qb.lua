@@ -45,6 +45,7 @@ local coreFunctionsOverride = {
                         firstName = data.charinfo.firstname,
                         lastName = data.charinfo.lastname,
                         phone = data.charinfo.phone,
+                        gender = data.gender == 1 and 'female' or 'male',
                         items = shared.Shared.Items
                     }
                 end
