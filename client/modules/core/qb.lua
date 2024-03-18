@@ -37,6 +37,8 @@ local coreFunctionsOverride = {
                     local job = data.job
                     local gang = data.gang
                     local charinfo = data.charinfo
+
+                    local year, month, day = charinfo.birthdate:match("(%d+)-(%d+)-(%d+)")
                     return {
                         cid = data.citizenid,
                         money = data.money,
@@ -47,7 +49,7 @@ local coreFunctionsOverride = {
                         lastName = charinfo.lastname,
                         phone = charinfo.phone,
                         gender = charinfo.gender == 1 and 'female' or 'male',
-                        dob = charinfo.birthdate -- YYYY-MM-DD
+                        dob = ('%s/%s/%s'):format(month, day, year) -- DD/MM/YYYY
                     }
                 end
             }

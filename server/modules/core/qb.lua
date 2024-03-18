@@ -81,7 +81,8 @@ local playerFunctionsOverride = {
             modifier = {
                 executeFun = true,
                 effect = function(data)
-                    return data.birthdate -- YYYY-MM-DD
+                    local year, month, day = data.birthdate:match("(%d+)-(%d+)-(%d+)")
+                    return ('%s/%s/%s'):format(month, day, year) -- DD/MM/YYYY
                 end
             }
         },

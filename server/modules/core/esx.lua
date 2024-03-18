@@ -62,6 +62,13 @@ local coreFunctionsOverride = {
     },
     dob = {
         originalMethod = 'dateofbirth',
+        modifier = {
+            effect = function(string)
+                if type(string) ~= 'string' then return end
+                local month, day, year = string:match("(%d+)/(%d+)/(%d+)")
+                return ('%s/%s/%s'):format(month, day, year)
+            end
+        }
     },
 }
 

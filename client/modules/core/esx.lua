@@ -30,6 +30,9 @@ local coreFunctionsOverride = {
                 lib.waitFor(function() Wait(100) if shared.IsPlayerLoaded() then return true end end, nil, 10000)
                 local data = originalFun()
                 local job = data.job
+
+                local month, day, year = data.dateofbirth:match("(%d+)/(%d+)/(%d+)")
+
                 return {
                     cid = data.identifier,
                     money = data.money,
@@ -39,7 +42,7 @@ local coreFunctionsOverride = {
                     lastName = data.lastName,
                     phone = data.phone_number or '0',
                     gender = data.sex,
-                    dob = data.dateofbirth
+                    dob = ('%s/%s/%s'):format(month, day, year)
                 }
             end
         }
