@@ -71,7 +71,7 @@ local playerFunctionsOverride = {
                 executeFun = true,
                 effect = function(data)
                     local gender = data.gender
-                    gender = gender == 1 and 'male' or 'female'
+                    gender = gender == 1 and 'female' or 'male'
                     return gender
                 end
             }
