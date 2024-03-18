@@ -9,6 +9,11 @@ overrideFunction.methods = {
     Functions = {
         addItem = {
             originalMethod = 'AddItem',
+            modifier = {
+                effect = function(originalFun, name, amount, metadata, slot)
+                    return originalFun(name, amount, slot, metadata)
+                end
+            }
         },
         removeItem = {
             originalMethod = 'RemoveItem',
