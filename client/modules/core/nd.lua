@@ -49,8 +49,8 @@ local coreFunctionsOverride = {
                     firstName = data.firstname,
                     lastName = data.lastname,
                     phone = 'Unknown',
-                    -- need to add gender
-                        -- need to add dob -- YYYY-MM-DD
+                    gender = data.gender,
+                    dob = data.dob,
                 }
             end
         }

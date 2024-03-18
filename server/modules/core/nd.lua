@@ -49,9 +49,7 @@ local playerFunctionsOverride = {
         modifier = {
             executeFun = true,
             effect = function(data)
-                local firstname, lastname = data('firstname'), data('lastname')
-
-                return {firstname = firstname, lastname = lastname}
+                return {firstname = data('firstname'), lastname = data('lastname')}
             end
         }
     },
@@ -82,7 +80,15 @@ local playerFunctionsOverride = {
             end
         }
     },
-    -- need to add dob -- YYYY-MM-DD
+    dob = {
+        originalMethod = 'getData',
+        modifier = {
+            executeFun = true,
+            effect = function(data)
+                return data('dob')
+            end
+        }
+    },
 }
 
 function Core.players()

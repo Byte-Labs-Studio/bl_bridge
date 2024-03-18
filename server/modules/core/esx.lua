@@ -60,7 +60,9 @@ local coreFunctionsOverride = {
     gender = {
         originalMethod = 'sex',
     },
-        -- need to add dob -- YYYY-MM-DD
+    dob = {
+        originalMethod = 'dateofbirth',
+    },
 }
 
 local totalFunctionsOverride = merge(inventoryFunctions.methods, coreFunctionsOverride)
