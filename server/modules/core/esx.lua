@@ -100,7 +100,7 @@ end
 function Core.GetPlayer(src)
     local player = shared.GetPlayerFromId(src)
     if not player then return end
-    local wrappedPlayer = Utils.retreiveStringIndexedData(player, totalFunctionsOverride)
+    local wrappedPlayer = Utils.retreiveStringIndexedData(player, totalFunctionsOverride, src)
     return wrappedPlayer
 end
 
