@@ -48,6 +48,15 @@ local coreFunctionsOverride = {
             end
         }
     },
+    charinfo = {
+        originalMethod = 'variables',
+        modifier = {
+            executeFun = true,
+            effect = function(data)
+                return {firstname = data.firstName, lastname = data.lastName}
+            end
+        }
+    },
     name = {
         originalMethod = 'getName',
         modifier = {
@@ -58,7 +67,13 @@ local coreFunctionsOverride = {
         originalMethod = 'identifier',
     },
     gender = {
-        originalMethod = 'sex',
+        originalMethod = 'variables',
+        modifier = {
+            executeFun = true,
+            effect = function(data)
+                return data.sex == 'm' and 'male' or 'female'
+            end
+        }
     },
     dob = {
         originalMethod = 'dateofbirth',
