@@ -76,7 +76,7 @@ local playerFunctionsOverride = {
         modifier = {
             executeFun = true,
             effect = function(data)
-                return data('gender')
+                return string.lower(data('gender'))
             end
         }
     },
@@ -85,7 +85,8 @@ local playerFunctionsOverride = {
         modifier = {
             executeFun = true,
             effect = function(data)
-                return data('dob')
+                local year, month, day = data('dob'):match("(%d+)-(%d+)-(%d+)")
+                return ('%s/%s/%s'):format(month, day, year) -- DD/MM/YYYY
             end
         }
     },

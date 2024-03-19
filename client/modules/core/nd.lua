@@ -41,6 +41,9 @@ local coreFunctionsOverride = {
                 lib.waitFor(function() if loaded then return true end end, nil, 10000)
                 local data = originalFun()
                 local jobData = data.jobInfo
+
+                local year, month, day = data.dob.birthdate:match("(%d+)-(%d+)-(%d+)")
+
                 return {
                     cid = data.id,
                     money = data.cash,
@@ -49,8 +52,8 @@ local coreFunctionsOverride = {
                     firstName = data.firstname,
                     lastName = data.lastname,
                     phone = 'Unknown',
-                    gender = data.gender,
-                    dob = data.dob,
+                    gender = string.lower(data.gender),
+                    dob = ('%s/%s/%s'):format(month, day, year),
                 }
             end
         }
