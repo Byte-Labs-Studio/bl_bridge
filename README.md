@@ -1,4 +1,8 @@
+# Byte Labs - Bridge
+An extendible and modular bridge for FiveM Frameworks. Made to unify and simplify the process of creating and maintaining resources for multiple frameworks.
 
+Website: [Byte Labs](https://byte-labs.net)
+Discord: [Byte Labs](https://discord.gg/fqsqSjZfxE)
 
 ## CFG
 ``` 
