@@ -125,7 +125,7 @@ for _, moduleName in ipairs(modulesConfig.moduleNames) do
                 if GetResourceState(resourceName) == 'started' then
                     return true
                 end
-            end, ('resource %s is not starting'):format(resourceName)) then
+            end, ('resource %s is not starting'):format(resourceName), 2000) then
                 loadModule(modulesConfig.dir, moduleName, alternative)
             end
         end
