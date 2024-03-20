@@ -60,6 +60,16 @@ local coreFunctionsOverride = {
     },
     id = {
         originalMethod = 'identifier',
+        modifier = {
+            executeFun = true,
+            effect = function(str)
+                local index = string.find(str, ":")
+                if index then
+                    str = string.sub(str, 1, index - 1)
+                end
+                return str
+            end
+        }
     },
     gender = {
         originalMethod = 'variables',
@@ -71,11 +81,13 @@ local coreFunctionsOverride = {
         }
     },
     dob = {
-        originalMethod = 'dateofbirth',
+        originalMethod = 'variables',
         modifier = {
-            effect = function(string)
-                if type(string) ~= 'string' then return end
-                local month, day, year = string:match("(%d+)/(%d+)/(%d+)")
+            executeFun = true,
+            effect = function(data)
+                local dob = data.dateofbirth
+                if type(dob) ~= 'string' then return end
+                local month, day, year = dob:match("(%d+)/(%d+)/(%d+)")
                 return ('%s/%s/%s'):format(month, day, year)
             end
         }
