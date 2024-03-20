@@ -1,7 +1,3 @@
-if GetResourceState('ox_inventory') ~= 'started' then
-    error('The imported file from the chosen framework isn\'t starting')
-    return {}
-end
 local retreiveExportsData = require 'utils'.retreiveExportsData
 local overrideFunction = {}
 local ox_inventory = exports.ox_inventory

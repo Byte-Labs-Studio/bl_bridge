@@ -30,6 +30,104 @@ Config = {
         notify = format(GetConvar('bl:notify', DEFAULT_FRAMEWORK)),
         textui = format(GetConvar('bl:textui', DEFAULT_FRAMEWORK)),
     },
+    resources = {
+        inventory = {
+            ox = 'ox_inventory',
+            qb = 'qb-inventory',
+            ps = 'ps-inventory'
+        },
+        core = {
+            nd = 'ND_Core',
+            qb = 'qb-core',
+            esx = 'es_extended'
+        },
+        context = {
+            qb = 'qb-menu',
+        },
+        progressbar = {
+            qb = 'progressbar'
+        },
+        radial = {
+            qb = 'qb-radialmenu'
+        },
+        target = {
+            qb = 'qb-target'
+        },
+    },
+
+    client = {
+        dir = 'client',
+        moduleNames = {
+            "core",
+            "context",
+            "target",
+            "radial",
+            "notify",
+            "inventory",
+            "progressbar",
+            'textui',
+        },
+        all = {
+            inventory = true
+        },
+    },
+    server = {
+        dir = 'server',
+        moduleNames = {
+            "inventory",
+            "core",
+            "notify",
+        },
+        alternative = {
+            inventory = {
+                ps = 'qb'
+            }
+        },
+    }
 }
 
-require(("%s.main"):format(lib.context))
+local function loadModule(dir, moduleName, framework)
+    local fomartedModule = ("%s.%s.%s"):format(dir, moduleName, framework)
+    local success, module = pcall(require, fomartedModule)
+    if type(module) ~= "string" or not string.find(module, 'not found') then
+        if success then
+            Framework[moduleName] = module
+            print(("[%s] Loaded module %s"):format(framework, moduleName))
+        else
+            error(("Error loading module %s: %s"):format(moduleName, module))
+        end
+    end
+end
+
+local modulesConfig = Config[lib.context]
+
+if lib.context == 'server' then
+    local UUID = require'utils'.UUID
+    lib.callback.register('UUID', function(_, num)
+        return UUID(num)
+    end)
+end
+
+for _, moduleName in ipairs(modulesConfig.moduleNames) do
+    local framework = Config.convars[moduleName]
+    if Config.frameworks[framework] then
+        local hasAlternative = modulesConfig.alternative and modulesConfig.alternative[moduleName]
+        local moduleForAll = modulesConfig.all and modulesConfig.all[moduleName] and 'all' or framework
+        local alternative = hasAlternative and hasAlternative[moduleForAll] or moduleForAll
+
+        local resourceName = Config.resources[moduleName] and Config.resources[moduleName][framework]
+
+        if not resourceName or GetResourceState(resourceName) == 'started' then
+            loadModule(modulesConfig.dir, moduleName, alternative)
+        else
+            ExecuteCommand('ensure '..resourceName)
+            if lib.waitFor(function()
+                if GetResourceState(resourceName) == 'started' then
+                    return true
+                end
+            end, ('resource %s is not starting'):format(resourceName)) then
+                loadModule(modulesConfig.dir, moduleName, alternative)
+            end
+        end
+    end
+end

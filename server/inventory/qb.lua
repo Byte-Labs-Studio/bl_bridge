@@ -1,3 +1,5 @@
+
+
 if GetResourceState('qb-inventory') ~= 'started' and GetResourceState('ps-inventory') ~= 'started' then
     error('The imported file from the chosen framework isn\'t starting')
     return

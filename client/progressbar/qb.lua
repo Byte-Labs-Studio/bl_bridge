@@ -1,9 +1,3 @@
-local menuName = 'progressbar'
-if GetResourceState(menuName) ~= 'started' then
-    error('The imported file from the chosen framework isn\'t starting')
-    return
-end
-
 local Progressbar = {}
 Progressbar.state = false
 

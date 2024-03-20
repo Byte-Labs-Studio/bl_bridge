@@ -1,11 +1,5 @@
-local resource = 'qb-core'
-if GetResourceState(resource) ~= 'started' then
-    error('The imported file from the chosen framework isn\'t starting')
-    return
-end
-
 local Core = {}
-local shared = exports[resource]:GetCoreObject()
+local shared = exports['qb-core']:GetCoreObject()
 local retreiveStringIndexedData = require 'utils'.retreiveStringIndexedData
 local merge = lib.table.merge
 local inventoryFunctions = Framework.inventory

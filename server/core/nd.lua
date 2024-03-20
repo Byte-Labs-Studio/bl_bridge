@@ -1,11 +1,5 @@
-local resource = 'ND_Core'
-if GetResourceState(resource) ~= 'started' then
-    error('The imported file from the chosen framework isn\'t starting')
-    return
-end
-
 local Core = {}
-local shared = exports[resource]
+local shared = exports.ND_Core
 local retreiveStringIndexedData = require 'utils'.retreiveStringIndexedData
 local merge = lib.table.merge
 local inventoryFunctions = Framework.inventory
