@@ -41,7 +41,7 @@ local coreFunctionsOverride = {
                     firstName = data.firstName,
                     lastName = data.lastName,
                     phone = data.phone_number or '0',
-                    gender = data.sex,
+                    gender = data.sex == 'm' and 'male' or 'female',
                     dob = ('%s/%s/%s'):format(month, day, year)
                 }
             end
