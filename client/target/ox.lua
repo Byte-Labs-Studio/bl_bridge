@@ -1,10 +1,4 @@
-local targetName = 'ox_target'
-if GetResourceState(targetName) ~= 'started' then
-    error(targetName .. ' isn\'t started')
-    return
-end
-
-local target = exports[targetName]
+local target = exports.ox_target
 local Target = {}
 
 -- for options is exactly the same as https://overextended.dev/ox_target

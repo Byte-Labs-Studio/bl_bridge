@@ -45,16 +45,29 @@ Config = {
         },
         context = {
             qb = 'qb-menu',
+            ox = 'none'
         },
         progressbar = {
-            qb = 'progressbar'
+            qb = 'progressbar',
+            ox = 'none'
         },
         radial = {
-            qb = 'qb-radialmenu'
+            qb = 'qb-radialmenu',
+            ox = 'none'
         },
         target = {
-            qb = 'qb-target'
+            qb = 'qb-target',
+            ox = 'ox_target',
         },
+        notify = {
+            qb = 'none',
+            ox = 'none',
+            esx = 'none',
+        },
+        textui = {
+            ox = 'none',
+            qb = 'none',
+        }
     },
 
     client = {
@@ -122,7 +135,7 @@ for _, moduleName in ipairs(modulesConfig.moduleNames) do
 
         if not resourceName then
             return error('there is no '..framework.. ' on module '..moduleName.. '!, please make sure you configured your convars on cfg!')
-        elseif GetResourceState(resourceName) == 'started' then
+        elseif resourceName == 'none' or GetResourceState(resourceName) == 'started' then
             loadModule(modulesConfig.dir, moduleName, alternative)
         else
             ExecuteCommand('ensure '..resourceName)
