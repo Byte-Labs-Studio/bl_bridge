@@ -19,6 +19,7 @@ Config = {
         qb = true,
         nd = true,
         ps = true,
+        qs = true
     },
     convars = {
         core = format(GetConvar('bl:framework', DEFAULT_FRAMEWORK)),
@@ -34,7 +35,8 @@ Config = {
         inventory = {
             ox = 'ox_inventory',
             qb = 'qb-inventory',
-            ps = 'ps-inventory'
+            ps = 'ps-inventory',
+            qs = 'qs-inventory'
         },
         core = {
             nd = 'ND_Core',
@@ -80,7 +82,8 @@ Config = {
         },
         alternative = {
             inventory = {
-                ps = 'qb'
+                ps = 'qb',
+                qs = 'qb'
             }
         },
     }
