@@ -120,7 +120,9 @@ for _, moduleName in ipairs(modulesConfig.moduleNames) do
 
         local resourceName = Config.resources[moduleName] and Config.resources[moduleName][framework]
 
-        if not resourceName or GetResourceState(resourceName) == 'started' then
+        if not resourceName then
+            return error('there is no '..framework.. ' on module '..moduleName.. '!, please make sure you configured your convars on cfg!')
+        elseif GetResourceState(resourceName) == 'started' then
             loadModule(modulesConfig.dir, moduleName, alternative)
         else
             ExecuteCommand('ensure '..resourceName)
