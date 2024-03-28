@@ -13,10 +13,10 @@ function Progressbar.showProgress(data)
         useWhileDead = data.useWhileDead,
         canCancel = data.canCancel,
         controlDisables = {
-            disableMovement = disableControl.move or true,
-            disableCarMovement = disableControl.car or true,
-            disableMouse = disableControl.mouse or true,
-            disableCombat = disableControl.combat or true,
+            disableMovement = disableControl.move ~= false,
+            disableCarMovement = disableControl.car ~= false,
+            disableMouse = disableControl.mouse ~= false,
+            disableCombat = disableControl.combat ~= false,
         },
         animation = animation and {
             animDict = animation.dict,
