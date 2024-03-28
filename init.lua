@@ -19,6 +19,7 @@ Config = {
         qb = true,
         nd = true,
         ps = true,
+        qs = true
     },
     convars = {
         core = format(GetConvar('bl:framework', DEFAULT_FRAMEWORK)),
@@ -34,7 +35,8 @@ Config = {
         inventory = {
             ox = 'ox_inventory',
             qb = 'qb-inventory',
-            ps = 'ps-inventory'
+            ps = 'ps-inventory',
+            qs = 'qs-inventory'
         },
         core = {
             nd = 'ND_Core',
@@ -43,16 +45,29 @@ Config = {
         },
         context = {
             qb = 'qb-menu',
+            ox = 'none'
         },
         progressbar = {
-            qb = 'progressbar'
+            qb = 'progressbar',
+            ox = 'none'
         },
         radial = {
-            qb = 'qb-radialmenu'
+            qb = 'qb-radialmenu',
+            ox = 'none'
         },
         target = {
-            qb = 'qb-target'
+            qb = 'qb-target',
+            ox = 'ox_target',
         },
+        notify = {
+            qb = 'none',
+            ox = 'none',
+            esx = 'none',
+        },
+        textui = {
+            ox = 'none',
+            qb = 'none',
+        }
     },
 
     client = {
@@ -80,7 +95,8 @@ Config = {
         },
         alternative = {
             inventory = {
-                ps = 'qb'
+                ps = 'qb',
+                qs = 'qb'
             }
         },
     }
@@ -117,7 +133,9 @@ for _, moduleName in ipairs(modulesConfig.moduleNames) do
 
         local resourceName = Config.resources[moduleName] and Config.resources[moduleName][framework]
 
-        if not resourceName or GetResourceState(resourceName) == 'started' then
+        if not resourceName then
+            return error('there is no '..framework.. ' on module '..moduleName.. '!, please make sure you configured your convars on cfg!')
+        elseif resourceName == 'none' or GetResourceState(resourceName) == 'started' then
             loadModule(modulesConfig.dir, moduleName, alternative)
         else
             ExecuteCommand('ensure '..resourceName)
