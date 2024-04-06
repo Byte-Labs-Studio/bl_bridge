@@ -102,6 +102,13 @@ Config = {
     }
 }
 
+exports('getFramework', function(module)
+    local moduleConfig = Config.resources[module]
+    if not moduleConfig then return end
+    
+    return moduleConfig[Config.convars[module]]
+end)
+
 local function loadModule(dir, moduleName, framework)
     local fomartedModule = ("%s.%s.%s"):format(dir, moduleName, framework)
     local success, module = pcall(require, fomartedModule)
