@@ -16,7 +16,7 @@ overrideFunction.methods = retreiveExportsData(ox_inventory, {
         }
     },
     getItem = {
-        originalMethod = 'GetItem',
+        originalMethod = 'GetSlotWithItem',
         modifier = {
             passSource = true,
         }
