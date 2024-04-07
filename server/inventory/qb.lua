@@ -15,6 +15,23 @@ overrideFunction.methods = {
         },
         getItem = {
             originalMethod = 'GetItemByName',
+            modifier = {
+                effect = function(originalFun, itemName)
+                    local data = originalFun(itemName)
+                    local filtered = {}
+
+                    filtered.label = data.label
+                    filtered.name = data.name
+                    filtered.weight = data.weight
+                    filtered.slot = data.slot
+                    filtered.close = data.shouldClose
+                    filtered.stack = not data.unique
+                    filtered.metadata = data.info ~= '' and data.info or {}
+                    filtered.count = data.amount or 1
+
+                    return filtered
+                end
+            }
         }
     },
     PlayerData = {
