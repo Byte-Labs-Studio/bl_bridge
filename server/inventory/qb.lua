@@ -18,18 +18,16 @@ overrideFunction.methods = {
             modifier = {
                 effect = function(originalFun, itemName)
                     local data = originalFun(itemName)
-                    local filtered = {}
-
-                    filtered.label = data.label
-                    filtered.name = data.name
-                    filtered.weight = data.weight
-                    filtered.slot = data.slot
-                    filtered.close = data.shouldClose
-                    filtered.stack = not data.unique
-                    filtered.metadata = data.info ~= '' and data.info or {}
-                    filtered.count = data.amount or 1
-
-                    return filtered
+                    return {
+                        label = data.label,
+                        name = data.name,
+                        weight = data.weight,
+                        slot = data.slot,
+                        close = data.shouldClose,
+                        stack = not data.unique,
+                        metadata = data.info ~= '' and data.info or {},
+                        count = data.amount or 1
+                    }
                 end
             }
         }
