@@ -4,6 +4,8 @@ An extendible and modular bridge for FiveM Frameworks. Made to unify and simplif
 Website: [Byte Labs](https://byte-labs.net)
 Discord: [Byte Labs](https://discord.gg/fqsqSjZfxE)
 
+# Instruction (Follow [Docs](https://docs.byte-labs.net/ ) 
+
 ## CFG
 ``` 
 # Frameworks 'qb' | 'esx' | 'nd'
