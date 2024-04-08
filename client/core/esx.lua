@@ -31,15 +31,15 @@ local coreFunctionsOverride = {
                 local data = originalFun()
                 local job = data.job
 
-                local month, day, year = data.dateofbirth:match("(%d+)/(%d+)/(%d+)")
+                local month, day, year = data.dateofbirth and data.dateofbirth:match("(%d+)/(%d+)/(%d+)") or 00, 00, 24
 
                 return {
                     cid = data.identifier,
                     money = data.money,
                     inventory = data.inventory,
                     job = {name = job.name, label = job.label, onDuty = true, isBoss = false, grade = {name = job.grade, label = job.grade_label, salary = job.grade_salary}},
-                    firstName = data.firstName,
-                    lastName = data.lastName,
+                    firstName = data.firstName or 'Unknown',
+                    lastName = data.lastName or 'Unknown',
                     phone = data.phone_number or '0',
                     gender = data.sex == 'm' and 'male' or 'female',
                     dob = ('%s/%s/%s'):format(month, day, year)

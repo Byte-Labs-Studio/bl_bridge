@@ -45,9 +45,9 @@ local coreFunctionsOverride = {
                         inventory = type(data.items) == 'string' and json.decode(data.items) or data.items,
                         job = { name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, type = job.type, grade = { name = job.grade.level, label = job.grade.name, salary = job.payment } },
                         gang = { name = gang.name, label = gang.label, isBoss = gang.isboss, grade = { name = gang.grade.level, label = gang.grade.label } },
-                        firstName = charinfo.firstname,
-                        lastName = charinfo.lastname,
-                        phone = charinfo.phone,
+                        firstName = charinfo.firstname or 'Unknown',
+                        lastName = charinfo.lastname or 'Unknown',
+                        phone = charinfo.phone or '0000000',
                         gender = charinfo.gender == 1 and 'female' or 'male',
                         dob = ('%s/%s/%s'):format(month, day, year) -- DD/MM/YYYY
                     }
