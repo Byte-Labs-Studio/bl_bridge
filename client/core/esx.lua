@@ -35,8 +35,8 @@ local coreFunctionsOverride = {
 
                 return {
                     cid = data.identifier,
-                    money = data.money,
-                    inventory = data.inventory,
+                    money = data.money or 0,
+                    inventory = data.inventory or {},
                     job = {name = job.name, label = job.label, onDuty = true, isBoss = false, grade = {name = job.grade, label = job.grade_label, salary = job.grade_salary}},
                     firstName = data.firstName or 'Unknown',
                     lastName = data.lastName or 'Unknown',
