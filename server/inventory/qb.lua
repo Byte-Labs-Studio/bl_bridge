@@ -18,6 +18,9 @@ overrideFunction.methods = {
             modifier = {
                 effect = function(originalFun, itemName)
                     local data = originalFun(itemName)
+                    if not data then
+                        return false, 'Item not exist or you don\'t have it'
+                    end
                     return {
                         label = data.label,
                         name = data.name,
