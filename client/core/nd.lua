@@ -38,7 +38,9 @@ local coreFunctionsOverride = {
         modifier = {
             executeFun = true,
             effect = function(originalFun)
-                lib.waitFor(function() if loaded then return true end end, nil, 10000)
+                while not loaded do
+                    Wait(1000)
+                end
                 local data = originalFun()
                 local jobData = data.jobInfo
 

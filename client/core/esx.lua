@@ -4,15 +4,18 @@ if GetResourceState(coreName) ~= 'started' then
     return
 end
 
+local loaded = false
 local Core = {}
 local retreiveStringIndexedData = require 'utils'.retreiveStringIndexedData
 
 RegisterNetEvent('esx:playerLoaded', function()
     TriggerEvent('bl_bridge:client:playerLoaded')
+    loaded = true
 end)
 
 RegisterNetEvent('esx:onPlayerLogout', function()
     TriggerEvent('bl_bridge:client:playerUnloaded')
+    loaded = false
 end)
 
 RegisterNetEvent('esx:setJob', function(job)
@@ -27,7 +30,9 @@ local coreFunctionsOverride = {
         modifier = {
             executeFun = true,
             effect = function(originalFun)
-                lib.waitFor(function() Wait(100) if shared.IsPlayerLoaded() then return true end end, nil, 10000)
+                while not loaded do
+                    Wait(1000)
+                end
                 local data = originalFun()
                 local job = data.job
 
@@ -55,7 +60,7 @@ function Core.getPlayerData()
 end
 
 function Core.playerLoaded()
-    return shared.IsPlayerLoaded()
+    return loaded
 end
 
 return Core

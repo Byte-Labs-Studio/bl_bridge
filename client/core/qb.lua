@@ -32,7 +32,9 @@ local coreFunctionsOverride = {
             modifier = {
                 executeFun = true,
                 effect = function(originalFun)
-                    lib.waitFor(function()if LocalPlayer.state.isLoggedIn then return true end end, nil, 10000)
+                    while not LocalPlayer.state.isLoggedIn do
+                        Wait(1000)
+                    end
                     local data = originalFun()
                     local job = data.job
                     local gang = data.gang
