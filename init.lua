@@ -95,8 +95,7 @@ Config = {
         },
         alternative = {
             inventory = {
-                ps = 'qb',
-                qs = 'qb'
+                ps = 'qb'
             }
         },
     }
