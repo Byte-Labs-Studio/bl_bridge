@@ -38,7 +38,7 @@ end
 function inventory.openInventory(invType, invId)
     if isOx then
         exports.ox_inventory:openInventory(invType, {type = invId})
-    elseif invFramework == 'qb' or invFramework == 'qs' then
+    elseif invFramework == 'qb' or isQS then
         local inventoryData = lib.callback.await('bl_bridge:validInventory', 10, invType, invId)
         if not inventoryData then return end
         TriggerServerEvent('inventory:server:OpenInventory', invType, invId, inventoryData)
