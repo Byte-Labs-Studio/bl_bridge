@@ -59,6 +59,16 @@ local playerFunctionsOverride = {
         id = {
             originalMethod = 'citizenid',
         },
+        nationality = {
+            originalMethod = 'charinfo',
+            modifier = {
+                executeFun = true,
+                effect = function(data)
+                    local nationality = data.nationality
+                    return nationality
+                end
+            }
+        },
         gender = {
             originalMethod = 'charinfo',
             modifier = {
