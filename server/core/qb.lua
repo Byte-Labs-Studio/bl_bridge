@@ -8,6 +8,10 @@ RegisterNetEvent('QBCore:Server:OnPlayerLoaded', function(...)
     TriggerEvent('bl_bridge:server:playerLoaded', source, ...)
 end)
 
+AddEventHandler('QBCore:Server:OnMoneyChange', function(src, moneyType, amount, operation, reason)
+    TriggerEvent('bl_bridge:server:updateMoney', src, moneyType, amount, operation)
+end)
+
 local playerFunctionsOverride = {
     Functions = {
         getBalance = {
@@ -18,6 +22,9 @@ local playerFunctionsOverride = {
         },
         addBalance = {
             originalMethod = 'AddMoney',
+        },
+        setBalance = {
+            originalMethod = 'SetMoney',
         },
         setJob = {
             originalMethod = 'SetJob',

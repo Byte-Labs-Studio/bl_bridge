@@ -4,8 +4,12 @@ local retreiveStringIndexedData = require 'utils'.retreiveStringIndexedData
 local merge = lib.table.merge
 local inventoryFunctions = Framework.inventory
 
-AddEventHandler("ND:characterLoaded", function(...)
-    TriggerEvent('bl_bridge:server:playerLoaded', ...)
+AddEventHandler("ND:characterLoaded", function(character)
+    TriggerEvent('bl_bridge:server:playerLoaded', character.source, character)
+end)
+
+AddEventHandler("ND:moneyChange", function(source, account, amount, action, reason)
+    TriggerEvent('bl_bridge:server:updateMoney', source, account, amount, action)
 end)
 
 local playerFunctionsOverride = {
@@ -24,6 +28,14 @@ local playerFunctionsOverride = {
     },
     addBalance = {
         originalMethod = 'addMoney',
+    },
+    setBalance = {
+        originalMethod = 'setMetadata',
+        modifier = {
+            effect = function(originalFun, type, amount)
+                return originalFun(type, amount)
+            end
+        }
     },
     setJob = {
         originalMethod = 'setJob',

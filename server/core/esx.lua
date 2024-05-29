@@ -3,6 +3,14 @@ local shared = exports["es_extended"]:getSharedObject()
 local Utils = require 'utils'
 local merge = lib.table.merge
 
+RegisterNetEvent('esx:playerLoaded', function(...)
+    TriggerEvent('bl_bridge:server:playerLoaded', ...)
+end)
+
+RegisterNetEvent('esx:setAccountMoney', function(player, accountName, money, reason)
+    TriggerEvent('bl_bridge:server:updateMoney', player, accountName == 'money' and 'cash' or accountName, money, 'set')
+end)
+
 local inventoryFunctions = Framework.inventory
 local coreFunctionsOverride = {
     getBalance = {
@@ -15,6 +23,14 @@ local coreFunctionsOverride = {
     },
     removeBalance = {
         originalMethod = 'removeAccountMoney',
+        modifier = {
+            effect = function(originalFun, type, amount)
+                return originalFun(type == 'cash' and 'money' or type, amount)
+            end
+        }
+    },
+    setBalance = {
+        originalMethod = 'setAccountMoney',
         modifier = {
             effect = function(originalFun, type, amount)
                 return originalFun(type == 'cash' and 'money' or type, amount)
