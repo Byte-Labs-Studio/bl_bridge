@@ -1,9 +1,7 @@
 local Radial = {}
-local menu = lib
-local callback = menu.callback
 
 function Radial.addOptions(optionId, data)
-    local id = callback.await('UUID', false, 8)
+    local id = require'utils'.await('UUID', false, 8)
 
     local title, icon, items in data
     lib.registerRadial({
