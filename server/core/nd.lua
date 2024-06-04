@@ -1,7 +1,8 @@
 local Core = {}
 local shared = exports.ND_Core
-local retreiveStringIndexedData = require 'utils'.retreiveStringIndexedData
-local merge = lib.table.merge
+local Utils = require 'utils'
+local retreiveStringIndexedData = Utils.retreiveStringIndexedData
+local merge = Utils.table_merge
 local inventoryFunctions = Framework.inventory
 
 AddEventHandler("ND:characterLoaded", function(character)

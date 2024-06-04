@@ -6,12 +6,11 @@ version '1.2.2'
 
 dependencies {
   '/onesync',
-  'ox_lib',
 }
 
-shared_script {
-  '@ox_lib/init.lua',
-  'init.lua'
+shared_scripts {
+  'require.lua',
+  'init.lua',
 }
 
 files {

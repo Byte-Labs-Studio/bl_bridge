@@ -35,6 +35,13 @@ local funcs = {
         end
     },
     {
+        name = "addModel",
+        originalname = "addModel",
+        args = function(data)
+            return table.unpack({data.models, data.options})
+        end
+    },
+    {
         name = "addCircleZone",
         originalname = "addSphereZone",
         args = function(data)
@@ -73,6 +80,13 @@ local funcs = {
         originalname = "removeZone",
         args = function(data)
             return data
+        end
+    },
+    {
+        name = "removeModel",
+        originalname = "removeModel",
+        args = function(data)
+            return table.unpack({data.models, data.names})
         end
     },
     {

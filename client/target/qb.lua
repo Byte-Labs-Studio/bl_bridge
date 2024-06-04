@@ -7,8 +7,8 @@ if GetResourceState(targetName) ~= 'started' then
 end
 
 local target = exports[targetName]
-local retreiveNumberIndexedData = require 'utils'.retreiveNumberIndexedData
-local callback = lib.callback
+local Utils = require'utils'
+local retreiveNumberIndexedData = Utils.retreiveNumberIndexedData
 local Target = {}
 
 local OverrideData = {
@@ -75,6 +75,13 @@ local funcs = {
         end
     },
     {
+        name = "addModel",
+        originalname = "AddTargetModel",
+        args = function(data)
+            return {data.models}
+        end
+    },
+    {
         name = "addEntity",
         originalname = "AddTargetEntity",
         args = function(data)
@@ -114,7 +121,7 @@ local funcs = {
 -- dynamic way of creating funcs for the target, i will make it global in the future
 for _, exportData in ipairs(funcs) do
     Target[exportData.name] = function(data)
-        local id = callback.await('UUID', false, 8)
+        local id = Utils.await('UUID', false, 8)
         local originalName = exportData.originalname or exportData.name
 
         local args = exportData.args(data, id)

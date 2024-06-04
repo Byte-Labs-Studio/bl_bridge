@@ -6,8 +6,6 @@ end
 
 local qb_radial = exports[menuName]
 local Radial = {}
-local menu = lib
-local callback = menu.callback
 local Utils = require 'utils'
 local eventIndex = 0
 local storedEvents = {}
@@ -45,7 +43,7 @@ local overRideData = {
 }
 
 function Radial.addOptions(optionId, data)
-    local id = callback.await('UUID', false, 8)
+    local id = Utils.await('UUID', false, 8)
 
     local title, icon, items in data
     items = Utils.retreiveNumberIndexedData(items, overRideData)

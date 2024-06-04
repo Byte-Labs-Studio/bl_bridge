@@ -145,7 +145,144 @@ local function UUID(num)
     return uuidWithTime
 end
 
+local context = IsDuplicityVersion() and 'server' or 'client'
+
+--https://github.com/overextended/ox_lib/blob/master/imports/waitFor/shared.lua
+function Utils.waitFor(cb, errMessage, timeout)
+    local value = cb()
+
+    if value ~= nil then return value end
+
+    if timeout or timeout == nil then
+        if type(timeout) ~= 'number' then timeout = 1000 end
+    end
+
+    local start = timeout and GetGameTimer()
+
+    while value == nil do
+        Wait(0)
+
+        local elapsed = timeout and GetGameTimer() - start
+
+        if elapsed and elapsed > timeout then
+            return error(('%s (waited %.1fms)'):format(errMessage or 'failed to resolve callback', elapsed), 2)
+        end
+
+        value = cb()
+    end
+
+    return value
+end
+
+
+--https://github.com/overextended/ox_lib/blob/master/imports/callback/client.lua - thanks
+--https://github.com/overextended/ox_lib/blob/master/imports/callback/server.lua
+if context == 'client' then
+    local pendingCallbacks = {}
+    local timers = {}
+    local cbEvent = '__ox_cb_%s'
+    local resource = GetCurrentResourceName()
+
+    RegisterNetEvent(cbEvent:format(resource), function(key, ...)
+        local cb = pendingCallbacks[key]
+        pendingCallbacks[key] = nil
+    
+        return cb and cb(...)
+    end)
+
+    local function eventTimer(event, delay)
+        if delay and type(delay) == 'number' and delay > 0 then
+            local time = GetGameTimer()
+    
+            if (timers[event] or 0) > time then
+                return false
+            end
+    
+            timers[event] = time + delay
+        end
+    
+        return true
+    end
+    
+    local function triggerServerCallback(_, event, delay, cb, ...)
+        if not eventTimer(event, delay) then return end
+    
+        local key
+    
+        repeat
+            key = ('%s:%s'):format(event, math.random(0, 100000))
+        until not pendingCallbacks[key]
+    
+        TriggerServerEvent(cbEvent:format(event), resource, key, ...)
+    
+        ---@type promise | false
+        local promise = not cb and promise.new()
+    
+        pendingCallbacks[key] = function(response, ...)
+            response = { response, ... }
+    
+            if promise then
+                return promise:resolve(response)
+            end
+    
+            if cb then
+                cb(table.unpack(response))
+            end
+        end
+    
+        if promise then
+            SetTimeout(300000, function() promise:reject(("callback event '%s' timed out"):format(key)) end)
+    
+            return table.unpack(Citizen.Await(promise))
+        end
+    end
+    
+    function Utils.await(event, delay, ...)
+        return triggerServerCallback(nil, event, delay, false, ...)
+    end
+else
+    local cbEvent = '__ox_cb_%s'
+
+    local function callbackResponse(success, result, ...)
+        if not success then
+            if result then
+                return print(('^1SCRIPT ERROR: %s^0\n%s'):format(result,
+                    Citizen.InvokeNative(`FORMAT_STACK_TRACE` & 0xFFFFFFFF, nil, 0, Citizen.ResultAsString()) or ''))
+            end
+    
+            return false
+        end
+    
+        return result, ...
+    end
+
+    function Utils.register(name, cb)
+        RegisterNetEvent(cbEvent:format(name), function(resource, key, ...)
+            TriggerClientEvent(cbEvent:format(resource), source, key, callbackResponse(pcall(cb, source, ...)))
+        end)
+    end
+end
+
+local function table_merge(t1, t2, addDuplicateNumbers)
+    if addDuplicateNumbers == nil then addDuplicateNumbers = true end
+    for k, v in pairs(t2) do
+        local type1 = type(t1[k])
+        local type2 = type(v)
+
+		if type1 == 'table' and type2 == 'table' then
+            table_merge(t1[k], v, addDuplicateNumbers)
+        elseif addDuplicateNumbers and (type1 == 'number' and type2 == 'number') then
+            t1[k] += v
+		else
+			t1[k] = v
+        end
+    end
+
+    return t1
+end
+
 exports('UUID', UUID)
+Utils.table_merge = table_merge
 Utils.retreiveStringIndexedData = retreiveStringIndexedData
 Utils.retreiveExportsData = retreiveExportsData
 Utils.retreiveNumberIndexedData = retreiveNumberIndexedData

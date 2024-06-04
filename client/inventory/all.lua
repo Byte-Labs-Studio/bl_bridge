@@ -1,9 +1,10 @@
 local inventory = {}
 local invFramework = Config.convars.inventory
-
+local Utils = require'utils'
 local core = Framework.core
+
 if not core then
-    lib.waitFor(function()
+    Utils.waitFor(function()
         if Framework.core then return true end
     end)
 end
@@ -39,7 +40,7 @@ function inventory.openInventory(invType, invId)
     if isOx then
         exports.ox_inventory:openInventory(invType, {type = invId})
     elseif invFramework == 'qb' or isQS then
-        local inventoryData = lib.callback.await('bl_bridge:validInventory', 10, invType, invId)
+        local inventoryData = Utils.await('bl_bridge:validInventory', 10, invType, invId)
         if not inventoryData then return end
         TriggerServerEvent('inventory:server:OpenInventory', invType, invId, inventoryData)
     end

@@ -58,7 +58,7 @@ function overrideFunction.registerInventory(id, data)
     }
 end
 
-lib.callback.register('bl_bridge:validInventory', function(_, invType, invId)
+require'utils'.register('bl_bridge:validInventory', function(_, invType, invId)
     local inventory = registeredInventories[('%s-%s'):format(invType, invId)]
     if not inventory then return end
     return inventory

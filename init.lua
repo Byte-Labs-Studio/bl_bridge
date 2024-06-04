@@ -1,4 +1,3 @@
-if not lib then return end
 local DEFAULT_FRAMEWORK = 'qb'
 Framework = setmetatable({}, {
     __newindex = function(self, name, fn)
@@ -6,6 +5,8 @@ Framework = setmetatable({}, {
         rawset(self, name, fn)
     end
 })
+local context = IsDuplicityVersion() and 'server' or 'client'
+local Utils = require'utils'
 
 local function format(str)
     if not string.find(str, "'") then return str end
@@ -45,15 +46,15 @@ Config = {
         },
         context = {
             qb = 'qb-menu',
-            ox = 'none'
+            ox = 'ox_lib'
         },
         progressbar = {
             qb = 'progressbar',
-            ox = 'none'
+            ox = 'ox_lib'
         },
         radial = {
             qb = 'qb-radialmenu',
-            ox = 'none'
+            ox = 'ox_lib'
         },
         target = {
             qb = 'qb-target',
@@ -61,11 +62,11 @@ Config = {
         },
         notify = {
             qb = 'none',
-            ox = 'none',
+            ox = 'ox_lib',
             esx = 'none',
         },
         textui = {
-            ox = 'none',
+            ox = 'ox_lib',
             qb = 'none',
         }
     },
@@ -121,12 +122,11 @@ local function loadModule(dir, moduleName, framework)
     end
 end
 
-local modulesConfig = Config[lib.context]
+local modulesConfig = Config[context]
 
-if lib.context == 'server' then
-    local UUID = require'utils'.UUID
-    lib.callback.register('UUID', function(_, num)
-        return UUID(num)
+if context == 'server' then
+    Utils.register('UUID', function(_, num)
+        return Utils.UUID(num)
     end)
 end
 
@@ -145,7 +145,7 @@ for _, moduleName in ipairs(modulesConfig.moduleNames) do
             loadModule(modulesConfig.dir, moduleName, alternative)
         else
             ExecuteCommand('ensure '..resourceName)
-            if lib.waitFor(function()
+            if Utils.waitFor(function()
                 if GetResourceState(resourceName) == 'started' then
                     return true
                 end
