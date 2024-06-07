@@ -1,15 +1,17 @@
 local Radial = {}
 
+
 function Radial.addOptions(optionId, data)
     local id = require'utils'.await('UUID', false, 8)
-
+    local lib = exports.ox_lib
+    
     local title, icon, items in data
-    lib.registerRadial({
+    lib:registerRadial({
         id = id,
         items = items
     })
 
-    lib.addRadialItem({
+    lib:addRadialItem({
         {
             id = optionId,
             label = title or 'Unknown',

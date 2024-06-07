@@ -1,8 +1,7 @@
 local Progressbar = {}
-local menu = lib
 
 function Progressbar.showProgress(data)
-    return menu.progressBar({
+    return exports.ox_lib:progressBar({
         duration = data.duration,
         label = data.label,
         useWhileDead = data.useWhileDead,
@@ -19,11 +18,11 @@ function Progressbar.showProgress(data)
 end
 
 function Progressbar.cancelProgress()
-    lib.cancelProgress()
+    exports.ox_lib:cancelProgress()
 end
 
 function Progressbar.isProgressActive()
-    return menu.progressActive()
+    return exports.ox_lib:progressActive()
 end
 
 return Progressbar
