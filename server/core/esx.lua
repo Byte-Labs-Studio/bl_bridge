@@ -79,10 +79,6 @@ local coreFunctionsOverride = {
         modifier = {
             executeFun = true,
             effect = function(str)
-                local index = string.find(str, ":")
-                if index then
-                    str = string.sub(str, 1, index - 1)
-                end
                 return str
             end
         }
