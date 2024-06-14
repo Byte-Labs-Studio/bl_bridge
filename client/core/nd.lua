@@ -9,7 +9,7 @@ local retreiveStringIndexedData = require 'utils'.retreiveStringIndexedData
 local jobInfo = {}
 local loaded = false
 
-AddEventHandler('ND:characterLoaded', function(character)
+RegisterNetEvent('ND:characterLoaded', function(character)
     TriggerEvent('bl_bridge:client:playerLoaded')
     jobInfo = character.jobInfo
     jobInfo.name = character.job
