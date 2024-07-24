@@ -6,6 +6,7 @@ Discord: [Byte Labs](https://discord.gg/fqsqSjZfxE)
 
 # Instruction (Follow [Docs](https://docs.byte-labs.net/bl_bridge))
 
+### Do `none` to disable wanted module like `setr bl:inventory 'none'` if we want to disable inventory module
 ## CFG
 ``` 
 # Frameworks 'qb' | 'esx' | 'nd'
