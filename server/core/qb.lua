@@ -117,13 +117,13 @@ function Core.CommandAdd(name, permission, cb, suggestion, flags)
     shared.Commands.Add(name, suggestion.help, suggestion.arguments, flags.argsrequired, cb, permission)
 end
 
-Core.RegisterUsableItem = inventoryFunctions.registerUsableItem or function(name, cb)
+Core.RegisterUsableItem = inventoryFunctions and inventoryFunctions.registerUsableItem or function(name, cb)
     shared.Functions.CreateUseableItem(name, function(source, item)
         cb(source, item and item.slot, item and item.info)
     end)
 end
 
-local totalFunctionsOverride = merge(inventoryFunctions.methods, playerFunctionsOverride)
+local totalFunctionsOverride = inventoryFunctions and merge(inventoryFunctions.methods, playerFunctionsOverride) or playerFunctionsOverride
 
 function Core.GetPlayer(src)
     local player = shared.Functions.GetPlayer(src)

@@ -14,14 +14,6 @@ local function format(str)
 end
 
 Config = {
-    frameworks = {
-        ox = true,
-        esx = true,
-        qb = true,
-        nd = true,
-        ps = true,
-        qs = true
-    },
     convars = {
         core = format(GetConvar('bl:framework', DEFAULT_FRAMEWORK)),
         inventory = format(GetConvar('bl:inventory', DEFAULT_FRAMEWORK)),
@@ -132,13 +124,13 @@ end
 
 for _, moduleName in ipairs(modulesConfig.moduleNames) do
     local framework = Config.convars[moduleName]
-    if Config.frameworks[framework] then
+    if framework ~= 'none' then
         local hasAlternative = modulesConfig.alternative and modulesConfig.alternative[moduleName]
         local moduleForAll = modulesConfig.all and modulesConfig.all[moduleName] and 'all' or framework
         local alternative = hasAlternative and hasAlternative[moduleForAll] or moduleForAll
-
+    
         local resourceName = Config.resources[moduleName] and Config.resources[moduleName][framework]
-
+    
         if not resourceName then
             return error('there is no '..framework.. ' on module '..moduleName.. '!, please make sure you configured your convars on cfg!')
         elseif resourceName == 'none' or GetResourceState(resourceName) == 'started' then
