@@ -44,7 +44,7 @@ local coreFunctionsOverride = {
                 local data = originalFun()
                 local jobData = data.jobInfo
 
-                local year, month, day = data.dob.birthdate:match("(%d+)-(%d+)-(%d+)")
+                local year, month, day = data.dob:match("(%d+)-(%d+)-(%d+)")
 
                 return {
                     cid = data.id,
