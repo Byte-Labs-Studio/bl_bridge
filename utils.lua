@@ -31,17 +31,14 @@ local function retreiveStringIndexedData(wrappedData, functionsOverride, src)
                 if passSource and executeFun then
                     if not src then return error('source not exist') end
                     lastEffect = ref(src)
-                elseif passSource then
-                    lastEffect = function(...)
-                        if not src then return error('source not exist') end
-                        return ref(src, ...)
-                    end
                 elseif executeFun then
                     lastEffect = effect and effect(ref) or ref
                 else
                     lastEffect = function(...)
-                        if passSource and not src then return error('source not exist') end
-                        return passSource and effect(ref, src, ...) or effect(ref, ...)
+                        if passSource and not src then
+                            error('source not exist')
+                        end
+                        return passSource and src and effect and effect(ref, src, ...) or effect and effect(ref, ...) or ref(src, ...)
                     end
                 end
             else

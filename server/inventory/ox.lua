@@ -13,6 +13,9 @@ overrideFunction.methods = retreiveExportsData(ox_inventory, {
         originalMethod = 'RemoveItem',
         modifier = {
             passSource = true,
+            effect = function(originalFun, source, name, count, slot)
+                return originalFun(source, name, count, nil, slot)
+            end,
         }
     },
     getItem = {
