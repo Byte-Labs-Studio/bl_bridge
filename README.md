@@ -12,7 +12,7 @@ Discord: [Byte Labs](https://discord.gg/fqsqSjZfxE)
 # Frameworks 'qb' | 'esx' | 'nd'
 setr bl:framework 'qb' 
 
-# Inventories 'ox' | 'qb'
+# Inventories 'ox' | 'qb' | 'codem'
 setr bl:inventory 'ox'
 
 # Context 'ox' | 'qb'
