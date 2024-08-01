@@ -34,7 +34,7 @@ local shared = exports[coreName]
 function Core.getPlayerData()
     local player = shared.GetPlayerData()
     local job = player.job
-    local gang = player.job
+    local gang = player.gang
     local charinfo = player.charinfo
     local year, month, day = charinfo.birthdate:match('(%d+)-(%d+)-($d+)')
 
