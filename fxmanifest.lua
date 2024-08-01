@@ -2,21 +2,19 @@ fx_version "cerulean"
 use_experimental_fxv2_oal 'yes'
 lua54 'yes'
 game 'gta5'
+version '1.2.4'
 
 dependencies {
   '/onesync',
-  'ox_lib',
 }
 
-shared_script {
-  '@ox_lib/init.lua',
-  'init.lua'
+shared_scripts {
+  'require.lua',
+  'init.lua',
 }
 
 files {
   'utils.lua',
-  'client/modules/**/*.lua',
+  'client/**/*.lua',
   'imports/client.lua',
-  'client/main.lua',
-  'server/main.lua',
 }
