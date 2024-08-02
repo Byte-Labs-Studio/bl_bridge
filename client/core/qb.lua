@@ -25,6 +25,9 @@ end)
 local shared = exports[coreName]:GetCoreObject()
 
 function Core.getPlayerData()
+    while not LocalPlayer.state.isLoggedIn do
+        Wait(1000)
+    end
     local player = shared.GetPlayerData()
     local job = player.job
     local gang = player.gang
@@ -60,8 +63,8 @@ function Core.getPlayerData()
         inventory = type(player.items) == 'string' and json.decode(player.items) or player.items,
         job = formattedJob,
         gang = formattedGang,
-        firstName = charinfo.firstName or 'Unknown',
-        lastName = charinfo.lastName or 'Unknown',
+        firstName = charinfo.firstname or 'Unknown',
+        lastName = charinfo.lastname or 'Unknown',
         phone = charinfo.phone or '0000000',
         gender = charinfo.gender == 1 and 'female' or 'male',
         dob = ('%02d/%02d/%04d'):format(month, day, year) -- DD/MM/YYYY

@@ -32,6 +32,9 @@ end)
 local shared = exports[coreName]
 
 function Core.getPlayerData()
+    while not loaded do
+        Wait(1000)
+    end
     local data = shared.getPlayer()
     local jobData = data.jobInfo
     local year, month, day = data.dob:match("(%d+)-(%d+)-(%d+)")

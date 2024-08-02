@@ -21,6 +21,9 @@ end)
 local shared = exports[coreName]:getSharedObject()
 
 function Core.getPlayerData()
+    while not shared.IsPlayerLoaded() do
+        Wait(1000)
+    end
     local data = shared.GetPlayerData()
     local job = data.job
     local month, day, year = data.dateofbirth and data.dateofbirth:match("(%d+)/(%d+)/(%d+)") or 00, 00, 24
