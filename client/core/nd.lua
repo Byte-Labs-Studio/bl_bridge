@@ -5,7 +5,6 @@ if GetResourceState(coreName) ~= 'started' then
 end
 
 local Core = {}
-local retreiveStringIndexedData = require 'utils'.retreiveStringIndexedData
 local jobInfo = {}
 local loaded = false
 
@@ -32,39 +31,37 @@ end)
 
 local shared = exports[coreName]
 
-local coreFunctionsOverride = {
-    playerData = {
-        originalMethod = 'getPlayer',
-        modifier = {
-            executeFun = true,
-            effect = function(originalFun)
-                while not loaded do
-                    Wait(1000)
-                end
-                local data = originalFun()
-                local jobData = data.jobInfo
-
-                local year, month, day = data.dob:match("(%d+)-(%d+)-(%d+)")
-
-                return {
-                    cid = data.id,
-                    money = data.cash,
-                    inventory = type(data.inventory) == 'string' and json.decode(data.inventory) or data.inventory,
-                    job = { name = data.job, label = jobData.label, onDuty = true, isBoss = jobData.isBoss, grade = { name = jobData.rank, label = jobData.rankName, salary = 0 } },
-                    firstName = data.firstname,
-                    lastName = data.lastname,
-                    phone = 'Unknown',
-                    gender = string.lower(data.gender),
-                    dob = ('%s/%s/%s'):format(month, day, year),
-                }
-            end
-        }
-    },
-}
-
 function Core.getPlayerData()
-    local wrappedPlayer = retreiveStringIndexedData(shared, coreFunctionsOverride)
-    return wrappedPlayer.playerData
+    while not loaded do
+        Wait(1000)
+    end
+    local data = shared.getPlayer()
+    local jobData = data.jobInfo
+    local year, month, day = data.dob:match("(%d+)-(%d+)-(%d+)")
+
+    local formattedJob = {
+        name = data.job,
+        label = jobData.label,
+        onDuty = true,
+        isBoss = jobData.isBoss,
+        grade = {
+            name = jobData.rank,
+            label = jobData.rankName,
+            salary = 0
+        }
+    }
+
+    return {
+        cid = data.id,
+        money = data.cash,
+        inventory = type(data.inventory) == 'string' and json.decode(data.inventory) or data.inventory,
+        job = formattedJob,
+        firstName = data.firstname,
+        lastName = data.lastname,
+        phone = 'Unknown',
+        gender = string.lower(data.gender),
+        dob = ('%s/%s/%s'):format(month, day, year),
+    }
 end
 
 function Core.playerLoaded()
