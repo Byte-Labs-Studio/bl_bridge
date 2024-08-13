@@ -5,13 +5,22 @@ overrideFunction.methods = {
         addItem = {
             originalMethod = 'AddItem',
             modifier = {
-                effect = function(originalFun, name, amount, metadata, slot)
+                passSource = true,
+                effect = function(originalFun, src, name, amount, metadata, slot)
+                    TriggerClientEvent('inventory:client:ItemBox', src, name, "add")
                     return originalFun(name, amount, slot, metadata)
                 end
             }
         },
         removeItem = {
             originalMethod = 'RemoveItem',
+            modifier = {
+                passSource = true,
+                effect = function(originalFun, src, name, amount, slot)
+                    TriggerClientEvent('inventory:client:ItemBox', src, name, "remove")
+                    return originalFun(name, amount, slot)
+                end
+            }
         },
         getItem = {
             originalMethod = 'GetItemByName',
