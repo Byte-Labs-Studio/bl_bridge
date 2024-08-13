@@ -16,7 +16,7 @@ local OverrideData = {
     type = {
         originalMethod = { 'event', 'serverEvent' },
         modifier = {
-            executeFun = true,
+            executeFunc = true,
             effect = function(value, originalMethod)
                 return originalMethod == 'event' and 'client' or originalMethod == 'serverEvent' and 'server'
             end

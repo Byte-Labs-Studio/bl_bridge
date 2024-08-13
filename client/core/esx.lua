@@ -25,7 +25,7 @@ local coreFunctionsOverride = {
     playerData = {
         originalMethod = 'GetPlayerData',
         modifier = {
-            executeFun = true,
+            executeFunc = true,
             effect = function(originalFun)
                 while not shared.IsPlayerLoaded() do
                     Wait(1000)

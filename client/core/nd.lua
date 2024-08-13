@@ -36,7 +36,7 @@ local coreFunctionsOverride = {
     playerData = {
         originalMethod = 'getPlayer',
         modifier = {
-            executeFun = true,
+            executeFunc = true,
             effect = function(originalFun)
                 while not loaded do
                     Wait(1000)

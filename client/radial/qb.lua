@@ -23,7 +23,7 @@ local overRideData = {
     shouldClose = {
         originalMethod = 'keepOpen',
         modifier = {
-            executeFun = true,
+            executeFunc = true,
             effect = function(value)
                 return type(value) ~= 'boolean' and true or not value
             end
@@ -32,7 +32,7 @@ local overRideData = {
     event = {
         originalMethod = 'onSelect',
         modifier = {
-            executeFun = true,
+            executeFunc = true,
             effect = function(value)
                 local eventName = ("bl_bridge:client:radialId%s"):format(eventIndex)
                 eventIndex+= 1

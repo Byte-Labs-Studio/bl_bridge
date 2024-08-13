@@ -35,7 +35,7 @@ local playerFunctionsOverride = {
         job = {
             originalMethod = 'job',
             modifier = {
-                executeFun = true,
+                executeFunc = true,
                 effect = function(originalFun)
                     local job = originalFun
                     return {name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, type = job.type, grade = { name = job.grade.level, label = job.grade.name, salary = job.payment } }
@@ -45,7 +45,7 @@ local playerFunctionsOverride = {
         gang = {
             originalMethod = 'gang',
             modifier = {
-                executeFun = true,
+                executeFunc = true,
                 effect = function(data)
                     local gang = data
                     return {name = gang.name, label = gang.label, isBoss = gang.isboss, grade = {name = gang.grade.level, label = gang.grade.label}}
@@ -55,7 +55,7 @@ local playerFunctionsOverride = {
         charinfo = {
             originalMethod = 'charinfo',
             modifier = {
-                executeFun = true,
+                executeFunc = true,
                 effect = function(data)
                     return {firstname = data.firstname, lastname = data.lastname}
                 end
@@ -70,7 +70,7 @@ local playerFunctionsOverride = {
         gender = {
             originalMethod = 'charinfo',
             modifier = {
-                executeFun = true,
+                executeFunc = true,
                 effect = function(data)
                     local gender = data.gender
                     gender = gender == 1 and 'female' or 'male'
@@ -81,7 +81,7 @@ local playerFunctionsOverride = {
         dob = {
             originalMethod = 'charinfo',
             modifier = {
-                executeFun = true,
+                executeFunc = true,
                 effect = function(data)
                     local year, month, day = data.birthdate:match("(%d+)-(%d+)-(%d+)")
                     return ('%s/%s/%s'):format(month, day, year) -- DD/MM/YYYY

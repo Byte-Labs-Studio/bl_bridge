@@ -52,7 +52,7 @@ local coreFunctionsOverride = {
     job = {
         originalMethod = 'getJob',
         modifier = {
-            executeFun = true,
+            executeFunc = true,
             effect = function(data)
                 local job = data()
                 return {name = job.name, label = job.label, onDuty = true, isBoss = false, grade = {name = job.grade, label = job.grade_label, salary = job.grade_salary}}
@@ -62,7 +62,7 @@ local coreFunctionsOverride = {
     charinfo = {
         originalMethod = 'variables',
         modifier = {
-            executeFun = true,
+            executeFunc = true,
             effect = function(data)
                 return {firstname = data.firstName, lastname = data.lastName}
             end
@@ -71,13 +71,13 @@ local coreFunctionsOverride = {
     name = {
         originalMethod = 'getName',
         modifier = {
-            executeFun = true,
+            executeFunc = true,
         }
     },
     id = {
         originalMethod = 'identifier',
         modifier = {
-            executeFun = true,
+            executeFunc = true,
             effect = function(str)
                 return str
             end
@@ -86,7 +86,7 @@ local coreFunctionsOverride = {
     gender = {
         originalMethod = 'variables',
         modifier = {
-            executeFun = true,
+            executeFunc = true,
             effect = function(data)
                 return data.sex == 'm' and 'male' or 'female'
             end
@@ -95,7 +95,7 @@ local coreFunctionsOverride = {
     dob = {
         originalMethod = 'variables',
         modifier = {
-            executeFun = true,
+            executeFunc = true,
             effect = function(data)
                 local dob = data.dateofbirth
                 if type(dob) ~= 'string' then return end

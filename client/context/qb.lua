@@ -18,7 +18,7 @@ local overRideData = {
     icon = {
         originalMethod = 'icon',
         modifier = {
-            executeFun = true,
+            executeFunc = true,
             effect = function(value)
                 local text = ('fas fa-%s'):format(value)
                 return text
