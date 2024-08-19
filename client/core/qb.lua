@@ -30,7 +30,7 @@ local coreFunctionsOverride = {
         playerData = {
             originalMethod = 'GetPlayerData',
             modifier = {
-                executeFun = true,
+                executeFunc = true,
                 effect = function(originalFun)
                     while not LocalPlayer.state.isLoggedIn do
                         Wait(1000)
