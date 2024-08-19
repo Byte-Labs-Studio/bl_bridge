@@ -17,7 +17,7 @@ local playerFunctionsOverride = {
     getBalance = {
         originalMethod = 'getData',
         modifier = {
-            executeFun = true,
+            executeFunc = true,
             effect = function(data, type)
                 local balance = data(type)
                 return balance
@@ -44,7 +44,7 @@ local playerFunctionsOverride = {
     job = {
         originalMethod = 'getJob',
         modifier = {
-            executeFun = true,
+            executeFunc = true,
             effect = function(originalFun)
                 local _, jobInfo = originalFun()
                 return {name = jobInfo.name, label = jobInfo.label, onDuty = jobInfo.isJob, isBoss = true, grade = {name = jobInfo.rank, label = jobInfo.rankName, salary = 0}}
@@ -54,7 +54,7 @@ local playerFunctionsOverride = {
     charinfo = {
         originalMethod = 'getData',
         modifier = {
-            executeFun = true,
+            executeFunc = true,
             effect = function(data)
                 return {firstname = data('firstname'), lastname = data('lastname')}
             end
@@ -63,7 +63,7 @@ local playerFunctionsOverride = {
     name = {
         originalMethod = 'getData',
         modifier = {
-            executeFun = true,
+            executeFunc = true,
             effect = function(data)
                 return data('fullname')
             end
@@ -72,7 +72,7 @@ local playerFunctionsOverride = {
     id = {
         originalMethod = 'getData',
         modifier = {
-            executeFun = true,
+            executeFunc = true,
             effect = function(data)
                 return data('id')
             end
@@ -81,7 +81,7 @@ local playerFunctionsOverride = {
     gender = {
         originalMethod = 'getData',
         modifier = {
-            executeFun = true,
+            executeFunc = true,
             effect = function(data)
                 return string.lower(data('gender'))
             end
@@ -90,7 +90,7 @@ local playerFunctionsOverride = {
     dob = {
         originalMethod = 'getData',
         modifier = {
-            executeFun = true,
+            executeFunc = true,
             effect = function(data)
                 local year, month, day = data('dob'):match("(%d+)-(%d+)-(%d+)")
                 return ('%s/%s/%s'):format(month, day, year) -- DD/MM/YYYY
