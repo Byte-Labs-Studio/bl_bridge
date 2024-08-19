@@ -35,6 +35,7 @@ Config = {
         core = {
             nd = 'ND_Core',
             qb = 'qb-core',
+            qbx = 'qbx_core',
             esx = 'es_extended'
         },
         context = {
@@ -79,6 +80,11 @@ Config = {
         all = {
             inventory = true
         },
+        alternative = {
+            core = {
+                qbx = 'qb'
+            }
+        },
     },
     server = {
         dir = 'server',
@@ -90,6 +96,9 @@ Config = {
         alternative = {
             inventory = {
                 ps = 'qb'
+            },
+            core = {
+                qbx = 'qb'
             }
         },
     }
