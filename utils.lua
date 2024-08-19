@@ -27,11 +27,11 @@ local function retreiveStringIndexedData(wrappedData, functionsOverride, src)
         if ref and originalMethod then
             local lastEffect
             if modifier then
-                local executeFun, effect, passSource in modifier
-                if passSource and executeFun then
+                local executeFunc, effect, passSource in modifier
+                if passSource and executeFunc then
                     if not src then return error('source not exist') end
                     lastEffect = ref(src)
-                elseif executeFun then
+                elseif executeFunc then
                     lastEffect = effect and effect(ref) or ref
                 else
                     lastEffect = function(...)
@@ -91,7 +91,7 @@ local function retreiveNumberIndexedData(playerTable, functionsOverride)
                 newMethods[dataIndex] = newMethods[dataIndex] or {}
                 local effect
                 if modifier then
-                    if modifier.executeFun then
+                    if modifier.executeFunc then
                         effect = modifier.effect(originalMethodRef, originalMethod) 
                     else
                         effect = function(...)
