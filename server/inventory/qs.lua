@@ -1,4 +1,5 @@
-local retreiveExportsData = require 'utils'.retreiveExportsData
+local utils = require 'utils'
+local retreiveExportsData = utils.retreiveExportsData
 local overrideFunction = {}
 local registeredInventories = {}
 
@@ -7,10 +8,19 @@ overrideFunction.methods = retreiveExportsData(exports['qs-inventory'], {
         originalMethod = 'AddItem',
         modifier = {
             passSource = true,
+            effect = function(originalFun, src, name, amount, metadata, slot)
+                return originalFun(src, name, amount, slot, metadata)
+            end
         }
     },
     removeItem = {
         originalMethod = 'RemoveItem',
+        modifier = {
+            passSource = true,
+        }
+    },
+    setMetaData = {
+        originalMethod = 'SetItemMetadata',
         modifier = {
             passSource = true,
         }
@@ -61,7 +71,7 @@ function overrideFunction.registerInventory(id, data)
     }
 end
 
-require'utils'.register('bl_bridge:validInventory', function(_, invType, invId)
+utils.register('bl_bridge:validInventory', function(_, invType, invId)
     local inventory = registeredInventories[('%s-%s'):format(invType, invId)]
     if not inventory then return end
     return inventory

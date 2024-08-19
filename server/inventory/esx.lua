@@ -11,6 +11,9 @@ overrideFunction.methods = {
     getItem = {
         originalMethod = 'getInventoryItem',
     },
+    setMetaData = { -- not exist :()
+      
+    },
     items = {
         originalMethod = 'getInventory',
         modifier = {

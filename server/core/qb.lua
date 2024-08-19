@@ -88,6 +88,9 @@ local playerFunctionsOverride = {
                 end
             }
         },
+        items = {
+            originalMethod = 'items',
+        },
     }
 }
 

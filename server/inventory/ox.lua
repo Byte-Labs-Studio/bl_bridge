@@ -18,6 +18,12 @@ overrideFunction.methods = retreiveExportsData(ox_inventory, {
             end,
         }
     },
+    setMetaData = {
+        originalMethod = 'SetMetadata',
+        modifier = {
+            passSource = true,
+        }
+    },
     getItem = {
         originalMethod = 'GetSlotWithItem',
         modifier = {
