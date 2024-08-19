@@ -27,7 +27,7 @@ overrideFunction.methods = retreiveExportsData(ox_inventory, {
     items = {
         originalMethod = 'GetInventoryItems',
         modifier = {
-            executeFun = true,
+            executeFunc = true,
             passSource = true,
         }
     },
