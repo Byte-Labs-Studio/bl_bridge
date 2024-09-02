@@ -79,11 +79,6 @@ Config = {
         all = {
             inventory = true
         },
-        alternative = {
-            core = {
-                qbx = 'qb'
-            }
-        },
     },
     server = {
         dir = 'server',
@@ -95,9 +90,6 @@ Config = {
         alternative = {
             inventory = {
                 ps = 'qb'
-            },
-            core = {
-                qbx = 'qb'
             }
         },
     }
