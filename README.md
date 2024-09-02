@@ -9,8 +9,8 @@ Discord: [Byte Labs](https://discord.gg/fqsqSjZfxE)
 ### Do `none` to disable wanted module like `setr bl:inventory 'none'` if we want to disable inventory module
 ## CFG
 ``` 
-# Frameworks 'qb' | 'esx' | 'nd'
-setr bl:framework 'qb' 
+# Frameworks 'qbx' | qb' | 'esx' | 'nd'
+setr bl:framework 'qbx' 
 
 # Inventories 'ox' | 'qb'
 setr bl:inventory 'ox'
