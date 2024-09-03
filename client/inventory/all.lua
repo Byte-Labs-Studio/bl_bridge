@@ -26,7 +26,8 @@ function inventory.playerItems()
     else
         playerData = core.getPlayerData().inventory
     end
-    for _, itemData in ipairs(playerData) do
+
+    for _, itemData in pairs(playerData) do
         local count = itemData.count
         if count then
             itemData.amount = count
@@ -58,7 +59,7 @@ function inventory.hasItem(itemName, itemCount)
         return
     end
 
-    for _, itemData in ipairs(playerData) do
+    for _, itemData in pairs(playerData) do
         local name, amount in itemData
         if itemName == name and itemCount <= amount then
             return true
