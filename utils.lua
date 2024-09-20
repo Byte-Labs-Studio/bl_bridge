@@ -38,7 +38,13 @@ local function retreiveStringIndexedData(wrappedData, functionsOverride, src)
                         if passSource and not src then
                             error('source not exist')
                         end
-                        return passSource and src and effect and effect(ref, src, ...) or effect and effect(ref, ...) or ref(src, ...)
+                        if passSource and src and effect then
+                            return effect(ref, src, ...)
+                        elseif effect then
+                            return effect(ref, ...)
+                        else
+                            return ref(src, ...)
+                        end
                     end
                 end
             else
