@@ -3,7 +3,7 @@ local Utils = {}
 local function retreiveExportsData(export, override)
     local newMethods = {}
 
-    for k,v in pairs(override) do
+    for k, v in pairs(override) do
         local method = export[v.originalMethod]
         if method then
             v.selfEffect = function(...)
@@ -27,17 +27,16 @@ local function retreiveStringIndexedData(wrappedData, functionsOverride, src)
         if ref and originalMethod then
             local lastEffect
             if modifier then
-                local executeFunc, effect, passSource in modifier
+                local executeFunc, effect, passSource = modifier.executeFunc, modifier.effect, modifier.passSource
                 if passSource and executeFunc then
-                    if not src then return error('source not exist') end
+                    assert(src, 'source not exist')
+
                     lastEffect = ref(src)
                 elseif executeFunc then
                     lastEffect = effect and effect(ref) or ref
                 else
                     lastEffect = function(...)
-                        if passSource and not src then
-                            error('source not exist')
-                        end
+                        assert(passSource and not src, 'source not exist')
                         if passSource and src and effect then
                             return effect(ref, src, ...)
                         elseif effect then
@@ -73,7 +72,8 @@ local function retreiveNumberIndexedData(playerTable, functionsOverride)
 
     local function modifyMethods(data, method, modification)
         for dataIndex, dataValue in ipairs(data) do
-            local originalMethods = type(modification.originalMethod) == 'table' and modification.originalMethod or { modification.originalMethod }
+            local originalMethods = type(modification.originalMethod) == 'table' and modification.originalMethod or
+            { modification.originalMethod }
             local originalMethodRef
             local originalMethod
             for _, method in ipairs(originalMethods) do
@@ -83,7 +83,7 @@ local function retreiveNumberIndexedData(playerTable, functionsOverride)
                     break
                 end
             end
-            
+
             local hasKeys = modification.hasKeys
             if hasKeys then
                 local modifier = modification.modifier
@@ -98,7 +98,7 @@ local function retreiveNumberIndexedData(playerTable, functionsOverride)
                 local effect
                 if modifier then
                     if modifier.executeFunc then
-                        effect = modifier.effect(originalMethodRef, originalMethod) 
+                        effect = modifier.effect(originalMethodRef, originalMethod)
                     else
                         effect = function(...)
                             return modifier.effect(originalMethodRef, ...)
@@ -122,7 +122,6 @@ local function retreiveNumberIndexedData(playerTable, functionsOverride)
                 end
             end
         end
-
     end
 
     processTable(playerTable, functionsOverride)
@@ -132,7 +131,7 @@ end
 local function UUID(num)
     num = type(num) == 'number' and num or 5
     local template = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-    
+
     local uuid = string.gsub(template, '[xy]', function(c)
         local v = (c == 'x') and math.random(0, 0xf) or math.random(8, 0xb)
         return string.format('%x', v)
@@ -140,7 +139,7 @@ local function UUID(num)
 
     local timestamp = os.time()
     local uuidWithTime = string.format("%s-%s", uuid, timestamp)
-    
+
     if num > 0 and num <= #uuidWithTime then
         uuidWithTime = string.sub(uuidWithTime, 1, num)
     end
@@ -177,7 +176,6 @@ function Utils.waitFor(cb, errMessage, timeout)
     return value
 end
 
-
 --https://github.com/overextended/ox_lib/blob/master/imports/callback/client.lua - thanks
 --https://github.com/overextended/ox_lib/blob/master/imports/callback/server.lua
 if context == 'client' then
@@ -189,57 +187,57 @@ if context == 'client' then
     RegisterNetEvent(cbEvent:format(resource), function(key, ...)
         local cb = pendingCallbacks[key]
         pendingCallbacks[key] = nil
-    
+
         return cb and cb(...)
     end)
 
     local function eventTimer(event, delay)
         if delay and type(delay) == 'number' and delay > 0 then
             local time = GetGameTimer()
-    
+
             if (timers[event] or 0) > time then
                 return false
             end
-    
+
             timers[event] = time + delay
         end
-    
+
         return true
     end
-    
+
     local function triggerServerCallback(_, event, delay, cb, ...)
         if not eventTimer(event, delay) then return end
-    
+
         local key
-    
+
         repeat
             key = ('%s:%s'):format(event, math.random(0, 100000))
         until not pendingCallbacks[key]
-    
+
         TriggerServerEvent(cbEvent:format(event), resource, key, ...)
-    
+
         ---@type promise | false
         local promise = not cb and promise.new()
-    
+
         pendingCallbacks[key] = function(response, ...)
             response = { response, ... }
-    
+
             if promise then
                 return promise:resolve(response)
             end
-    
+
             if cb then
                 cb(table.unpack(response))
             end
         end
-    
+
         if promise then
             SetTimeout(300000, function() promise:reject(("callback event '%s' timed out"):format(key)) end)
-    
+
             return table.unpack(Citizen.Await(promise))
         end
     end
-    
+
     function Utils.await(event, delay, ...)
         return triggerServerCallback(nil, event, delay, false, ...)
     end
@@ -252,10 +250,10 @@ else
                 return print(('^1SCRIPT ERROR: %s^0\n%s'):format(result,
                     Citizen.InvokeNative(`FORMAT_STACK_TRACE` & 0xFFFFFFFF, nil, 0, Citizen.ResultAsString()) or ''))
             end
-    
+
             return false
         end
-    
+
         return result, ...
     end
 
@@ -272,12 +270,12 @@ local function table_merge(t1, t2, addDuplicateNumbers)
         local type1 = type(t1[k])
         local type2 = type(v)
 
-		if type1 == 'table' and type2 == 'table' then
+        if type1 == 'table' and type2 == 'table' then
             table_merge(t1[k], v, addDuplicateNumbers)
         elseif addDuplicateNumbers and (type1 == 'number' and type2 == 'number') then
             t1[k] += v
-		else
-			t1[k] = v
+        else
+            t1[k] = v
         end
     end
 
