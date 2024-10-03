@@ -41,6 +41,12 @@ overrideFunction.methods = retreiveExportsData(exports['qb-inventory'], {
             end
         }
     },
+    canCarryItem = {
+        originalMethod = 'CanAddItem',
+        modifier = {
+            passSource = true,
+        }
+    },
     getItem = {
         originalMethod = 'GetItemByName',
         modifier = {

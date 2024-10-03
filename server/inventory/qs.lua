@@ -25,6 +25,12 @@ overrideFunction.methods = retreiveExportsData(exports['qs-inventory'], {
             passSource = true,
         }
     },
+    canCarryItem = {
+        originalMethod = 'CanCarryItem',
+        modifier = {
+            passSource = true,
+        }
+    },
     getItem = {
         originalMethod = 'GetItemByName',
         modifier = {

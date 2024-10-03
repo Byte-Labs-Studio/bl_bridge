@@ -1,4 +1,3 @@
-
 local overrideFunction = {}
 
 overrideFunction.methods = {
@@ -12,7 +11,10 @@ overrideFunction.methods = {
         originalMethod = 'getInventoryItem',
     },
     setMetaData = { -- not exist :()
-      
+
+    },
+    canCarryItem = {
+        originalMethod = 'canCarryItem',
     },
     items = {
         originalMethod = 'getInventory',

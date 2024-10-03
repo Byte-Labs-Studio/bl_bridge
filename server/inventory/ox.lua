@@ -24,6 +24,12 @@ overrideFunction.methods = retreiveExportsData(ox_inventory, {
             passSource = true,
         }
     },
+    canCarryItem = {
+        originalMethod = 'CanCarryItem',
+        modifier = {
+            passSource = true,
+        }
+    },
     getItem = {
         originalMethod = 'GetSlotWithItem',
         modifier = {
