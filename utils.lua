@@ -36,7 +36,7 @@ local function retreiveStringIndexedData(wrappedData, functionsOverride, src)
                     lastEffect = effect and effect(ref) or ref
                 else
                     lastEffect = function(...)
-                        assert(passSource and not src, 'source not exist')
+                        assert(not passSource or src, 'source not exist')
                         if passSource and src and effect then
                             return effect(ref, src, ...)
                         elseif effect then
