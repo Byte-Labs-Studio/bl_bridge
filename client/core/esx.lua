@@ -6,20 +6,21 @@ end
 
 local Core = {}
 local retreiveStringIndexedData = require 'utils'.retreiveStringIndexedData
+local shared = exports[coreName]:getSharedObject()
 
 RegisterNetEvent('esx:playerLoaded', function()
     TriggerEvent('bl_bridge:client:playerLoaded')
+    shared.PlayerLoaded = true
 end)
 
 RegisterNetEvent('esx:onPlayerLogout', function()
     TriggerEvent('bl_bridge:client:playerUnloaded')
+    shared.PlayerLoaded = false
 end)
 
 RegisterNetEvent('esx:setJob', function(job)
     TriggerEvent('bl_bridge:client:jobUpdated', {name = job.name, label = job.label, onDuty = true, isBoss = false, grade = {name = job.grade, label = job.grade_label, salary = job.grade_salary}})
 end)
-
-local shared = exports[coreName]:getSharedObject()
 
 local coreFunctionsOverride = {
     playerData = {
@@ -27,7 +28,7 @@ local coreFunctionsOverride = {
         modifier = {
             executeFunc = true,
             effect = function(originalFun)
-                while not shared.IsPlayerLoaded() do
+                while not shared.PlayerLoaded do
                     Wait(1000)
                 end
                 local data = originalFun()
@@ -57,7 +58,7 @@ function Core.getPlayerData()
 end
 
 function Core.playerLoaded()
-    return shared.IsPlayerLoaded()
+    return shared.PlayerLoaded
 end
 
 return Core
