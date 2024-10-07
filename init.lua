@@ -1,4 +1,4 @@
-local DEFAULT_FRAMEWORK = 'qb'
+local DEFAULT_FRAMEWORK = 'ox'
 Framework = setmetatable({}, {
     __newindex = function(self, name, fn)
         exports(name, function() return fn end)
@@ -6,7 +6,8 @@ Framework = setmetatable({}, {
     end
 })
 local context = IsDuplicityVersion() and 'server' or 'client'
-local Utils = require'utils'
+local requireLua = require -- when importing ox_core chunk, this gets overrides by ox_lib require, which loses stored data
+local Utils = requireLua'utils'
 
 local function format(str)
     if not string.find(str, "'") then return str end
@@ -34,6 +35,7 @@ Config = {
         core = {
             nd = 'ND_Core',
             qb = 'qb-core',
+            ox = 'ox_core',
             qbx = 'qbx_core',
             esx = 'es_extended'
         },
@@ -95,16 +97,20 @@ Config = {
     }
 }
 
-exports('getFramework', function(module)
+---@param module string Module name
+---@return string?
+function GetFramework(module)
     local moduleConfig = Config.resources[module]
     if not moduleConfig then return end
-    
+
     return moduleConfig[Config.convars[module]]
-end)
+end
+
+exports('getFramework', GetFramework)
 
 local function loadModule(dir, moduleName, framework)
     local fomartedModule = ("%s.%s.%s"):format(dir, moduleName, framework)
-    local success, module = pcall(require, fomartedModule)
+    local success, module = pcall(requireLua, fomartedModule)
     if type(module) ~= "string" or not string.find(module, 'not found') then
         if success then
             Framework[moduleName] = module

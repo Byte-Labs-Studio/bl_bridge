@@ -1,14 +1,6 @@
 local inventory = {}
-local invFramework = Config.convars.inventory
+local invFramework = GetFramework('inventory')
 local Utils = require'utils'
-local core = Framework.core
-
-if not core then
-    Utils.waitFor(function()
-        if Framework.core then return true end
-    end)
-end
-
 local isOx = invFramework == 'ox'
 local isQS = invFramework == 'qs'
 
@@ -24,6 +16,12 @@ function inventory.playerItems()
     elseif isQS then
         playerData = exports['qs-inventory']:getUserInventory()
     else
+        local core = Framework.core
+        if not core then
+            Utils.waitFor(function()
+                if Framework.core then return true end
+            end)
+        end
         playerData = core.getPlayerData().inventory
     end
 
