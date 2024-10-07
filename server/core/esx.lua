@@ -4,7 +4,7 @@ local Utils = require 'utils'
 local merge = Utils.table_merge
 
 RegisterNetEvent('esx:playerLoaded', function(...)
-    TriggerEvent('bl_bridge:server:playerLoaded', ...)
+    TriggerEvent('bl_bridge:server:playerLoaded', source, ...)
 end)
 
 RegisterNetEvent('esx:setAccountMoney', function(player, accountName, money, reason)
