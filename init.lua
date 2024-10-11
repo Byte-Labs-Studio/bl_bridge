@@ -30,7 +30,8 @@ Config = {
             ox = 'ox_inventory',
             qb = 'qb-inventory',
             ps = 'ps-inventory',
-            qs = 'qs-inventory'
+            qs = 'qs-inventory',
+            codem = 'codem-inventory'
         },
         core = {
             nd = 'ND_Core',
