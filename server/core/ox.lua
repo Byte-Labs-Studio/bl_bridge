@@ -41,6 +41,25 @@ end, {
     },
 })
 
+local group = {
+    originalMethod = 'get',
+    modifier = {
+        passSource = true,
+        executeFunc = true,
+        effect = function(get, source)
+            local activeGroup = get('activeGroup')
+            if not activeGroup then return end
+
+            local job = Ox.GetGroup(activeGroup)
+
+            if type(job) ~= 'table' then return end
+
+            local grade = Ox.GetPlayer(source).getGroup(activeGroup)
+            return {name = job.name, label = job.label, onDuty = true, isBoss = job.accountRoles[tostring(grade)], type = job.type, grade = { name = grade, label = job.grades[grade], salary = 0 } }
+        end
+    }
+}
+
 local playerFunctionsOverride = {
     getBalance = {
         originalMethod = 'getAccount',
@@ -94,72 +113,102 @@ local playerFunctionsOverride = {
         }
     },
     setBalance = {
-        originalMethod = 'SetMoney',
+        originalMethod = 'getAccount',
+        modifier = {
+            passSource = true,
+            ---@param getAccount function OxAccount
+            ---@param source number
+            ---@param moneyType MoneyType
+            ---@param amount number|string
+            effect = function(getAccount, source, moneyType, amount)
+                ---@diagnostic disable-next-line: cast-local-type
+                amount = tonumber(amount)
+                if not amount then return end
+
+                local currentAmount = moneyType == 'cash' and ox_inv:GetItemCount(source, 'money') or (getAccount()?.get('balance') or 0)
+                if currentAmount == amount then return end
+
+                if currentAmount > amount then
+                    if moneyType == 'cash' then
+                        ox_inv:RemoveItem(source, 'money', currentAmount - amount)
+                    else
+                        getAccount()?.removeBalance({
+                            amount = amount
+                        })
+                    end
+                else
+                    if moneyType == 'cash' then
+                        ox_inv:AddItem(source, 'money', amount - currentAmount)
+                    else
+                        getAccount()?.addBalance({
+                            amount = amount
+                        })
+                    end
+                end
+            end
+        }
     },
-    -- setJob = {
-    --     originalMethod = 'SetJob',
-    -- },
-    -- PlayerData = {
-    --     job = {
-    --         originalMethod = 'job',
-    --         modifier = {
-    --             executeFunc = true,
-    --             effect = function(originalFun)
-    --                 local job = originalFun
-    --                 return {name = job.name, label = job.label, onDuty = job.onduty, isBoss = job.isboss, type = job.type, grade = { name = job.grade.level, label = job.grade.name, salary = job.payment } }
-    --             end
-    --         }
-    --     },
-    --     gang = {
-    --         originalMethod = 'gang',
-    --         modifier = {
-    --             executeFunc = true,
-    --             effect = function(data)
-    --                 local gang = data
-    --                 return {name = gang.name, label = gang.label, isBoss = gang.isboss, grade = {name = gang.grade.level, label = gang.grade.label}}
-    --             end
-    --         }
-    --     },
-    --     charinfo = {
-    --         originalMethod = 'charinfo',
-    --         modifier = {
-    --             executeFunc = true,
-    --             effect = function(data)
-    --                 return {firstname = data.firstname, lastname = data.lastname}
-    --             end
-    --         }
-    --     },
-    --     name = {
-    --         originalMethod = 'name',
-    --     },
-    --     id = {
-    --         originalMethod = 'citizenid',
-    --     },
-    --     gender = {
-    --         originalMethod = 'charinfo',
-    --         modifier = {
-    --             executeFunc = true,
-    --             effect = function(data)
-    --                 local gender = data.gender
-    --                 gender = gender == 1 and 'female' or 'male'
-    --                 return gender
-    --             end
-    --         }
-    --     },
-    --     dob = {
-    --         originalMethod = 'charinfo',
-    --         modifier = {
-    --             executeFunc = true,
-    --             effect = function(data)
-    --                 local year, month, day = data.birthdate:match("(%d+)-(%d+)-(%d+)")
-    --                 return ('%s/%s/%s'):format(month, day, year) -- DD/MM/YYYY
-    --             end
-    --         }
-    --     },
-    --     items = {
-    --         originalMethod = 'items',
-    --     },
-    -- }
+    setJob = {
+        originalMethod = 'setGroup',
+        modifier = {
+            passSource = true,
+            ---@param setGroup function
+            ---@param source number
+            ---@param job string
+            ---@param grade number
+            effect = function(setGroup, source, job, grade)
+                setGroup(job, grade)
+                Ox.GetPlayer(source).setActiveGroup(job)
+            end
+        }
+    },
+    job = group, -- future TODO: make job and gang as groups
+    gang = group,
+
+    charinfo = {
+        originalMethod = 'get',
+        modifier = {
+            ---@param get function 
+            ---@return CharInfo
+            effect = function(get)
+                return { firstname = get('firstName'), lastname = get('lastName') }
+            end
+        }
+    },
+
+    name = {
+        originalMethod = 'get',
+        modifier = {
+            ---@param get function
+            ---@return string  --fullname
+            effect = function(get)
+                return ('%s %s'):format(get('firstName'), get('lastName'))
+            end
+        }
+    },
+    id = {
+        originalMethod = 'charId',
+    },
+    gender = {
+        originalMethod = 'get',
+        modifier = {
+            ---@param get function
+            ---@return string  --gender
+            effect = function(get)
+                return get('gender')
+            end
+        }
+    },
+    dob = {
+        originalMethod = 'get',
+        modifier = {
+            ---@param get function
+            ---@return string  --DD/MM/YYYY
+            effect = function(get)
+                return get('dateOfBirth')
+            end
+        }
+    },
 }
 
 function Core.players()
@@ -179,7 +228,7 @@ function Core.players()
 end
 
 function Core.CommandAdd(name, permission, cb, suggestion, flags)
-
+    print('?') -- todo
 end
 
 Core.RegisterUsableItem = inventoryFunctions?.registerUsableItem or function()
@@ -194,8 +243,6 @@ function Core.GetPlayer(src)
     if not player then return end
     return retreiveStringIndexedData(player, totalFunctionsOverride, src)
 end
-
-print(Core.GetPlayer(1).addBalance('cash', 1000))
 
 function Core.hasPerms(...)
     return Ox.Functions.HasPermission(...)
