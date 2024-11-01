@@ -5,7 +5,7 @@ local open = false
 local textui = {}
 
 ---@param text string
----@param options? TextUIOptions
+---@param position? TextUIOptions
 function textui.showTextUI(text, position)
     qb_textui:DrawText(text, position or 'right')
     open = true
