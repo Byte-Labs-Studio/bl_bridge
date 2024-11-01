@@ -30,8 +30,7 @@ local function retreiveStringIndexedData(wrappedData, functionsOverride, src)
                 local executeFunc, effect, passSource = modifier.executeFunc, modifier.effect, modifier.passSource
                 if passSource and executeFunc then
                     assert(src, 'source not exist')
-
-                    lastEffect = ref(src)
+                    lastEffect = effect and effect(ref, src) or ref(src)
                 elseif executeFunc then
                     lastEffect = effect and effect(ref) or ref
                 else

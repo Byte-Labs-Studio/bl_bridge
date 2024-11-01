@@ -1,6 +1,9 @@
 
 ---@alias IconProp 'fas' | 'far' | 'fal' | 'fat' | 'fad' | 'fab' | 'fak' | 'fass'
 ---@alias NotificationPosition 'top' | 'top-right' | 'top-left' | 'bottom' | 'bottom-right' | 'bottom-left' | 'center-right' | 'center-left'
+---@alias MoneyType 'cash' | 'bank'
+---@alias CharInfo {firstname: string, lastname: string}
+---@alias GroupData {name: string, label: string, onDuty: boolean, isBoss: boolean, grade: {name: string, label: string, salary: number}}
 
 ---@class NotificationParams
 ---@field title? string
