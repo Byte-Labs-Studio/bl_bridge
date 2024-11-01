@@ -63,6 +63,7 @@ Config = {
         textui = {
             ox = 'ox_lib',
             qb = 'none',
+            esx = 'esx_textui',
         }
     },
 
