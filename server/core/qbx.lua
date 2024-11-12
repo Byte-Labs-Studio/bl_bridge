@@ -113,7 +113,7 @@ function Core.CommandAdd(name, permission, cb, suggestion, flags)
     RegisterCommand(name, cb, permission)
 end
 
-Core.RegisterUsableItem = inventoryFunctions and inventoryFunctions.registerUsableItem or function(name, cb)
+Core.RegisterUsableItem = inventoryFunctions?.registerUsableItem or function(name, cb)
     exports.qbx_core:CreateUseableItem(name, function(source, item)
         cb(source, item and item.slot, item and item.info)
     end)

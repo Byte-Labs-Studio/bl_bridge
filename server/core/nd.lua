@@ -115,9 +115,7 @@ function Core.CommandAdd(name, permission, cb, suggestion, flags)
     RegisterCommand(name, cb, permission)
 end
 
-if inventoryFunctions then
-    Core.RegisterUsableItem = inventoryFunctions.registerUsableItem
-end
+Core.RegisterUsableItem = inventoryFunctions?.registerUsableItem
 
 local totalFunctionsOverride = inventoryFunctions and merge(inventoryFunctions.methods, playerFunctionsOverride) or playerFunctionsOverride
 
