@@ -12,6 +12,10 @@ AddEventHandler('ox:playerLoaded', function(playerId, ...)
     TriggerEvent('bl_bridge:server:playerLoaded', playerId, ...) -- TODO: sync event data across other framworks
 end)
 
+AddEventHandler('ox:playerLogout', function(playerId, ...)
+    TriggerEvent('bl_bridge:client:playerUnloaded', playerId, ...) -- TODO: sync event data across other framworks
+end)
+
 ox_inv:registerHook('swapItems', function(payload)
     local toInv = payload.toInventory
     local fromInv = payload.fromInventory
@@ -55,7 +59,7 @@ local group = {
             if type(job) ~= 'table' then return end
 
             local grade = Ox.GetPlayer(source).getGroup(activeGroup)
-            return {name = job.name, label = job.label, onDuty = true, isBoss = job.accountRoles[tostring(grade)], type = job.type, grade = { name = grade, label = job.grades[grade], salary = 0 } }
+            return {name = job.name, label = job.label, onDuty = true, isBoss = job.accountRoles[tostring(grade)] == 'owner', type = job.type, grade = { name = grade, label = job.grades[grade], salary = 0 } }
         end
     }
 }
@@ -212,19 +216,7 @@ local playerFunctionsOverride = {
 }
 
 function Core.players()
-    local data = {}
-    for k, v in ipairs(Ox.Players) do
-        local playerData = v.PlayerData
-        local job = playerData.job
-        local gang = playerData.gang
-        local charinfo = playerData.charinfo
-        data[k] = {
-            job = { name = job.name, label = job.label, onDuty = job.onduty, type = job.type, isBoss = job.isboss, grade = { name = job.grade.level, label = job.grade.name, salary = job.payment } },
-            gang = { name = gang.name, label = gang.label, isBoss = gang.isboss, grade = { name = gang.grade.level, label = gang.grade.label } },
-            charinfo = { firstname = charinfo.firstname, lastname = charinfo.lastname }
-        }
-    end
-    return data
+    return Ox.Players
 end
 
 function Core.CommandAdd(name, permission, cb, suggestion, flags)
