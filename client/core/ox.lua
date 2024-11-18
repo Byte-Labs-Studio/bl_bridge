@@ -66,6 +66,4 @@ function Core.playerLoaded()
     return LocalPlayer.state.isLoggedIn
 end
 
-print(json.encode(Core.getPlayerData()))
-
 return Core
