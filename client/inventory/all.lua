@@ -42,6 +42,10 @@ function inventory.openInventory(invType, invId)
         local inventoryData = Utils.await('bl_bridge:validInventory', 10, invType, invId)
         if not inventoryData then return end
         TriggerServerEvent('inventory:server:OpenInventory', invType, invId, inventoryData)
+    elseif invFramework == 'codem'then
+        local inventoryData = Utils.await('bl_bridge:validInventory', 10, invType, invId)
+        if not inventoryData then return end
+        TriggerServerEvent('inventory:server:OpenInventory', invType, invId, inventoryData)
     end
 end
 
