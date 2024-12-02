@@ -7,8 +7,16 @@ RegisterNetEvent('esx:playerLoaded', function(...)
     TriggerEvent('bl_bridge:server:playerLoaded', source, ...)
 end)
 
-RegisterNetEvent('esx:setAccountMoney', function(player, accountName, money, reason)
+AddEventHandler('esx:setAccountMoney', function(player, accountName, money)
     TriggerEvent('bl_bridge:server:updateMoney', player, accountName == 'money' and 'cash' or accountName, money, 'set')
+end)
+
+AddEventHandler('esx:removeAccountMoney', function(source, accountName, money)
+    TriggerEvent('bl_bridge:server:updateMoney', source, accountName == 'money' and 'cash' or accountName, money, 'remove')
+end)
+
+AddEventHandler('esx:addAccountMoney', function(source, accountName, money)
+    TriggerEvent('bl_bridge:server:updateMoney', source, accountName == 'money' and 'cash' or accountName, money, 'add')
 end)
 
 local inventoryFunctions = Framework.inventory
