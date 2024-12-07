@@ -9,10 +9,10 @@ Discord: [Byte Labs](https://discord.gg/fqsqSjZfxE)
 ### Do `none` to disable wanted module like `setr bl:inventory 'none'` if we want to disable inventory module
 ## CFG
 ``` 
-# Frameworks 'qbx' | qb' | 'esx' | 'nd'
-setr bl:framework 'qbx' 
+# Frameworks 'ox' | 'qb' | 'esx' | 'qbx'
+setr bl:framework 'qb' 
 
-# Inventories 'ox' | 'qb'
+# Inventories 'ox' | 'qb' | 'esx' | 'ps' | 'qs' | 'none'
 setr bl:inventory 'ox'
 
 # Context 'ox' | 'qb'
@@ -21,16 +21,16 @@ setr bl:context 'ox'
 # Target 'ox' | 'qb'
 setr bl:target 'ox'
 
+# Progress 'ox' | 'qb'
+setr bl:progressbar 'ox'
+
 # Radial 'ox' | 'qb'
 setr bl:radial 'ox'
 
-# Notification 'ox' | 'qb'
+# Notification 'ox' | 'qb' | 'esx'
 setr bl:notify 'ox'
 
-# Progressbar 'ox' | 'qb'
-setr bl:progressbar 'ox'
-
-# TextUI 'ox' | 'qb'
+# TextUI 'ox' | 'qb' | 'esx'
 setr bl:textui 'ox'
 ```
 
