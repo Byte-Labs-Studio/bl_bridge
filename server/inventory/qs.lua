@@ -2,8 +2,9 @@ local utils = require 'utils'
 local retreiveExportsData = utils.retreiveExportsData
 local overrideFunction = {}
 local registeredInventories = {}
+local qs_inventory = exports['qs-inventory']
 
-overrideFunction.methods = retreiveExportsData(exports['qs-inventory'], {
+overrideFunction.methods = retreiveExportsData(qs_inventory, {
     addItem = {
         originalMethod = 'AddItem',
         modifier = {
@@ -75,6 +76,10 @@ function overrideFunction.registerInventory(id, data)
         slots     = slots or #items,
         maxweight = maxWeight
     }
+end
+
+function overrideFunction.registerUsableItem(name, cb)
+    qs_inventory:CreateUsableItem(name, cb)
 end
 
 utils.register('bl_bridge:validInventory', function(_, invType, invId)
