@@ -79,7 +79,9 @@ function overrideFunction.registerInventory(id, data)
 end
 
 function overrideFunction.registerUsableItem(name, cb)
-    qs_inventory:CreateUsableItem(name, cb)
+    qs_inventory:CreateUsableItem(name, function(source, item)
+        cb(source, item and item.slot, item and item.info)
+    end)
 end
 
 utils.register('bl_bridge:validInventory', function(_, invType, invId)
