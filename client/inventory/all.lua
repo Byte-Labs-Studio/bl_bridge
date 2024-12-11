@@ -1,8 +1,8 @@
 local inventory = {}
 local invFramework = GetFramework('inventory')
 local Utils = require'utils'
-local isOx = invFramework == 'ox'
-local isQS = invFramework == 'qs'
+local isOx = invFramework == 'ox_inventory'
+local isQS = invFramework == 'qs-inventory'
 
 -- function inventory.items()
 --     local inventoryItems = isOx and exports.ox_inventory:Items() or core.getPlayerData().items or {}
