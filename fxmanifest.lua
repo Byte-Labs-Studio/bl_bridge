@@ -2,7 +2,7 @@ fx_version "cerulean"
 use_experimental_fxv2_oal 'yes'
 lua54 'yes'
 game 'gta5'
-version '1.3.1'
+version '1.4.0'
 
 dependencies {
   '/onesync',
