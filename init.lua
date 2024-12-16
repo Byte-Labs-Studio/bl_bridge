@@ -109,13 +109,13 @@ end
 
 exports('getFramework', GetFramework)
 
-local function loadModule(dir, moduleName, framework)
+local function loadModule(dir, moduleName, framework, prefix)
     local fomartedModule = ("%s.%s.%s"):format(dir, moduleName, framework)
     local success, module = pcall(requireLua, fomartedModule)
     if type(module) ~= "string" or not string.find(module, 'not found') then
         if success then
             Framework[moduleName] = module
-            print(("[%s] Loaded module %s"):format(framework, moduleName))
+            print(("[%s] Loaded module %s"):format(prefix, moduleName))
         else
             error(("Error loading module %s: %s"):format(moduleName, module))
         end
@@ -142,7 +142,7 @@ for _, moduleName in ipairs(modulesConfig.moduleNames) do
         if not resourceName then
             return error('there is no '..framework.. ' on module '..moduleName.. '!, please make sure you configured your convars on cfg!')
         elseif resourceName == 'none' or GetResourceState(resourceName) == 'started' then
-            loadModule(modulesConfig.dir, moduleName, alternative)
+            loadModule(modulesConfig.dir, moduleName, alternative, framework)
         else
             ExecuteCommand('ensure '..resourceName)
             if Utils.waitFor(function()
@@ -150,7 +150,7 @@ for _, moduleName in ipairs(modulesConfig.moduleNames) do
                     return true
                 end
             end, ('resource %s is not starting'):format(resourceName), 2000) then
-                loadModule(modulesConfig.dir, moduleName, alternative)
+                loadModule(modulesConfig.dir, moduleName, alternative, framework)
             end
         end
     end
