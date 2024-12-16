@@ -2,9 +2,9 @@ local utils = require 'utils'
 local retreiveExportsData = utils.retreiveExportsData
 local overrideFunction = {}
 local registeredInventories = {}
-
-
-overrideFunction.methods = retreiveExportsData(exports['qb-inventory'], {
+local inventoryName = GetFramework('inventory')
+local inventory = exports[inventoryName]
+overrideFunction.methods = retreiveExportsData(inventory, {
     addItem = {
         originalMethod = 'AddItem',
         modifier = {
@@ -32,7 +32,7 @@ overrideFunction.methods = retreiveExportsData(exports['qb-inventory'], {
         modifier = {
             passSource = true,
             effect = function(originalFun, src, slot, data)
-                local item = exports['qb-inventory']:GetItemBySlot(src, slot)
+                local item = inventory:GetItemBySlot(src, slot)
 
                 if not item then return end
                 if type(data) ~= 'table' then return end
@@ -42,7 +42,7 @@ overrideFunction.methods = retreiveExportsData(exports['qb-inventory'], {
         }
     },
     canCarryItem = {
-        originalMethod = 'CanAddItem',
+        originalMethod = inventoryName == 'qb-inventory' and 'CanAddItem' or 'HasItem',
         modifier = {
             passSource = true,
         }
