@@ -30,6 +30,7 @@ Config = {
             ox = 'ox_inventory',
             qb = 'qb-inventory',
             ps = 'ps-inventory',
+            esx = 'es_extended',
             qs = 'qs-inventory'
         },
         core = {
