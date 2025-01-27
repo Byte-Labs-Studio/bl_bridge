@@ -3,6 +3,10 @@ local shared = exports["es_extended"]:getSharedObject()
 local Utils = require 'utils'
 local merge = Utils.table_merge
 
+RegisterNetEvent('esx:playerLoaded', function(...)
+    TriggerEvent('bl_bridge:server:playerLoaded', source, ...)
+end)
+
 AddEventHandler("esx:playerLoaded", function(playerId, xPlayer)
     TriggerEvent('bl_bridge:server:playerLoaded', playerId, xPlayer)
 end)
