@@ -35,11 +35,11 @@ overrideFunction.methods = retreiveExportsData(qs_inventory, {
     getItem = {
         originalMethod = 'GetItemByName',
         modifier = {
-            passSource = true,
-            effect = function(originalFun, itemName)
-                local data = originalFun(itemName)
+            passSource = true, -- Src doesn't actually seem to be passed to originalFunc
+            effect = function(originalFunc, src, itemName)
+                local data = originalFunc(src, itemName)
                 if not data then
-                    return false, 'Item not exist or you don\'t have it'
+                    return false, 'Item does not exist or you don\'t have it'
                 end
                 return {
                     label = data.label,
