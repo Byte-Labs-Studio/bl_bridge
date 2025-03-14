@@ -38,7 +38,7 @@ end
 function inventory.openInventory(invType, invId)
     if isOx then
         exports.ox_inventory:openInventory(invType, invType == 'stash' and invId or {type = invId})
-    elseif invFramework == 'qb' or isQS then
+    elseif invFramework == 'qb-inventory' or isQS then
         local inventoryData = Utils.await('bl_bridge:validInventory', 10, invType, invId)
         if not inventoryData then return end
         TriggerServerEvent('inventory:server:OpenInventory', invType, invId, inventoryData)
