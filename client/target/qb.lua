@@ -126,7 +126,12 @@ for _, exportData in ipairs(funcs) do
 
         local args = exportData.args(data, id)
 
-        if type(data) == "table" and data.options then
+        if type(data) == "table" and type(data.options) == "table" then
+
+            if not data.options[1] then
+                data.options = { data.options }
+            end
+
             args[#args + 1] = {
                 options = retreiveNumberIndexedData(data.options, OverrideData),
                 distance = data.distance
