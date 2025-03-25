@@ -42,7 +42,7 @@ overrideFunction.methods = retreiveExportsData(inventory, {
         }
     },
     canCarryItem = {
-        originalMethod = inventoryName == 'qb-inventory' and 'CanAddItem' or 'HasItem',
+        originalMethod = inventoryName == 'qb-inventory' and inventory.CanAddItem and 'CanAddItem' or 'HasItem',
         modifier = {
             passSource = true,
         }
