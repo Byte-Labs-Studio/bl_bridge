@@ -2,6 +2,7 @@ local inventory = {}
 local invFramework = GetFramework('inventory')
 local Utils = require'utils'
 local isOx = invFramework == 'ox_inventory'
+local isOrigen = invFramework == 'origen_inventory'
 local isQS = invFramework == 'qs-inventory'
 
 -- function inventory.items()
@@ -13,6 +14,8 @@ function inventory.playerItems()
     local playerData = {}
     if isOx then
         playerData = exports.ox_inventory:GetPlayerItems()
+    elseif isOrigen then
+        playerData = exports.origen_inventory:GetInventory()
     elseif isQS then
         playerData = exports['qs-inventory']:getUserInventory()
     else
@@ -38,6 +41,9 @@ end
 function inventory.openInventory(invType, invId)
     if isOx then
         exports.ox_inventory:openInventory(invType, invType == 'stash' and invId or {type = invId})
+    elseif isOrigen then
+        exports.origen_inventory:openInventory(invType, invId)
+
     elseif invFramework == 'qb-inventory' or isQS then
         local inventoryData = Utils.await('bl_bridge:validInventory', 10, invType, invId)
         if not inventoryData then return end
