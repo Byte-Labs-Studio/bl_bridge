@@ -31,7 +31,7 @@ Config = {
             qb = 'qb-inventory',
             ps = 'ps-inventory',
             esx = 'es_extended',
-            origen = 'origen-inventory',
+            origen = 'origen_inventory',
             qs = 'qs-inventory'
         },
         core = {
