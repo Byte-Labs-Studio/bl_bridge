@@ -65,7 +65,7 @@ overrideFunction.methods = retreiveExportsData(qs_inventory, {
 function overrideFunction.registerInventory(id, data)
     local type, name, items, slots, maxWeight in data
 
-    for k,v in ipairs(items) do
+    for k,v in ipairs(items or {}) do
         v.amount = v.amount or 10
         v.slot = k
     end
