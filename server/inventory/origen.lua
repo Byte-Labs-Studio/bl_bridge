@@ -53,14 +53,16 @@ end
 
 function overrideFunction.registerInventory(id, data)
     local type, name, items in data
-    if type == 'shop' and origen_inventory.registerShop then
-        origen_inventory:registerShop(id, {
-            name = name or 'Shop',
-            inventory = items or {},
-        })
+    if type == 'shop' then
+        pcall(function()
+            origen_inventory:registerShop(id, {name = name or 'Shop',inventory = items or {},})
+        end)
     elseif type == 'stash' then
         local maxWeight, slots in data
-        origen_inventory:registerStash(id, name or 'Stash', slots or 10, maxWeight or 20000)
+
+        pcall(function()
+            origen_inventory:registerStash(id, name or 'Stash', slots or 10, maxWeight or 20000)
+        end)
     end
 end
 
