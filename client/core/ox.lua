@@ -34,12 +34,22 @@ local coreFunctionsOverride = {
                 ---@type function
                 local get = data.get
                 local activeJob = get('activeGroup')
-                if not activeJob then return end
 
-                local grade = data.getGroup(activeJob)
-                local job = Ox.GetGroup(activeJob)
-                local group = prepareJobData(job, grade)
-                
+                local grade = activeJob and data.getGroup(activeJob)
+                local job = activeJob and Ox.GetGroup(activeJob)
+                local group = grade and job and prepareJobData(job, grade) or {
+                    name = 'unemployed',
+                    label = 'Unemployed',
+                    onDuty = false,
+                    isBoss = false,
+                    type = 'unemployed',
+                    grade = {
+                        name = 0,
+                        label = 'Unemployed',
+                        salary = 0
+                    }
+                }
+
                 return {
                     cid = data.citizenid,
                     money = data.money or 0,
