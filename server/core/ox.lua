@@ -52,11 +52,11 @@ local group = {
         executeFunc = true,
         effect = function(get, source)
             local activeGroup = get('activeGroup')
-            if not activeGroup then return end
+            if not activeGroup then return {name = '', label = '', onDuty = false, isBoss = false, type = '', grade = { name = '', label = '', salary = 0 }} end
 
             local job = Ox.GetGroup(activeGroup)
 
-            if type(job) ~= 'table' then return end
+            if type(job) ~= 'table' then return {name = '', label = '', onDuty = false, isBoss = false, type = '', grade = { name = '', label = '', salary = 0 }} end
 
             local grade = Ox.GetPlayer(source).getGroup(activeGroup)
             return {name = job.name, label = job.label, onDuty = true, isBoss = job.accountRoles[tostring(grade)] == 'owner', type = job.type, grade = { name = grade, label = job.grades[grade], salary = 0 } }
