@@ -2,7 +2,7 @@ local Radial = {}
 
 
 function Radial.addOptions(optionId, data)
-    local id = require'utils'.await('UUID', false, 8)
+    local id = bridgeRequire'utils'.await('UUID', false, 8)
     local lib = exports.ox_lib
     
     local title, icon, items in data

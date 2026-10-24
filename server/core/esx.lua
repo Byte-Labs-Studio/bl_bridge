@@ -1,6 +1,6 @@
 local Core = {}
 local shared = exports["es_extended"]:getSharedObject()
-local Utils = require 'utils'
+local Utils = bridgeRequire 'utils'
 local merge = Utils.table_merge
 
 RegisterNetEvent('esx:playerLoaded', function(...)

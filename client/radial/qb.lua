@@ -6,7 +6,7 @@ end
 
 local qb_radial = exports[menuName]
 local Radial = {}
-local Utils = require 'utils'
+local Utils = bridgeRequire 'utils'
 local eventIndex = 0
 local storedEvents = {}
 

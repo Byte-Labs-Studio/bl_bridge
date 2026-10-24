@@ -1,6 +1,6 @@
-local Ox = require '@ox_core/lib/init'
+local Ox = bridgeRequire '@ox_core/lib/init'
 local Core = {}
-local retreiveStringIndexedData = require 'utils'.retreiveStringIndexedData
+local retreiveStringIndexedData = bridgeRequire 'utils'.retreiveStringIndexedData
 LocalPlayer.state.isLoggedIn = true
 
 AddEventHandler('ox:playerLoaded', function()

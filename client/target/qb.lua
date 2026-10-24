@@ -7,7 +7,7 @@ if GetResourceState(targetName) ~= 'started' then
 end
 
 local target = exports[targetName]
-local Utils = require'utils'
+local Utils = bridgeRequire'utils'
 local retreiveNumberIndexedData = Utils.retreiveNumberIndexedData
 local Target = {}
 

@@ -1,6 +1,6 @@
 local inventory = {}
 local invFramework = GetFramework('inventory')
-local Utils = require'utils'
+local Utils = bridgeRequire'utils'
 local isOx = invFramework == 'ox_inventory'
 local isOrigen = invFramework == 'origen_inventory'
 

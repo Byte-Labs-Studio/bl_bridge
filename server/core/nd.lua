@@ -1,6 +1,6 @@
 local Core = {}
 local shared = exports.ND_Core
-local Utils = require 'utils'
+local Utils = bridgeRequire 'utils'
 local retreiveStringIndexedData = Utils.retreiveStringIndexedData
 local merge = Utils.table_merge
 local inventoryFunctions = Framework.inventory

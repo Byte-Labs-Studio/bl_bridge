@@ -6,7 +6,7 @@ end
 
 local Context = {}
 local qb_menu = exports[menuName]
-local Utils = require 'utils'
+local Utils = bridgeRequire 'utils'
 
 local overRideData = {
     header = {

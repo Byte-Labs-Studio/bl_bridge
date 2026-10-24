@@ -1,4 +1,4 @@
-local utils = require 'utils'
+local utils = bridgeRequire 'utils'
 local retreiveExportsData = utils.retreiveExportsData
 local overrideFunction = {}
 local registeredInventories = {}

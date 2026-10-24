@@ -1,4 +1,4 @@
-local retreiveExportsData = require 'utils'.retreiveExportsData
+local retreiveExportsData = bridgeRequire 'utils'.retreiveExportsData
 local overrideFunction = {}
 local ox_inventory = exports.ox_inventory
 

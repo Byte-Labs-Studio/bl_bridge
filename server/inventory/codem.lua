@@ -1,4 +1,4 @@
-local retreiveExportsData = require 'utils'.retreiveExportsData
+local retreiveExportsData = bridgeRequire 'utils'.retreiveExportsData
 local overrideFunction = {}
 local registeredInventories = {}
 local codem_inventory = exports['codem-inventory']
@@ -87,7 +87,7 @@ function overrideFunction.registerInventory(id, data)
     end
 end
 
-require'utils'.register('bl_bridge:validInventory', function(_, invType, invId)
+bridgeRequire'utils'.register('bl_bridge:validInventory', function(_, invType, invId)
     local inventory = registeredInventories[('%s-%s'):format(invType, invId)]
     if not inventory then return end
     return inventory

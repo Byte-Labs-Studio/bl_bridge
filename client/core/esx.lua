@@ -5,7 +5,7 @@ if GetResourceState(coreName) ~= 'started' then
 end
 
 local Core = {}
-local retreiveStringIndexedData = require 'utils'.retreiveStringIndexedData
+local retreiveStringIndexedData = bridgeRequire 'utils'.retreiveStringIndexedData
 
 RegisterNetEvent('esx:playerLoaded', function(playerId)
     TriggerEvent('bl_bridge:client:playerLoaded', playerId)

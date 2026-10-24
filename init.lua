@@ -6,8 +6,7 @@ Framework = setmetatable({}, {
     end
 })
 local context = IsDuplicityVersion() and 'server' or 'client'
-local requireLua = require -- when importing ox_core chunk, this gets overrides by ox_lib require, which loses stored data
-local Utils = requireLua'utils'
+local Utils = bridgeRequire'utils'
 
 local function format(str)
     if not string.find(str, "'") then return str end
@@ -114,7 +113,7 @@ exports('getFramework', GetFramework)
 
 local function loadModule(dir, moduleName, framework, prefix)
     local fomartedModule = ("%s.%s.%s"):format(dir, moduleName, framework)
-    local success, module = pcall(requireLua, fomartedModule)
+    local success, module = pcall(bridgeRequire, fomartedModule)
     if type(module) ~= "string" or not string.find(module, 'not found') then
         if success then
             Framework[moduleName] = module

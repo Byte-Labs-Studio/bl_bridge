@@ -5,7 +5,7 @@ if GetResourceState(coreName) ~= 'started' then
 end
 
 local Core = {}
-local retreiveStringIndexedData = require 'utils'.retreiveStringIndexedData
+local retreiveStringIndexedData = bridgeRequire 'utils'.retreiveStringIndexedData
 local jobInfo = {}
 local loaded = false
 

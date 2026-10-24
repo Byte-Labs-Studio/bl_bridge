@@ -1,8 +1,8 @@
 assert(GetFramework('inventory') == 'ox_inventory', 'Needs ox_inventory')
 
 local Core = {}
-local Utils = require 'utils'
-local Ox = require '@ox_core/lib/init'
+local Utils = bridgeRequire 'utils'
+local Ox = bridgeRequire '@ox_core/lib/init'
 local retreiveStringIndexedData = Utils.retreiveStringIndexedData
 local merge = Utils.table_merge
 local inventoryFunctions = Framework.inventory

@@ -2,7 +2,7 @@
 local loaded = {}
 local _require = require
 
-package = {
+local package = {
     path = './?.lua;./?/init.lua',
     preload = {},
     loaded = setmetatable({}, {
@@ -113,7 +113,7 @@ package.searchers = {
 ---Passing `@resourceName.modName` loads a module from a remote resource.
 ---@param modName string
 ---@return unknown
-function require(modName)
+function bridgeRequire(modName)
     if type(modName) ~= 'string' then
         error(("module name must be a string (received '%s')"):format(modName), 3)
     end
